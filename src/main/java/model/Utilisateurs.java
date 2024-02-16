@@ -27,7 +27,7 @@ public class Utilisateurs extends PanacheEntityBase {
     @Column(nullable = false, unique = true)
     public String email;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     public String tel;
 
     @Column(nullable = true)
