@@ -65,3 +65,21 @@ Easily start your Reactive RESTful Web Services
 Create your web page using Quarkus RESTEasy Reactive & Qute
 
 [Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
+
+### Le Token
+voici une explication de ce que j'ai fait :  
+
+- J'ai ajouté les dépendances nécessaires dans le fichier pom.xml. 
+- Ces dépendances sont nécessaires pour utiliser JWT (JSON Web Tokens) et 
+les fonctionnalités de sécurité de Quarkus.  
+- J'ai créé une classe TokenService qui génère un token JWT. Cette classe utilise 
+l'API SmallRye JWT pour créer un token avec un émetteur, un nom d'utilisateur (upn) et des rôles.  
+- J'ai configuré la sécurité de Quarkus dans le fichier application.properties.
+Ces configurations activent JWT, définissent le mécanisme d'authentification comme MP-JWT, 
+définissent le nom du royaume comme Quarkus et configurent le rafraîchissement des clés JWT.  
+- J'ai sécurisé les points de terminaison dans la classe UtilisateurResource. 
+- J'ai utilisé l'annotation @RolesAllowed pour spécifier quels rôles peuvent accéder à chaque point de 
+terminaison. Dans cet exemple, seuls les utilisateurs avec le rôle "User" peuvent accéder au point de terminaison
+getUtilisateurs, et seuls les utilisateurs avec le rôle "Admin" peuvent accéder au point de terminaison addUtilisateur.  
+C'est une implémentation simplifiée d'un système d'authentification basé sur des tokens en
+utilisant Quarkus et JWT. Selon vos besoins spécifiques, vous devrez peut-être ajuster cette implémentation.
