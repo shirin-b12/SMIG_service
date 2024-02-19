@@ -1,8 +1,8 @@
-package service;
+package org.acme.service;
 
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
-import model.Utilisateurs;
+import org.acme.model.Utilisateur;
 import java.util.HashSet;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class TokenService {
 
 
-    public String generateToken(Utilisateurs user) {
+    public String generateToken(Utilisateur user) {
         String role = user.id_role == 1 ? "Admin" : "User";
         return Jwt.issuer("https://localhost/issuer")
                 .upn(String.valueOf(user.id_utilisateur))
