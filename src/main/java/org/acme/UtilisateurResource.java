@@ -2,6 +2,7 @@ package org.acme;
 
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 import model.Utilisateurs;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -10,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 import jakarta.annotation.security.RolesAllowed;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.TokenService;
@@ -23,11 +25,14 @@ public class UtilisateurResource {
     EntityManager entityManager;
     @Inject
     TokenService tokenService;
+    @Inject
+    JsonWebToken jwt;
     private static final Logger LOGGER = LoggerFactory.getLogger(UtilisateurResource.class);
 
     @GET
     @RolesAllowed("User")
     public List<Utilisateurs> getUtilisateurs() {
+
         return Utilisateurs.listAll();
     }
     @POST
