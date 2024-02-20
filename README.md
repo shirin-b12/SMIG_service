@@ -1,85 +1,79 @@
-# code-with-quarkus
+# README
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Contrôleur Utilisateurs
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+Le contrôleur `UtilisateursController` gère les interactions avec les utilisateurs de notre application. Voici comment fonctionnent les requêtes GET et POST pour ce contrôleur.
 
-## Running the application in dev mode
+### Requêtes GET
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
+Une requête GET est utilisée pour récupérer des données à partir de notre serveur.
+
+- Pour récupérer tous les utilisateurs, vous pouvez envoyer une requête GET à l'URL suivante :
+
+```
+GET /utilisateur
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+Cela renverra une liste de tous les utilisateurs dans notre base de données.
 
-## Packaging and running the application
+- Pour récupérer un utilisateur spécifique par son ID, vous pouvez envoyer une requête GET à l'URL suivante :
 
-The application can be packaged using:
-```shell script
-./mvnw package
 ```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
+GET /utilisateur/{id}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+Cela renverra l'utilisateur correspondant à l'ID fourni. Cette route nécessite une authentification et l'utilisateur doit avoir le rôle "Utilisateur".
 
-## Creating a native executable
+### Requêtes POST
 
-You can create a native executable using: 
-```shell script
-./mvnw package -Dnative
+Une requête POST est utilisée pour envoyer des données à notre serveur.
+
+- Pour créer un nouvel utilisateur, vous pouvez envoyer une requête POST à l'URL suivante :
+
+```
+POST /utilisateur
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+Dans le corps de la requête, vous devez inclure les détails de l'utilisateur que vous voulez créer. Par exemple :
+
+```json
+{
+    "nom": "Dupont",
+    "prenom": "Jean",
+    "email": "jean.dupont@example.com",
+    "mot_de_passe": "motdepasse"
+}
 ```
 
-You can then execute your native executable with: `./target/code-with-quarkus-1.0.0-SNAPSHOT-runner`
+Cela créera un nouvel utilisateur dans notre base de données avec les détails que vous avez fournis. Cette route nécessite une authentification et l'utilisateur doit avoir le rôle "SuperAdmin".
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
+- Pour se connecter en tant qu'utilisateur, vous pouvez envoyer une requête POST à l'URL suivante :
 
-## Related Guides
+```
+POST /utilisateur/login
+```
 
-- RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- JDBC Driver - MySQL ([guide](https://quarkus.io/guides/datasource)): Connect to the MySQL database via JDBC
+Dans le corps de la requête, vous devez inclure l'email et le mot de passe de l'utilisateur. Par exemple :
 
-## Provided Code
+```json
+{
+    "email": "jean.dupont@example.com",
+    "mot_de_passe": "motdepasse"
+}
+```
 
-### RESTEasy Reactive
+Cela renverra un token que vous pouvez utiliser pour vous authentifier sur les routes protégées.
 
-Easily start your Reactive RESTful Web Services
+### Statut des réponses
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+Chaque requête renvoie un code de statut qui indique si la requête a réussi ou non. Voici quelques codes de statut courants :
 
-### RESTEasy Reactive Qute
+- 200 OK : La requête a réussi.
+- 201 Created : La requête POST a réussi et un nouvel utilisateur a été créé.
+- 400 Bad Request : La requête n'a pas été comprise par le serveur, souvent à cause d'un corps de requête mal formé.
+- 401 Unauthorized : La requête nécessite une authentification. Cela se produit généralement lorsqu'une requête POST est envoyée à `/utilisateur/login` avec un email ou un mot de passe incorrect.
+- 404 Not Found : L'utilisateur demandé n'a pas été trouvé sur le serveur.
 
-Create your web page using Quarkus RESTEasy Reactive & Qute
+### Authentification
 
-[Related guide section...](https://quarkus.io/guides/qute#type-safe-templates)
-
-### Le Token
-voici une explication de ce que j'ai fait :  
-
-- J'ai ajouté les dépendances nécessaires dans le fichier pom.xml. 
-- Ces dépendances sont nécessaires pour utiliser JWT (JSON Web Tokens) et 
-les fonctionnalités de sécurité de Quarkus.  
-- J'ai créé une classe TokenService qui génère un token JWT. Cette classe utilise 
-l'API SmallRye JWT pour créer un token avec un émetteur, un nom d'utilisateur (upn) et des rôles.  
-- J'ai configuré la sécurité de Quarkus dans le fichier application.properties.
-Ces configurations activent JWT, définissent le mécanisme d'authentification comme MP-JWT, 
-définissent le nom du royaume comme Quarkus et configurent le rafraîchissement des clés JWT.  
-- J'ai sécurisé les points de terminaison dans la classe UtilisateurResource. 
-- J'ai utilisé l'annotation @RolesAllowed pour spécifier quels rôles peuvent accéder à chaque point de 
-terminaison. Dans cet exemple, seuls les utilisateurs avec le rôle "User" peuvent accéder au point de terminaison
-getUtilisateurs, et seuls les utilisateurs avec le rôle "Admin" peuvent accéder au point de terminaison addUtilisateur.  
-C'est une implémentation simplifiée d'un système d'authentification basé sur des tokens en
-utilisant Quarkus et JWT. Selon vos besoins spécifiques, vous devrez peut-être ajuster cette implémentation.
+Certaines routes nécessitent une authentification. Pour ces routes, vous devez inclure un en-tête `Authorization` avec un token JWT valide. Vous pouvez obtenir un token en envoyant une requête POST à l'URL `/utilisateur/login` comme décrit ci-dessus.
