@@ -52,11 +52,11 @@ class UtilisateursControllerIT {
     @Test
     void testLogin() {
         Utilisateurs credentials = new Utilisateurs();
-        credentials.id_utilisateur = 1;
+        credentials.email = "secure@secure.com";
         credentials.mot_de_passe = "password";
         String expectedToken = "token123";
 
-        when(utilisateurService.login(anyInt(), anyString())).thenReturn(expectedToken);
+        when(utilisateurService.login(anyString(), anyString())).thenReturn(expectedToken);
 
         given()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +67,7 @@ class UtilisateursControllerIT {
                 .body(is(expectedToken));
 
         // Test d'échec de connexion
-        when(utilisateurService.login(anyInt(), anyString())).thenReturn(null);
+        when(utilisateurService.login(anyString(), anyString())).thenReturn(null);
 
         given()
                 .contentType(MediaType.APPLICATION_JSON)

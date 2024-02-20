@@ -66,23 +66,23 @@ class UtilisateursServiceTest {
     @Test
     void testLoginSuccess() {
         Utilisateurs user = new Utilisateurs();
-        user.id_utilisateur = 1;
+        user.email = "secure@secure.com";
         user.mot_de_passe = "secure";
         String expectedToken = "token123";
 
-        when(utilisateursRepository.findByUsernameAndPassword(anyInt(), anyString())).thenReturn(user);
+        when(utilisateursRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(user);
         when(tokenService.generateToken(any(Utilisateurs.class))).thenReturn(expectedToken);
 
-        String token = utilisateursService.login(1, "secure");
+        String token = utilisateursService.login("secure@secure.com", "secure");
         assertNotNull(token);
         assertEquals(expectedToken, token);
     }
 
     @Test
     void testLoginFailure() {
-        when(utilisateursRepository.findByUsernameAndPassword(anyInt(), anyString())).thenReturn(null);
+        when(utilisateursRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(null);
 
-        String token = utilisateursService.login(1, "wrongpassword");
+        String token = utilisateursService.login("secure@secure.com", "wrongpassword");
         assertNull(token);
     }
 }

@@ -31,8 +31,8 @@ public class UtilisateursService {
         }
         return null;
     }
-    public String login(int idUtilisateur, String motDePasse) {
-        Utilisateurs user = utilisateurRepository.findByUsernameAndPassword(idUtilisateur, motDePasse);
+    public String login(String email, String motDePasse) {
+        Utilisateurs user = utilisateurRepository.findByUsernameAndPassword(email, motDePasse);
         if (user != null) {
             return tokenService.generateToken(user);
         }

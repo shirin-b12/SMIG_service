@@ -26,10 +26,10 @@ public class UtilisateursRepository {
         Utilisateurs.persist(utilisateur);
     }
 
-    public Utilisateurs findByUsernameAndPassword(int idUtilisateur, String motDePasse) {
+    public Utilisateurs findByUsernameAndPassword(String email, String motDePasse) {
         try {
-            return entityManager.createQuery("SELECT u FROM Utilisateurs u WHERE u.id_utilisateur = :id_utilisateur AND u.mot_de_passe = :mot_de_passe", Utilisateurs.class)
-                    .setParameter("id_utilisateur", idUtilisateur)
+            return entityManager.createQuery("SELECT u FROM Utilisateurs u WHERE u.email = :email AND u.mot_de_passe = :mot_de_passe", Utilisateurs.class)
+                    .setParameter("email", email)
                     .setParameter("mot_de_passe", motDePasse)
                     .getSingleResult();
         } catch (NoResultException e) {

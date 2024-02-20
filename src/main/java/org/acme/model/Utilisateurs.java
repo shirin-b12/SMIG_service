@@ -1,10 +1,6 @@
 package org.acme.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
@@ -30,8 +26,9 @@ public class Utilisateurs extends PanacheEntityBase {
     @Column(nullable = true)
     public String tel;
 
-    @Column(nullable = true)
-    public Integer id_role; // Changed from int to Integer
+    @ManyToOne
+    @JoinColumn(name = "id_role", nullable = true)
+    public Roles role;
 
     @Column(nullable = true)
     public Integer id_image_profil; // Changed from int to Integer
