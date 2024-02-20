@@ -13,9 +13,10 @@ public class TokenService {
 
     public String generateToken(Utilisateurs user) {
         String role = user.id_role == 1 ? "Admin" : "User";
-        return Jwt.issuer("https://localhost/issuer")
+        return Jwt.issuer("https://localhost:8081/")
                 .upn(String.valueOf(user.id_utilisateur))
                 .groups(new HashSet<>(List.of(role)))
-                .signWithSecret("NouvelleCleSecreteDe32CaracteresOuPlus");
+                .claim("name", user.nom)
+                .sign();
     }
 }
