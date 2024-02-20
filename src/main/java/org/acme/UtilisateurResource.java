@@ -1,5 +1,6 @@
 package org.acme;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
@@ -30,10 +31,16 @@ public class UtilisateurResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(UtilisateurResource.class);
 
     @GET
-    @RolesAllowed("User")
+    @RolesAllowed("Admin")
     public List<Utilisateurs> getUtilisateurs() {
 
         return Utilisateurs.listAll();
+    }
+    @GET
+    @Path("/me")
+    @PermitAll
+    public Response getme(){
+        return Response.ok("ok").build();
     }
     @POST
     @Path("/login")
