@@ -20,6 +20,7 @@ public class UtilisateursController {
     UtilisateursService utilisateurService;
 
     @GET
+    @RolesAllowed("SuperAdmin")
     public List<Utilisateurs> getUtilisateurs() {
         return utilisateurService.listAll();
     }
