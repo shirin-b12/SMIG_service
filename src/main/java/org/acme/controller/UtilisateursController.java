@@ -37,7 +37,6 @@ public class UtilisateursController {
 
     @POST
     @Transactional
-    @RolesAllowed("SuperAdmin")
     public Response addUtilisateur(Utilisateurs utilisateur) {
         Utilisateurs createdUser = utilisateurService.addUtilisateur(utilisateur);
         if (createdUser != null) {
