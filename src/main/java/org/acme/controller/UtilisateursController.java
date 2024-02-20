@@ -37,7 +37,7 @@ public class UtilisateursController {
 
     @POST
     @Transactional
-    @RolesAllowed("Admin")
+    @RolesAllowed("SuperAdmin")
     public Response addUtilisateur(Utilisateurs utilisateur) {
         Utilisateurs createdUser = utilisateurService.addUtilisateur(utilisateur);
         if (createdUser != null) {
@@ -49,7 +49,7 @@ public class UtilisateursController {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("User")
+    @RolesAllowed("Utilisateur")
     public Response getUser(@PathParam("id") Long id) {
         Utilisateurs user = utilisateurService.findById(id);
         if (user != null) {
