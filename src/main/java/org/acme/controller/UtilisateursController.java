@@ -6,27 +6,27 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Utilisateur;
-import org.acme.service.UtilisateurService;
+import org.acme.model.Utilisateurs;
+import org.acme.service.UtilisateursService;
 
 import java.util.List;
 
 @Path("/utilisateur")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class UtilisateurController {
+public class UtilisateursController {
 
     @Inject
-    UtilisateurService utilisateurService;
+    UtilisateursService utilisateurService;
 
     @GET
-    public List<Utilisateur> getUtilisateurs() {
+    public List<Utilisateurs> getUtilisateurs() {
         return utilisateurService.listAll();
     }
 
     @POST
     @Path("/login")
-    public Response login(Utilisateur credentials) {
+    public Response login(Utilisateurs credentials) {
         String token = utilisateurService.login(credentials.id_utilisateur, credentials.mot_de_passe);
         if (token != null) {
             return Response.ok(token).build();
@@ -38,8 +38,8 @@ public class UtilisateurController {
     @POST
     @Transactional
     @RolesAllowed("Admin")
-    public Response addUtilisateur(Utilisateur utilisateur) {
-        Utilisateur createdUser = utilisateurService.addUtilisateur(utilisateur);
+    public Response addUtilisateur(Utilisateurs utilisateur) {
+        Utilisateurs createdUser = utilisateurService.addUtilisateur(utilisateur);
         if (createdUser != null) {
             return Response.ok(createdUser).build();
         } else {
@@ -51,7 +51,7 @@ public class UtilisateurController {
     @Path("/{id}")
     @RolesAllowed("User")
     public Response getUser(@PathParam("id") Long id) {
-        Utilisateur user = utilisateurService.findById(id);
+        Utilisateurs user = utilisateurService.findById(id);
         if (user != null) {
             return Response.ok(user).build();
         } else {

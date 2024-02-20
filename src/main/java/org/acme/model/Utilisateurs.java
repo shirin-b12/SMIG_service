@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
-public class Utilisateur extends PanacheEntityBase {
+public class Utilisateurs extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
