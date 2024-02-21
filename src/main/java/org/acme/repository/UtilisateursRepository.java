@@ -23,6 +23,7 @@ public class UtilisateursRepository {
     }
 
     public void persist(Utilisateurs utilisateur) {
+        utilisateur.role.id_role = 3;
         Utilisateurs.persist(utilisateur);
     }
 
