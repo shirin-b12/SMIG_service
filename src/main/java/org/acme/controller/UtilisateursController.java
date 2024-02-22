@@ -28,6 +28,7 @@ public class UtilisateursController {
 
     @POST
     @Path("/login")
+    @PermitAll
     public Response login(Utilisateurs credentials) {
         String token = utilisateurService.login(credentials.email, credentials.mot_de_passe);
         if (token != null) {
@@ -39,6 +40,7 @@ public class UtilisateursController {
 
     @POST
     @Transactional
+    @PermitAll
     public Response addUtilisateur(Utilisateurs utilisateur) {
         Utilisateurs createdUser = utilisateurService.addUtilisateur(utilisateur);
         if (createdUser != null) {
