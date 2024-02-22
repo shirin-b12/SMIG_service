@@ -1,5 +1,6 @@
 package org.acme.repository;
 
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -9,7 +10,7 @@ import org.acme.model.Utilisateurs;
 import java.util.List;
 
 @ApplicationScoped
-public class UtilisateursRepository {
+public class UtilisateursRepository{
 
     @Inject
     EntityManager entityManager;
@@ -18,7 +19,7 @@ public class UtilisateursRepository {
         return Utilisateurs.listAll();
     }
 
-    public Utilisateurs findById(Long id) {
+    public Utilisateurs findById(int id) {
         return Utilisateurs.findById(id);
     }
 
