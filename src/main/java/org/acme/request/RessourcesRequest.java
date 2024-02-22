@@ -2,6 +2,8 @@ package org.acme.request;
 
 import org.acme.model.Ressources;
 
+import java.time.LocalDateTime;
+
 public class RessourcesRequest {
     private int idCat;
     private int idType;
@@ -9,7 +11,8 @@ public class RessourcesRequest {
     private int idCreateur;
     private String titre;
     private String description;
-    private Ressources.Visibilite visibilite;
+    private int visibilite;
+    private LocalDateTime dateDeCreation;
 
     public int getIdCat() {
         return idCat;
@@ -59,11 +62,19 @@ public class RessourcesRequest {
         this.description = description;
     }
 
-    public Ressources.Visibilite getVisibilite() {
+    public int getVisibilite() {
         return visibilite;
     }
 
-    public void setVisibilite(Ressources.Visibilite visibilite) {
+    public void setVisibilite(int visibilite) {
         this.visibilite = visibilite;
+    }
+
+    public LocalDateTime getDateDeCreation() {
+        return dateDeCreation;
+    }
+
+    public void setDateDeCreation(LocalDateTime dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
     }
 }

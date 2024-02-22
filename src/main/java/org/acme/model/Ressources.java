@@ -37,20 +37,14 @@ public class Ressources extends PanacheEntityBase {
     @Column(nullable = false, length = 1000)
     public String description;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    public Visibilite visibilite;
+    @Column(nullable = true)
+    public int visibilite;
 
     @Column(nullable = false)
     public LocalDateTime date_de_creation;
 
     @Column(nullable = false)
     public int vue;
-
-    public enum Visibilite {
-        PUBLIC,
-        PRIVE
-    }
 
     public int getId_ressource() {
         return id_ressource;
@@ -116,11 +110,11 @@ public class Ressources extends PanacheEntityBase {
         this.description = description;
     }
 
-    public Visibilite getVisibilite() {
+    public int getVisibilite() {
         return visibilite;
     }
 
-    public void setVisibilite(Visibilite visibilite) {
+    public void setVisibilite(int visibilite) {
         this.visibilite = visibilite;
     }
 

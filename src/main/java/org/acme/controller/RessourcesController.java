@@ -32,9 +32,9 @@ public class RessourcesController {
     @Transactional
     @PermitAll
     public Response createRessource(RessourcesRequest request) {
-        Optional<Ressources> createdRessource = ressourcesService.createRessource(request);
-        if (createdRessource.isPresent()) {
-            return Response.ok(createdRessource.get()).build();
+        Ressources createdRessource = ressourcesService.createRessource(request);
+        if (createdRessource != null) {
+            return Response.ok(createdRessource).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
