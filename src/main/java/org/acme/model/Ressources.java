@@ -51,4 +51,92 @@ public class Ressources extends PanacheEntityBase {
         PUBLIC,
         PRIVE
     }
+
+    public int getId_ressource() {
+        return id_ressource;
+    }
+
+    public void setId_ressource(int id_ressource) {
+        this.id_ressource = id_ressource;
+    }
+
+    public Utilisateurs getCreateur() {
+        return createur;
+    }
+
+    public void setCreateur(Utilisateurs createur) {
+        this.createur = createur;
+    }
+
+    public Categories getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categories categorie) {
+        this.categorie = categorie;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    public Integer getId_image() {
+        return id_image;
+    }
+
+    public void setId_image(Integer id_image) {
+        this.id_image = id_image;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Visibilite getVisibilite() {
+        return visibilite;
+    }
+
+    public void setVisibilite(Visibilite visibilite) {
+        this.visibilite = visibilite;
+    }
+
+    public LocalDateTime getDate_de_creation() {
+        return date_de_creation;
+    }
+
+    public void setDate_de_creation(LocalDateTime date_de_creation) {
+        this.date_de_creation = date_de_creation;
+    }
+
+    public int getVue() {
+        return vue;
+    }
+
+    public void setVue(int vue) {
+        this.vue = vue;
+    }
 }

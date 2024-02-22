@@ -32,13 +32,7 @@ public class RessourcesController {
     @Transactional
     @PermitAll
     public Response createRessource(RessourcesRequest request) {
-        Optional<Ressources> createdRessource = ressourcesService.createRessource(
-                request.ressource,
-                request.idCat,
-                request.idType,
-                request.idTag,
-                request.idCreateur
-        );
+        Optional<Ressources> createdRessource = ressourcesService.createRessource(request);
         if (createdRessource.isPresent()) {
             return Response.ok(createdRessource.get()).build();
         } else {
