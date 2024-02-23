@@ -1,6 +1,7 @@
 package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 import org.acme.model.*;
@@ -24,6 +25,9 @@ public class RessourcesService {
 
     @Inject
     TagRepository tagRepository;
+
+    @Inject
+    Event<Ressources> newRessourceEvent;
 
     @Inject
     UtilisateursRepository utilisateursRepository;
@@ -54,6 +58,7 @@ public class RessourcesService {
         ressource.setDate_de_creation(request.getDateDeCreation());
 
         ressourcesRepository.persist(ressource);
+        newRessourceEvent.fire(ressource);
 
         return ressource;
     }
