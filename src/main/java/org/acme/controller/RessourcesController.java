@@ -1,5 +1,6 @@
 package org.acme.controller;
 
+import io.smallrye.mutiny.Multi;
 import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.event.Event;
 import jakarta.enterprise.event.Observes;
@@ -50,16 +51,7 @@ public class RessourcesController {
     @GET
     @PermitAll
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void streamDesRessources(@Context SseEventSink eventSink, @Context Sse sse,@Observes Ressources newRessource) {
-            try {
-                eventSink.send(sse.newEventBuilder()
-                        .name("ressources")
-                        .data(newRessource)
-                        .mediaType(MediaType.APPLICATION_JSON_TYPE)
-                        .build());
-            } catch (Exception e) {
-                eventSink.send(sse.newEvent("Erreur lors de l'envoi de la nouvelle ressource"));
-                eventSink.close();
-            }
+    public Multi<Ressources> streamDesRessources() {
+        return ressourcesService.getRessourceStream();
     }
 }

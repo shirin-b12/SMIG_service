@@ -1,5 +1,7 @@
 package org.acme.service;
 
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.operators.multi.processors.UnicastProcessor;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
@@ -27,10 +29,13 @@ public class RessourcesService {
     TagRepository tagRepository;
 
     @Inject
-    Event<Ressources> newRessourceEvent;
-
-    @Inject
     UtilisateursRepository utilisateursRepository;
+
+    private final UnicastProcessor<Ressources> ressourceStream = UnicastProcessor.create();
+
+    public Multi<Ressources> getRessourceStream() {
+        return ressourceStream;
+    }
 
     public List<Ressources> listAll() {
         return ressourcesRepository.listAll();
@@ -58,7 +63,7 @@ public class RessourcesService {
         ressource.setDate_de_creation(request.getDateDeCreation());
 
         ressourcesRepository.persist(ressource);
-        newRessourceEvent.fire(ressource);
+        ressourceStream.onNext(ressource);
 
         return ressource;
     }
