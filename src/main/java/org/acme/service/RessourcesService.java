@@ -44,17 +44,15 @@ public class RessourcesService {
         }
 
         Ressources ressource = new Ressources();
-        ressource.setCategorie(categorie);
-        ressource.setType(type);
-        ressource.setTag(tag);
-        ressource.setCreateur(createur);
-        ressource.setTitre(request.getTitre());
-        ressource.setDescription(request.getDescription());
-        ressource.setVisibilite(request.getVisibilite());
-        ressource.setDate_de_creation(request.getDateDeCreation());
-
+        ressource.categorie=categorie;
+        ressource.type=type;
+        ressource.tag=tag;
+        ressource.createur=createur;
+        ressource.titre=request.getTitre();
+        ressource.description=request.getDescription();
+        ressource.visibilite=request.getVisibilite();
+        ressource.date_de_creation=request.getDateDeCreation();
         ressourcesRepository.persist(ressource);
-
         return ressource;
     }
 
