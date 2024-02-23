@@ -8,7 +8,7 @@ import org.acme.repository.UtilisateursRepository;
 import java.util.List;
 
 @ApplicationScoped
-public class UtilisateursService {
+public class UtilisateursService{
 
     @Inject
     UtilisateursRepository utilisateurRepository;
@@ -20,7 +20,7 @@ public class UtilisateursService {
         return utilisateurRepository.listAll();
     }
 
-    public Utilisateurs findById(Long id) {
+    public Utilisateurs findById(int id) {
         return utilisateurRepository.findById(id);
     }
 

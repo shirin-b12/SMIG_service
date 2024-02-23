@@ -37,9 +37,9 @@ class UtilisateursServiceTest {
         Utilisateurs expectedUser = new Utilisateurs();
         expectedUser.id_utilisateur = 1;
 
-        when(utilisateursRepository.findById(anyLong())).thenReturn(expectedUser);
+        when(utilisateursRepository.findById(anyInt())).thenReturn(expectedUser);
 
-        Utilisateurs result = utilisateursService.findById(1L);
+        Utilisateurs result = utilisateursService.findById(1);
 
         assertNotNull(result);
         assertEquals(expectedUser.id_utilisateur, result.id_utilisateur);
