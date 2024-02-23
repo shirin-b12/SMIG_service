@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import org.acme.model.*;
 import org.acme.repository.*;
 import org.acme.request.RessourcesRequest;
+import org.acme.request.RessourcesResponce;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +32,9 @@ public class RessourcesService {
     @Inject
     UtilisateursRepository utilisateursRepository;
 
-    private final UnicastProcessor<Ressources> ressourceStream = UnicastProcessor.create();
+    private final UnicastProcessor<RessourcesResponce> ressourceStream = UnicastProcessor.create();
 
-    public Multi<Ressources> getRessourceStream() {
+    public Multi<RessourcesResponce> getRessourceStream() {
         return ressourceStream;
     }
 
@@ -53,18 +54,26 @@ public class RessourcesService {
         }
 
         Ressources ressource = new Ressources();
-        ressource.setCategorie(categorie);
-        ressource.setType(type);
-        ressource.setTag(tag);
-        ressource.setCreateur(createur);
-        ressource.setTitre(request.getTitre());
-        ressource.setDescription(request.getDescription());
-        ressource.setVisibilite(request.getVisibilite());
-        ressource.setDate_de_creation(request.getDateDeCreation());
+        ressource.categorie = categorie;
+        ressource.type = type;
+        ressource.tag = tag;
+        ressource.createur = createur;
+        ressource.titre = request.getTitre();
+        ressource.description = request.getDescription();
+        ressource.visibilite = request.getVisibilite();
+        ressource.date_de_creation = request.getDateDeCreation();
 
         ressourcesRepository.persist(ressource);
-        ressourceStream.onNext(ressource);
 
+        RessourcesResponce response = new RessourcesResponce();
+        response.setId(ressource.id_ressource);
+        response.setTitre(ressource.titre);
+        response.setDescription(ressource.description);
+        response.setVisibilite(ressource.visibilite);
+        response.setDateDeCreation(ressource.date_de_creation.toString());
+
+        // Émettez un événement sur le flux de ressources
+        ressourceStream.onNext(response);
         return ressource;
     }
 

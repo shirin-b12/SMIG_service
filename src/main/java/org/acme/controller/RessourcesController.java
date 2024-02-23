@@ -15,6 +15,7 @@ import jakarta.ws.rs.sse.SseEventSink;
 import org.acme.model.Ressources;
 import org.acme.model.Utilisateurs;
 import org.acme.request.RessourcesRequest;
+import org.acme.request.RessourcesResponce;
 import org.acme.service.RessourcesService;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class RessourcesController {
     @GET
     @PermitAll
     @Produces(MediaType.SERVER_SENT_EVENTS)
-    public Multi<Ressources> streamDesRessources() {
+    public Multi<RessourcesResponce> streamDesRessources() {
         return ressourcesService.getRessourceStream();
     }
 }
