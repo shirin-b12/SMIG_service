@@ -72,7 +72,6 @@ public class RessourcesService {
         response.setVisibilite(ressource.visibilite);
         response.setDateDeCreation(ressource.date_de_creation.toString());
 
-        // Émettez un événement sur le flux de ressources
         ressourceStream.onNext(response);
         return ressource;
     }
