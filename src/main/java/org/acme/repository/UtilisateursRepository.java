@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import org.acme.model.Roles;
 import org.acme.model.Utilisateurs;
 
 import java.util.List;
@@ -15,6 +16,9 @@ public class UtilisateursRepository{
     @Inject
     EntityManager entityManager;
 
+    @Inject
+    RolesRepository rolesRepository;
+
     public List<Utilisateurs> listAll() {
         return Utilisateurs.listAll();
     }
@@ -24,7 +28,10 @@ public class UtilisateursRepository{
     }
 
     public void persist(Utilisateurs utilisateur) {
-        utilisateur.role.id_role = 3;
+        if (utilisateur.role == null) {
+            utilisateur.role = rolesRepository.findById(3);
+        }
+
         Utilisateurs.persist(utilisateur);
     }
 
