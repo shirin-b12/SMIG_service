@@ -21,6 +21,8 @@ import org.acme.service.RessourcesService;
 import java.util.List;
 import java.util.Optional;
 
+
+//kfhfsfdhnqsldfswq
 @Path("/ressources")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
