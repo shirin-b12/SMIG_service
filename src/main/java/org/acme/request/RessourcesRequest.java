@@ -1,5 +1,7 @@
 package org.acme.request;
 
+import org.acme.model.Images;
+
 import java.time.LocalDateTime;
 
 public class RessourcesRequest {
@@ -9,6 +11,17 @@ public class RessourcesRequest {
     private int idCreateur;
     private String titre;
     private String description;
+
+    private Images image;
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(Images image) {
+        this.image = image;
+    }
+
     private int visibilite;
     private LocalDateTime dateDeCreation;
 

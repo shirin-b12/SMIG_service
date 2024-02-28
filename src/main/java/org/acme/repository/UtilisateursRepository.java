@@ -26,8 +26,8 @@ public class UtilisateursRepository {
     }
 
     public void persist(Utilisateurs utilisateur) {
-        if (utilisateur.role == null) {
-            utilisateur.role = rolesRepository.findById(3);
+        if (utilisateur.getRole() == null) {
+            utilisateur.setRole(rolesRepository.findById(3));
         }
 
         Utilisateurs.persist(utilisateur);

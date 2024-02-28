@@ -27,10 +27,10 @@ class UtilisateursControllerIT {
         List<Utilisateurs> mockUtilisateurs = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Utilisateurs utilisateur = new Utilisateurs();
-            utilisateur.id_utilisateur = i;
-            utilisateur.nom = "Nom" + i;
-            utilisateur.prenom = "Prenom" + i;
-            utilisateur.email = "email" + i + "@example.com";
+            utilisateur.setId_utilisateur(i);
+            utilisateur.setNom("Nom" + i);
+            utilisateur.setPrenom("Prenom" + i);
+            utilisateur.setEmail( "email" + i + "@example.com");
             mockUtilisateurs.add(utilisateur);
         }
 
@@ -52,8 +52,8 @@ class UtilisateursControllerIT {
     @Test
     void testLogin() {
         Utilisateurs credentials = new Utilisateurs();
-        credentials.email = "secure@secure.com";
-        credentials.mot_de_passe = "password";
+        credentials.setEmail("secure@secure.com");
+        credentials.setMot_de_passe("password");
         String expectedToken = "token123";
 
         when(utilisateurService.login(anyString(), anyString())).thenReturn(expectedToken);

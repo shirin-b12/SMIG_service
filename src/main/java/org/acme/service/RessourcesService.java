@@ -46,23 +46,24 @@ public class RessourcesService {
         }
 
         Ressources ressource = new Ressources();
-        ressource.categorie = categorie;
-        ressource.type = type;
-        ressource.tag = tag;
-        ressource.createur = createur;
-        ressource.titre = request.getTitre();
-        ressource.description = request.getDescription();
-        ressource.visibilite = request.getVisibilite();
-        ressource.date_de_creation = request.getDateDeCreation();
+        ressource.setCategorie(categorie);
+        ressource.setType(type);
+        ressource.setTag(tag);
+        ressource.setCreateur(createur);
+        ressource.setTitre(request.getTitre());
+        ressource.setDescription(request.getDescription());
+        ressource.setVisibilite(request.getVisibilite());
+        ressource.setDate_de_creation(request.getDateDeCreation());
+
 
         ressourcesRepository.persist(ressource);
 
         RessourcesResponce response = new RessourcesResponce();
-        response.setId(ressource.id_ressource);
-        response.setTitre(ressource.titre);
-        response.setDescription(ressource.description);
-        response.setVisibilite(ressource.visibilite);
-        response.setDateDeCreation(ressource.date_de_creation.toString());
+        response.setId(ressource.getId_ressource());
+        response.setTitre(ressource.getTitre());
+        response.setDescription(ressource.getDescription());
+        response.setVisibilite(ressource.getVisibilite());
+        response.setDateDeCreation(ressource.getDate_de_creation().toString());
 
         ressourceStream.onNext(response);
         return ressource;

@@ -10,9 +10,6 @@ import java.util.List;
 @ApplicationScoped
 public class RessourcesRepository {
 
-    @Inject
-    EntityManager entityManager;
-
     public List<Ressources> listAll() {
         return Ressources.listAll();
     }
