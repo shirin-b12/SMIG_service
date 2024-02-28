@@ -3,6 +3,7 @@ package org.acme.service;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.acme.model.Utilisateurs;
+
 import java.util.HashSet;
 import java.util.List;
 

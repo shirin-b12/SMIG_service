@@ -1,7 +1,5 @@
 package org.acme.request;
 
-import org.acme.model.Ressources;
-
 import java.time.LocalDateTime;
 
 public class RessourcesRequest {

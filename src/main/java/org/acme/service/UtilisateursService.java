@@ -8,7 +8,7 @@ import org.acme.repository.UtilisateursRepository;
 import java.util.List;
 
 @ApplicationScoped
-public class UtilisateursService{
+public class UtilisateursService {
 
     @Inject
     UtilisateursRepository utilisateurRepository;
@@ -31,6 +31,7 @@ public class UtilisateursService{
         }
         return null;
     }
+
     public String login(String email, String motDePasse) {
         Utilisateurs user = utilisateurRepository.findByUsernameAndPassword(email, motDePasse);
         if (user != null) {

@@ -1,7 +1,8 @@
 package org.acme.model;
 
-import jakarta.persistence.*;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity

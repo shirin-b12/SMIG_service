@@ -3,36 +3,28 @@ package org.acme.service;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.operators.multi.processors.UnicastProcessor;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
-
 import org.acme.model.*;
 import org.acme.repository.*;
 import org.acme.request.RessourcesRequest;
 import org.acme.request.RessourcesResponce;
 
 import java.util.List;
-import java.util.Optional;
 
 @ApplicationScoped
 public class RessourcesService {
 
+    private final UnicastProcessor<RessourcesResponce> ressourceStream = UnicastProcessor.create();
     @Inject
     RessourcesRepository ressourcesRepository;
-
     @Inject
     CategoriesRepository categoriesRepository;
-
     @Inject
     TypeRepository typeRepository;
-
     @Inject
     TagRepository tagRepository;
-
     @Inject
     UtilisateursRepository utilisateursRepository;
-
-    private final UnicastProcessor<RessourcesResponce> ressourceStream = UnicastProcessor.create();
 
     public Multi<RessourcesResponce> getRessourceStream() {
         return ressourceStream;

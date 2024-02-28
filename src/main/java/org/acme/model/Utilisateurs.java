@@ -1,7 +1,7 @@
 package org.acme.model;
 
-import jakarta.persistence.*;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
 
 @Entity
 public class Utilisateurs extends PanacheEntityBase {

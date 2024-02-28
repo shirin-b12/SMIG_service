@@ -2,11 +2,7 @@ package org.acme.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.smallrye.common.constraint.NotNull;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Type extends PanacheEntityBase {
@@ -20,9 +16,13 @@ public class Type extends PanacheEntityBase {
     @NotNull
     private String nom_type;
 
-    public String getNom_type() { return nom_type;}
+    public String getNom_type() {
+        return nom_type;
+    }
 
-    public int getId_type() {return id_type;}
+    public int getId_type() {
+        return id_type;
+    }
 
 
 }

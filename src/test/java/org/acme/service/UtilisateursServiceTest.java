@@ -1,7 +1,6 @@
 package org.acme.service;
 
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
