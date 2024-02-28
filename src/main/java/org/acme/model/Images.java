@@ -1,12 +1,22 @@
 package org.acme.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.ws.rs.GET;
+import io.smallrye.common.constraint.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 public class Images extends PanacheEntityBase {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
     private int id_image;
+    @Column(nullable = false)
     private String fichier;
+
+    @Column(nullable = true)
     private String legende;
 
     public int getId_image() {
