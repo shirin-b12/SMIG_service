@@ -14,4 +14,11 @@ public class ImagesService {
     public Images imagesParID(int id) {
         return imagesRepository.findById(id);
     }
+
+    public Images addImage(Images image) {
+        if (image != null){
+            imagesRepository.persist(image);
+            return image;
+        } return null;
+    }
 }

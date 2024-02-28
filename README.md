@@ -84,3 +84,31 @@ courants :
 Certaines routes nécessitent une authentification. Pour ces routes, vous devez inclure un en-tête `Authorization` avec
 un token JWT valide. Vous pouvez obtenir un token en envoyant une requête POST à l'URL `/utilisateur/login` comme décrit
 ci-dessus.
+
+### Image
+
+#### Demande
+
+Ce get ne sert que pour une image avec un id en entrée
+
+```
+GET /images/{id}
+```
+#### Création
+
+Pour récupérer une nouvelle image, vous pouvez envoyer une requête 'POST' à l'adresse suivante :
+```
+POST /images
+```
+
+Dans le corp de la requête vous devez inclure le détail de l'image que vous devez créer.
+
+- La légende peut être nul, mais pas le fichier.
+
+```json
+{
+  "fichier": "toto",
+  "legende": "zouzouba"
+}
+```
+

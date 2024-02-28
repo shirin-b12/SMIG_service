@@ -8,4 +8,8 @@ public class ImagesRepository {
     public Images findById(int id) {
         return Images.findById(id);
     }
+
+    public void persist(Images image){
+        Images.persist(image);
+    }
 }
