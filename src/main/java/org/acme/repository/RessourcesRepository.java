@@ -19,4 +19,6 @@ public class RessourcesRepository {
 
     public void persist(Ressources ressource) { Ressources.persist(ressource);}
 
+    public Ressources findById(int id) { return Ressources.findById(id); }
+
 }

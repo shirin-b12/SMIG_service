@@ -49,10 +49,25 @@ public class RessourcesController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+
     @GET
     @PermitAll
     @Produces(MediaType.SERVER_SENT_EVENTS)
     public Multi<RessourcesResponce> streamDesRessources() {
         return ressourcesService.getRessourceStream();
     }
+
+    @PUT
+    @Path("/update/{id}")
+    @Transactional
+    @PermitAll
+    public Response updateRessource(@PathParam("id") int id, RessourcesRequest request) {
+        Ressources updatedRessource = ressourcesService.updateRessource(id, request);
+        if (updatedRessource != null) {
+            return Response.ok(updatedRessource).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
 }

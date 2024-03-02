@@ -76,4 +76,20 @@ public class RessourcesService {
         return ressource;
     }
 
+    public Ressources updateRessource(int id, RessourcesRequest request) {
+        Ressources ressource = ressourcesRepository.findById(id);
+        if (ressource == null) {
+            return null;
+        }
+
+        ressource.titre = request.getTitre();
+        ressource.description = request.getDescription();
+        ressource.visibilite = request.getVisibilite();
+        ressource.date_de_creation = request.getDateDeCreation();
+
+        ressourcesRepository.persist(ressource);
+        return ressource;
+    }
+
+
 }
