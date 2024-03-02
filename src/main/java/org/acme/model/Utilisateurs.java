@@ -33,4 +33,12 @@ public class Utilisateurs extends PanacheEntityBase {
     @Column(nullable = true)
     public Integer id_image_profil; // Changed from int to Integer
 
+    @Column(nullable = true,unique = true)
+    private String tokenRefrech;
+
+    public void setToken(String token) {
+        this.tokenRefrech = token;
+    }
+
+
 }

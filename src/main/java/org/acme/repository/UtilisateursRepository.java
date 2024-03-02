@@ -38,4 +38,13 @@ public class UtilisateursRepository{
             return null;
         }
     }
+    public Utilisateurs findByToken(String tokenRefresh) {
+        try {
+            return entityManager.createQuery("SELECT u FROM Utilisateurs u WHERE u.tokenRefrech = :tokenRefrech", Utilisateurs.class)
+                    .setParameter("tokenRefrech", tokenRefresh)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
 }
