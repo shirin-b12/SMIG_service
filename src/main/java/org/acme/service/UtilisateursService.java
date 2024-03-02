@@ -38,4 +38,17 @@ public class UtilisateursService{
         }
         return null;
     }
+    public Utilisateurs updateUtilisateur(int id, Utilisateurs utilisateurUpdates) {
+        Utilisateurs utilisateur = findById(id);
+        if (utilisateur != null) {
+            utilisateur.nom = utilisateurUpdates.nom;
+            utilisateur.email = utilisateurUpdates.email;
+            utilisateur.mot_de_passe = utilisateurUpdates.mot_de_passe;
+
+            utilisateurRepository.persist(utilisateur);
+            return utilisateur;
+        }
+        return null;
+    }
+
 }
