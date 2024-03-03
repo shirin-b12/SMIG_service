@@ -30,7 +30,7 @@ public class UtilisateursController {
     @Path("/logine")
     @PermitAll
     public Response login(Utilisateurs credentials) {
-        String token = utilisateurService.login(credentials.email, credentials.mot_de_passe);
+        String token = utilisateurService.login(credentials.getEmail(), credentials.getMot_de_passe());
         if (token != null) {
             return Response.ok(token).build();
         } else {

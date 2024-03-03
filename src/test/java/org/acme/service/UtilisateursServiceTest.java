@@ -1,7 +1,6 @@
 package org.acme.service;
 
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -35,24 +32,24 @@ class UtilisateursServiceTest {
     @Test
     void testFindById() {
         Utilisateurs expectedUser = new Utilisateurs();
-        expectedUser.id_utilisateur = 1;
+        expectedUser.setId_utilisateur(1);
 
         when(utilisateursRepository.findById(anyInt())).thenReturn(expectedUser);
 
         Utilisateurs result = utilisateursService.findById(1);
 
         assertNotNull(result);
-        assertEquals(expectedUser.id_utilisateur, result.id_utilisateur);
+        assertEquals(expectedUser.getId_utilisateur(), result.getId_utilisateur());
     }
 
     @Test
     void testAddUtilisateur() {
         // Création d'un nouvel utilisateur
         Utilisateurs newUser = new Utilisateurs();
-        newUser.nom = "Lewis";
-        newUser.prenom = "Hamilton";
-        newUser.email = "lewis.hamilton@example.com";
-        newUser.mot_de_passe = "password";
+        newUser.setNom("Lewis");
+        newUser.setPrenom("Hamilton");
+        newUser.setEmail("lewis.hamilton@example.com");
+        newUser.setMot_de_passe( "password");
 
         doNothing().when(utilisateursRepository).persist(any(Utilisateurs.class));
 
@@ -60,14 +57,14 @@ class UtilisateursServiceTest {
 
         verify(utilisateursRepository).persist(newUser);
         assertNotNull(createdUser);
-        assertEquals(newUser.nom, createdUser.nom);
+        assertEquals(newUser.getNom(), createdUser.getNom());
     }
 
     @Test
     void testLoginSuccess() {
         Utilisateurs user = new Utilisateurs();
-        user.email = "secure@secure.com";
-        user.mot_de_passe = "secure";
+        user.setEmail("secure@secure.com");
+        user.setMot_de_passe("secure");
         String expectedToken = "token123";
 
         when(utilisateursRepository.findByUsernameAndPassword(anyString(), anyString())).thenReturn(user);

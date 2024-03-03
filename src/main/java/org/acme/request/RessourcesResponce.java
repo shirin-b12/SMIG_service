@@ -1,6 +1,12 @@
 package org.acme.request;
 
 public class RessourcesResponce {
+    private int id;
+    private String titre;
+    private String description;
+    private int visibilite;
+    private String dateDeCreation;
+
     public int getId() {
         return id;
     }
@@ -8,12 +14,6 @@ public class RessourcesResponce {
     public void setId(int id) {
         this.id = id;
     }
-
-    private int id;
-    private String titre;
-    private String description;
-    private int visibilite;
-    private String dateDeCreation;
 
     public String getTitre() {
         return titre;

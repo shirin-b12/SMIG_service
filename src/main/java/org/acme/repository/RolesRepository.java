@@ -13,9 +13,13 @@ public class RolesRepository {
     @Inject
     EntityManager entityManager;
 
-    public List<Roles> listAll() { return Roles.listAll();}
+    public List<Roles> listAll() {
+        return Roles.listAll();
+    }
 
-    public void persist(Roles role) { Roles.persist(role);}
+    public void persist(Roles role) {
+        Roles.persist(role);
+    }
 
     public Roles findById(int id) {
         return Roles.findById(id);

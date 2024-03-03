@@ -3,10 +3,7 @@ package org.acme.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.acme.model.Categories;
-import org.acme.model.Ressources;
 import org.acme.repository.CategoriesRepository;
-import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
 

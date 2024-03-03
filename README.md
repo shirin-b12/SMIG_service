@@ -2,7 +2,8 @@
 
 ## Contrôleur Utilisateurs
 
-Le contrôleur `UtilisateursController` gère les interactions avec les utilisateurs de notre application. Voici comment fonctionnent les requêtes GET et POST pour ce contrôleur.
+Le contrôleur `UtilisateursController` gère les interactions avec les utilisateurs de notre application. Voici comment
+fonctionnent les requêtes GET et POST pour ce contrôleur.
 
 ### Requêtes GET
 
@@ -22,7 +23,8 @@ Cela renverra une liste de tous les utilisateurs dans notre base de données.
 GET /utilisateur/{id}
 ```
 
-Cela renverra l'utilisateur correspondant à l'ID fourni. Cette route nécessite une authentification et l'utilisateur doit avoir le rôle "Utilisateur".
+Cela renverra l'utilisateur correspondant à l'ID fourni. Cette route nécessite une authentification et l'utilisateur
+doit avoir le rôle "Utilisateur".
 
 ### Requêtes POST
 
@@ -38,14 +40,15 @@ Dans le corps de la requête, vous devez inclure les détails de l'utilisateur q
 
 ```json
 {
-    "nom": "Dupont",
-    "prenom": "Jean",
-    "email": "jean.dupont@example.com",
-    "mot_de_passe": "motdepasse"
+  "nom": "Dupont",
+  "prenom": "Jean",
+  "email": "jean.dupont@example.com",
+  "mot_de_passe": "motdepasse"
 }
 ```
 
-Cela créera un nouvel utilisateur dans notre base de données avec les détails que vous avez fournis. Cette route nécessite une authentification et l'utilisateur doit avoir le rôle "SuperAdmin".
+Cela créera un nouvel utilisateur dans notre base de données avec les détails que vous avez fournis. Cette route
+nécessite une authentification et l'utilisateur doit avoir le rôle "SuperAdmin".
 
 - Pour se connecter en tant qu'utilisateur, vous pouvez envoyer une requête POST à l'URL suivante :
 
@@ -57,8 +60,8 @@ Dans le corps de la requête, vous devez inclure l'email et le mot de passe de l
 
 ```json
 {
-    "email": "jean.dupont@example.com",
-    "mot_de_passe": "motdepasse"
+  "email": "jean.dupont@example.com",
+  "mot_de_passe": "motdepasse"
 }
 ```
 
@@ -66,14 +69,46 @@ Cela renverra un token que vous pouvez utiliser pour vous authentifier sur les r
 
 ### Statut des réponses
 
-Chaque requête renvoie un code de statut qui indique si la requête a réussi ou non. Voici quelques codes de statut courants :
+Chaque requête renvoie un code de statut qui indique si la requête a réussi ou non. Voici quelques codes de statut
+courants :
 
 - 200 OK : La requête a réussi.
 - 201 Created : La requête POST a réussi et un nouvel utilisateur a été créé.
 - 400 Bad Request : La requête n'a pas été comprise par le serveur, souvent à cause d'un corps de requête mal formé.
-- 401 Unauthorized : La requête nécessite une authentification. Cela se produit généralement lorsqu'une requête POST est envoyée à `/utilisateur/login` avec un email ou un mot de passe incorrect.
+- 401 Unauthorized : La requête nécessite une authentification. Cela se produit généralement lorsqu'une requête POST est
+  envoyée à `/utilisateur/login` avec un email ou un mot de passe incorrect.
 - 404 Not Found : L'utilisateur demandé n'a pas été trouvé sur le serveur.
 
 ### Authentification
 
-Certaines routes nécessitent une authentification. Pour ces routes, vous devez inclure un en-tête `Authorization` avec un token JWT valide. Vous pouvez obtenir un token en envoyant une requête POST à l'URL `/utilisateur/login` comme décrit ci-dessus.
+Certaines routes nécessitent une authentification. Pour ces routes, vous devez inclure un en-tête `Authorization` avec
+un token JWT valide. Vous pouvez obtenir un token en envoyant une requête POST à l'URL `/utilisateur/login` comme décrit
+ci-dessus.
+
+### Image
+
+#### Demande
+
+Ce get ne sert que pour une image avec un id en entrée
+
+```
+GET /images/{id}
+```
+#### Création
+
+Pour récupérer une nouvelle image, vous pouvez envoyer une requête 'POST' à l'adresse suivante :
+```
+POST /images
+```
+
+Dans le corp de la requête vous devez inclure le détail de l'image que vous devez créer.
+
+- La légende peut être nul, mais pas le fichier.
+
+```json
+{
+  "fichier": "toto",
+  "legende": "zouzouba"
+}
+```
+
