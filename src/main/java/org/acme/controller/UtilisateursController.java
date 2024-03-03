@@ -27,7 +27,7 @@ public class UtilisateursController {
     }
 
     @POST
-    @Path("/login")
+    @Path("/logine")
     @PermitAll
     public Response login(Utilisateurs credentials) {
         String token = utilisateurService.login(credentials.email, credentials.mot_de_passe);
