@@ -79,10 +79,10 @@ public class RessourcesService {
             return null;
         }
 
-        ressource.titre = request.getTitre();
-        ressource.description = request.getDescription();
-        ressource.visibilite = request.getVisibilite();
-        ressource.date_de_creation = request.getDateDeCreation();
+        ressource.setTitre(request.getTitre());
+        ressource.setDescription(request.getDescription());
+        ressource.setVisibilite(request.getVisibilite());
+        ressource.setDate_de_creation(request.getDateDeCreation());
 
         ressourcesRepository.persist(ressource);
         return ressource;
