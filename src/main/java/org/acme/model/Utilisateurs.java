@@ -31,6 +31,6 @@ public class Utilisateurs extends PanacheEntityBase {
     public Roles role;
 
     @Column(nullable = true)
-    public Integer id_image_profil; // Changed from int to Integer
+    public Integer id_image_profil;
 
 }
