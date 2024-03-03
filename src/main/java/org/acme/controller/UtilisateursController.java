@@ -8,9 +8,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Utilisateurs;
+import org.acme.service.AuthService;
 import org.acme.service.UtilisateursService;
 
 import java.util.List;
+import java.util.Map;
 
 @Path("/utilisateur")
 @Produces(MediaType.APPLICATION_JSON)
@@ -19,6 +21,8 @@ public class UtilisateursController {
 
     @Inject
     UtilisateursService utilisateurService;
+    @Inject
+    AuthService authService;
 
     @GET
     @PermitAll
@@ -27,12 +31,24 @@ public class UtilisateursController {
     }
 
     @POST
-    @Path("/logine")
+    @Path("/login")
     @PermitAll
     public Response login(Utilisateurs credentials) {
-        String token = utilisateurService.login(credentials.getEmail(), credentials.getMot_de_passe());
+        Map<String, String> token = authService.login(credentials.email, credentials.mot_de_passe);
         if (token != null) {
             return Response.ok(token).build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+    @POST
+    @Path("/refrechtok")
+    @PermitAll
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response refrechtok(String token) {
+        Map<String, String> newToken = authService.login(token);
+        if (token != null) {
+            return Response.ok(newToken).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -52,6 +68,7 @@ public class UtilisateursController {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("Utilisateur")
     public Response getUser(@PathParam("id") int id) {
         Utilisateurs user = utilisateurService.findById(id);
         if (user != null) {
@@ -60,17 +77,4 @@ public class UtilisateursController {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
-    @PUT
-    @Path("/update/{id}")
-    @Transactional
-    public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
-        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
-        if (updatedUser != null) {
-            return Response.ok(updatedUser).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
 }
