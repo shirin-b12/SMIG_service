@@ -1,15 +1,11 @@
 package org.acme.service;
 
-import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.operators.multi.processors.UnicastProcessor;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 import org.acme.model.*;
 import org.acme.repository.*;
 import org.acme.request.RessourcesRequest;
-import org.acme.request.RessourcesResponce;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,12 +28,6 @@ public class RessourcesService {
     @Inject
     UtilisateursRepository utilisateursRepository;
 
-    private final UnicastProcessor<RessourcesResponce> ressourceStream = UnicastProcessor.create();
-
-    public Multi<RessourcesResponce> getRessourceStream() {
-        return ressourceStream;
-    }
-
     public List<Ressources> listAll() {
         return ressourcesRepository.listAll();
     }
@@ -54,25 +44,15 @@ public class RessourcesService {
         }
 
         Ressources ressource = new Ressources();
-        ressource.categorie = categorie;
-        ressource.type = type;
-        ressource.tag = tag;
-        ressource.createur = createur;
-        ressource.titre = request.getTitre();
-        ressource.description = request.getDescription();
-        ressource.visibilite = request.getVisibilite();
-        ressource.date_de_creation = request.getDateDeCreation();
-
+        ressource.categorie=categorie;
+        ressource.type=type;
+        ressource.tag=tag;
+        ressource.createur=createur;
+        ressource.titre=request.getTitre();
+        ressource.description=request.getDescription();
+        ressource.visibilite=request.getVisibilite();
+        ressource.date_de_creation=request.getDateDeCreation();
         ressourcesRepository.persist(ressource);
-
-        RessourcesResponce response = new RessourcesResponce();
-        response.setId(ressource.id_ressource);
-        response.setTitre(ressource.titre);
-        response.setDescription(ressource.description);
-        response.setVisibilite(ressource.visibilite);
-        response.setDateDeCreation(ressource.date_de_creation.toString());
-
-        ressourceStream.onNext(response);
         return ressource;
     }
 
