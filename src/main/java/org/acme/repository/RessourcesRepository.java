@@ -18,4 +18,6 @@ public class RessourcesRepository {
         Ressources.persist(ressource);
     }
 
+    public Ressources findById(int id) { return Ressources.findById(id); }
+
 }

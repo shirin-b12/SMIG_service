@@ -34,6 +34,10 @@ public class RessourcesService {
         return ressourcesRepository.listAll();
     }
 
+    public Ressources findById(int id) {
+        return ressourcesRepository.findById(id);
+    }
+
     public Ressources createRessource(RessourcesRequest request) {
 
         Categories categorie = categoriesRepository.findById(request.getIdCat());
@@ -68,5 +72,21 @@ public class RessourcesService {
         ressourceStream.onNext(response);
         return ressource;
     }
+
+    public Ressources updateRessource(int id, RessourcesRequest request) {
+        Ressources ressource = ressourcesRepository.findById(id);
+        if (ressource == null) {
+            return null;
+        }
+
+        ressource.titre = request.getTitre();
+        ressource.description = request.getDescription();
+        ressource.visibilite = request.getVisibilite();
+        ressource.date_de_creation = request.getDateDeCreation();
+
+        ressourcesRepository.persist(ressource);
+        return ressource;
+    }
+
 
 }
