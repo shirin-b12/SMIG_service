@@ -42,6 +42,10 @@ public class RessourcesService {
         return ressourcesRepository.listAll();
     }
 
+    public Ressources findById(int id) {
+        return ressourcesRepository.findById(id);
+    }
+
     public Ressources createRessource(RessourcesRequest request) {
 
         Categories categorie = categoriesRepository.findById(request.getIdCat());
