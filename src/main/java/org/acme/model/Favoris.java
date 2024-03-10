@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
-public class Favorie extends PanacheEntityBase {
+public class Favoris extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
@@ -20,10 +20,10 @@ public class Favorie extends PanacheEntityBase {
 
     @ManyToOne
     @JoinColumn(name = "id_ressource", nullable = false)
-    private Ressources id_ressource;
+    private Ressources ressource;
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
-    private Utilisateurs id_utilisateur;
+    private Utilisateurs utilisateur;
     @Column(nullable = false)
     private Date date_de_creation;
 
@@ -35,20 +35,20 @@ public class Favorie extends PanacheEntityBase {
         this.id_favori = id_favori;
     }
 
-    public Ressources getId_ressource() {
-        return id_ressource;
+    public Ressources getRessource() {
+        return ressource;
     }
 
-    public void setId_ressource(Ressources id_ressource) {
-        this.id_ressource = id_ressource;
+    public void setRessource(Ressources id_ressource) {
+        this.ressource = id_ressource;
     }
 
-    public Utilisateurs getId_utilisateur() {
-        return id_utilisateur;
+    public Utilisateurs getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setId_utilisateur(Utilisateurs id_utilisateur) {
-        this.id_utilisateur = id_utilisateur;
+    public void setUtilisateur(Utilisateurs utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     public Date getDate_de_creation() {

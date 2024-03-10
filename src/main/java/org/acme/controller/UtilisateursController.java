@@ -34,7 +34,7 @@ public class UtilisateursController {
     @Path("/login")
     @PermitAll
     public Response login(Utilisateurs credentials) {
-        Map<String, String> token = authService.login(credentials.email, credentials.mot_de_passe);
+        Map<String, String> token = authService.login(credentials.getEmail(), credentials.getMot_de_passe());
         if (token != null) {
             return Response.ok(token).build();
         } else {
@@ -88,5 +88,12 @@ public class UtilisateursController {
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+    }
+    @DELETE
+    @Path("/delete/{id}")
+    @Transactional
+    public Response deleteUtilisateur(@PathParam("id") int id) {
+        utilisateurService.deleteUtilisateur(id);
+        return Response.noContent().build();
     }
 }

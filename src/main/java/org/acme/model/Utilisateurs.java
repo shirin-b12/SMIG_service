@@ -9,29 +9,29 @@ public class Utilisateurs extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
-    public int id_utilisateur;
+    private int id_utilisateur;
 
     @Column(nullable = false)
-    public String nom;
+    private String nom;
 
     @Column(nullable = false)
-    public String prenom;
+    private String prenom;
 
     @Column(nullable = false, unique = true)
-    public String mot_de_passe;
+    private String mot_de_passe;
 
     @Column(nullable = false, unique = true)
-    public String email;
+    private String email;
 
     @Column(nullable = true)
-    public String tel;
+    private String tel;
 
     @ManyToOne
     @JoinColumn(name = "id_role", nullable = true)
-    public Roles role;
+    private Roles role;
 
     @Column(nullable = true)
-    public Integer id_image_profil; // Changed from int to Integer
+    private Integer id_image_profil; // Changed from int to Integer
 
     @Column(nullable = true,unique = true)
     private String tokenRefrech;

@@ -77,5 +77,14 @@ public class RessourcesController {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+    @DELETE
+    @Path("/delete/{id}")
+    //@RolesAllowed("Utilisateur")
+    @PermitAll
+    @Transactional
+    public Response deleteRessource(@PathParam("id") int id) {
+        ressourcesService.deleteRessource(id);
+        return Response.noContent().build();
+    }
 
 }

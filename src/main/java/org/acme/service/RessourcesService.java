@@ -87,6 +87,19 @@ public class RessourcesService {
         ressourcesRepository.persist(ressource);
         return ressource;
     }
+    public void deleteRessource(int id) {
+        Ressources ressource = findById(id);
+        if (ressource != null) {
+            ressourcesRepository.delete(ressource);
+        }
+    }
+    public void deleteRessourcebyCreateur(int id_createur){
+        try {
+            ressourcesRepository.deletebyCreateur(id_createur);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 
 
 }

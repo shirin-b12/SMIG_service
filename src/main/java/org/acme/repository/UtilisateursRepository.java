@@ -25,6 +25,7 @@ public class UtilisateursRepository {
         return Utilisateurs.findById(id);
     }
 
+
     public void persist(Utilisateurs utilisateur) {
         if (utilisateur.getRole() == null) {
             utilisateur.setRole(rolesRepository.findById(3));
@@ -49,8 +50,14 @@ public class UtilisateursRepository {
                     .setParameter("tokenRefrech", tokenRefrech)
                     .getSingleResult();
         } catch (NoResultException nre) {
-            System.out.println(nre);
             return null;
         }
     }
-}
+    public void delete(Utilisateurs utilisateur) {
+
+
+        Utilisateurs.delete("id", utilisateur.getId_utilisateur());
+
+    }
+    }
+

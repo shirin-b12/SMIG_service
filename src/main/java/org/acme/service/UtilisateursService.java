@@ -15,6 +15,10 @@ public class UtilisateursService {
 
     @Inject
     TokenService tokenService;
+    @Inject
+    FavorieService favorieService;
+    @Inject
+    RessourcesService ressourceService;
 
     public List<Utilisateurs> listAll() {
         return utilisateurRepository.listAll();
@@ -23,6 +27,9 @@ public class UtilisateursService {
     public Utilisateurs findById(int id) {
         return utilisateurRepository.findById(id);
     }
+
+
+
 
     public Utilisateurs addUtilisateur(Utilisateurs utilisateur) {
         if (utilisateur != null) {
@@ -42,14 +49,24 @@ public class UtilisateursService {
     public Utilisateurs updateUtilisateur(int id, Utilisateurs utilisateurUpdates) {
         Utilisateurs utilisateur = findById(id);
         if (utilisateur != null) {
-            utilisateur.nom = utilisateurUpdates.nom;
-            utilisateur.email = utilisateurUpdates.email;
-            utilisateur.mot_de_passe = utilisateurUpdates.mot_de_passe;
+            utilisateur.setNom(utilisateurUpdates.getNom());
+            utilisateur.setEmail(utilisateurUpdates.getEmail());
+            utilisateur.setMot_de_passe(utilisateur.getMot_de_passe());
 
             utilisateurRepository.persist(utilisateur);
             return utilisateur;
         }
         return null;
+    }
+    public void deleteUtilisateur(int id) {
+        Utilisateurs utilisateur = findById(id);
+        ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());
+        favorieService.deleteFavoriebyUtilisateur(utilisateur.getId_utilisateur());
+
+
+        if (utilisateur != null) {
+            utilisateurRepository.delete(utilisateur);
+        }
     }
 
 }

@@ -32,7 +32,7 @@ public class AuthService {
         String accessToken = tokenService.generateToken(user);
         String refreshToken = tokenService.generateRefreshToken(user);
 
-        authRepository.updateRefreshToken(user.id_utilisateur, refreshToken);
+        authRepository.updateRefreshToken(user.getId_utilisateur(), refreshToken);
 
         Map<String, String> tokens = new HashMap<>();
         tokens.put("accessToken", accessToken);
