@@ -1,5 +1,6 @@
 package org.acme.controller;
 
+
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -8,6 +9,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Images;
 import org.acme.service.ImagesService;
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 @Path("/images")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,8 +31,9 @@ public class ImagesController {
     @POST
     @PermitAll
     @Transactional
-    public Response createImage(Images image) {
-        Images createImage = imagesService.addImage(image);
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response createImage(@RestForm String description, @RestForm("image") FileUpload fileUpload) {
+        Images createImage = imagesService.addImage(description, fileUpload);
         if(createImage != null) {
             return Response.ok(createImage).build();
         }
