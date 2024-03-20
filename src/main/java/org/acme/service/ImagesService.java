@@ -7,6 +7,9 @@ import org.acme.repository.ImagesRepository;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 import org.jboss.resteasy.reactive.server.core.multipart.DefaultFileUpload;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -46,24 +49,15 @@ public class ImagesService {
         }
         return null;
     }
-    public FileUpload returnImage(int id) {
-        Images image = imagesRepository.findById(id);
-        if (image != null) {
-            return new CustomFileUpload(image.getFichier(), "image.jpg", "image/jpeg");
+    public BufferedImage convertBytesToImage(byte[] imageData) {
+        try {
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+            return ImageIO.read(bais);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to convert bytes to image", e);
         }
-        return null;
     }
 }
 
 // Custom class that implements FileUpload
-public class CustomFileUpload implements FileUpload {
-    private byte[] file;
-    private String fileName;
-    private String contentType;
 
-    public CustomFileUpload(byte[] file, String fileName, String contentType) {
-        this.file = file;
-        this.fileName = fileName;
-        this.contentType = contentType;
-    }
-}
