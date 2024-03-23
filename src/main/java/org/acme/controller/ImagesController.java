@@ -32,9 +32,7 @@ public class ImagesController {
     public Response imagesParID(@PathParam("id") int id) {
         Images image = imagesService.imagesParID(id);
         BufferedImage bufferedImage = imagesService.convertBytesToImage(image.getFichier());
-
         StreamingOutput stream = output -> ImageIO.write(bufferedImage, "jpg", output);
-
         return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM).build();
 
     }
