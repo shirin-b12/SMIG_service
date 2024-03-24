@@ -68,7 +68,7 @@ public class UtilisateursController {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("Utilisateur")
+    //@RolesAllowed("Utilisateur")
     public Response getUser(@PathParam("id") int id) {
         Utilisateurs user = utilisateurService.findById(id);
         if (user != null) {
