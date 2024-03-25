@@ -10,6 +10,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.acme.request.FavorieRequest;
 import org.acme.service.FavorieService;
 
 @Path("/favori")
@@ -20,16 +21,15 @@ public class FavorieController {
     @Inject
     FavorieService favorieService;
     @POST
-    public void addFavorie(int id_ressource, int id_utilisateur) {
-        favorieService.addFavorie(id_ressource, id_utilisateur);
+    public void addFavorie(FavorieRequest favorieRequest) {
+        favorieService.addFavorie(favorieRequest);
     }
     @GET
-    @Path("/{id}")
-    public void listFavorie(@PathParam("id") int id_utilisateur) {
+    public void listFavorie(int id_utilisateur) {
         favorieService.listFavorie(id_utilisateur);
     }
     @DELETE
-    public void removeFavorie(int id_ressource, int id_utilisateur) {
-        favorieService.removeFavorie(id_ressource, id_utilisateur);
+    public void removeFavorie(FavorieRequest favorieRequest) {
+        favorieService.removeFavorie(favorieRequest);
     }
 }
