@@ -38,4 +38,8 @@ public class CommentaireService {
         commentaireRepository.persist(commentaire);
         return commentaire;
     }
+
+    public List<Commentaires> getCommentsByRessourceId(int idRessource) {
+        return commentaireRepository.findByRessourceId(idRessource);
+    }
 }

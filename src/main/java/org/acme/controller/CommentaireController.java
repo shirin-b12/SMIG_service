@@ -4,11 +4,7 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.acme.model.Commentaires;
 import org.acme.request.CommentaireRequest;
@@ -34,5 +30,9 @@ public class CommentaireController {
     public Commentaires createCommentaire(CommentaireRequest commentaires) {
         return commentaireService.createCommentaire(commentaires);
     }
-
+    @GET
+    @Path("/{idRessource}")
+    public List<Commentaires> getCommentairesByRessource(@PathParam("idRessource") int idRessource) {
+        return commentaireService.getCommentsByRessourceId(idRessource);
+    }
 }

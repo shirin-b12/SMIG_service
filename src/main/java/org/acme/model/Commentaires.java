@@ -80,5 +80,4 @@ public class Commentaires extends PanacheEntityBase {
         this.commentaire_rep = id_commentaire_rep;
     }
 
-
 }
