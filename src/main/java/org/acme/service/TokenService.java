@@ -19,4 +19,11 @@ public class TokenService {
                 .groups(new HashSet<>(List.of(role)))
                 .sign();
     }
+    public String generateRefreshToken(Utilisateurs user) {
+        return Jwt.issuer("https://localhost:8081/")
+                .upn(String.valueOf(user.id_utilisateur))
+                .claim("refresh", true)
+                .sign();
+    }
+
 }
