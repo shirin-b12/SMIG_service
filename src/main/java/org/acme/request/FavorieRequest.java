@@ -1,5 +1,4 @@
 package org.acme.request;
-
 public class FavorieRequest {
     private int id_ressource;
     private int id_utilisateur;
@@ -20,3 +19,6 @@ public class FavorieRequest {
         this.id_utilisateur = id_utilisateur;
     }
 }
+
+
+
