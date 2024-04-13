@@ -49,6 +49,14 @@ public class Ressources extends PanacheEntityBase {
     @Column(nullable = false)
     private int vue;
 
+    public Images getImage() {
+        return image;
+    }
+
+    public void setImage(Images image) {
+        this.image = image;
+    }
+
     public int getId_ressource() {
         return id_ressource;
     }

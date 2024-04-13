@@ -21,6 +21,7 @@ public class TagController {
 
     @GET
     @PermitAll
+    @Path("/all")
     public List<Tag> getsTags() {
         return tagService.listAll();
     }

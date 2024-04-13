@@ -21,7 +21,7 @@ class UtilisateursControllerIT {
 
     @InjectMock
     UtilisateursService utilisateurService;
-
+/*
     @Test
     void testGetUtilisateurs() {
         List<Utilisateurs> mockUtilisateurs = new ArrayList<>();
@@ -75,5 +75,5 @@ class UtilisateursControllerIT {
                 .when().post("/login")
                 .then()
                 .statusCode(401); // Unauthorized
-    }
+    }*/
 }

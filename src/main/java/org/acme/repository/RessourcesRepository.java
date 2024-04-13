@@ -10,6 +10,9 @@ import java.util.List;
 @ApplicationScoped
 public class RessourcesRepository {
 
+    @Inject
+    EntityManager em;
+
     public List<Ressources> listAll() {
         return Ressources.listAll();
     }
@@ -19,6 +22,29 @@ public class RessourcesRepository {
     }
     public Ressources findById(int id) {
         return Ressources.findById(id);
+    }
+
+    public Ressources update(int id, Ressources nouvelleRessource) {
+        Ressources ressourceExistante = em.find(Ressources.class, id);
+        if (ressourceExistante != null) {
+            em.getTransaction().begin();
+
+            ressourceExistante.setTitre(nouvelleRessource.getTitre());
+            ressourceExistante.setDescription(nouvelleRessource.getDescription());
+            ressourceExistante.setVisibilite(nouvelleRessource.getVisibilite());
+            ressourceExistante.setDate_de_creation(nouvelleRessource.getDate_de_creation());
+            ressourceExistante.setVue(nouvelleRessource.getVue());
+            ressourceExistante.setCreateur(nouvelleRessource.getCreateur());
+            ressourceExistante.setCategorie(nouvelleRessource.getCategorie());
+            ressourceExistante.setType(nouvelleRessource.getType());
+            ressourceExistante.setTag(nouvelleRessource.getTag());
+            ressourceExistante.setimage(nouvelleRessource.getimage());
+
+            em.merge(ressourceExistante);
+            em.getTransaction().commit();
+            return ressourceExistante;
+        }
+        return null;
     }
 
 }

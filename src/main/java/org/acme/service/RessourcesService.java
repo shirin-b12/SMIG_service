@@ -9,6 +9,7 @@ import org.acme.repository.*;
 import org.acme.request.RessourcesRequest;
 import org.acme.request.RessourcesResponce;
 
+import java.awt.*;
 import java.util.List;
 
 @ApplicationScoped
@@ -28,6 +29,10 @@ public class RessourcesService {
 
     public Multi<RessourcesResponce> getRessourceStream() {
         return ressourceStream;
+    }
+
+    public Ressources findById(int id) {
+        return ressourcesRepository.findById(id);
     }
 
     public List<Ressources> listAll() {
@@ -67,6 +72,21 @@ public class RessourcesService {
 
         ressourceStream.onNext(response);
         return ressource;
+    }
+
+    public Ressources linkImage(Images image, int ressource) {
+
+        Ressources ressources = ressourcesRepository.findById(ressource);
+
+        if (ressources == null ) {
+            return null;
+        }
+
+        ressources.setImage(image);
+
+
+        ressourcesRepository.update(ressource, ressources);
+        return ressources;
     }
 
 }

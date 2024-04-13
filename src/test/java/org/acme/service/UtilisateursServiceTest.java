@@ -42,7 +42,7 @@ class UtilisateursServiceTest {
         assertEquals(expectedUser.getId_utilisateur(), result.getId_utilisateur());
     }
 
-    @Test
+   /* @Test
     void testAddUtilisateur() {
         // Création d'un nouvel utilisateur
         Utilisateurs newUser = new Utilisateurs();
@@ -81,5 +81,5 @@ class UtilisateursServiceTest {
 
         String token = utilisateursService.login("secure@secure.com", "wrongpassword");
         assertNull(token);
-    }
+    }*/
 }

@@ -42,10 +42,10 @@ public class UtilisateursController {
         }
     }
     @POST
-    @Path("/refrechtok")
+    @Path("/refreshtok")
     @PermitAll
     @Consumes(MediaType.TEXT_PLAIN)
-    public Response refrechtok(String token) {
+    public Response refreshtok(String token) {
         Map<String, String> newToken = authService.login(token);
         if (token != null) {
             return Response.ok(newToken).build();

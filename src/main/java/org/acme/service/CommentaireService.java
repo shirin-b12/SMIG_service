@@ -3,12 +3,14 @@ package org.acme.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.acme.model.Commentaires;
+import org.acme.model.Utilisateurs;
 import org.acme.repository.CommentaireRepository;
 import org.acme.repository.RessourcesRepository;
 import org.acme.repository.UtilisateursRepository;
 import org.acme.request.CommentaireRequest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @ApplicationScoped
 public class CommentaireService {
@@ -40,6 +42,25 @@ public class CommentaireService {
     }
 
     public List<Commentaires> getCommentsByRessourceId(int idRessource) {
-        return commentaireRepository.findByRessourceId(idRessource);
+        List<Commentaires> commentairesOriginaux = commentaireRepository.findByRessourceId(idRessource);
+        List<Commentaires> commentairesModifies = new ArrayList<>();
+
+        for (Commentaires commentaireOriginal : commentairesOriginaux) {
+            Commentaires commentaireModifie = new Commentaires();
+            commentaireModifie.setId_commentaire(commentaireOriginal.getId_commentaire());
+            commentaireModifie.setCommentaire(commentaireOriginal.getCommentaire());
+            commentaireModifie.setDate_de_creation(commentaireOriginal.getDate_de_creation());
+            commentaireModifie.setId_ressource(commentaireOriginal.getId_ressource());
+            commentaireModifie.setId_commentaire_rep(commentaireOriginal.getId_commentaire_rep());
+
+            // Set temporary redacteur
+            Utilisateurs redacteurTemporaire = utilisateursRepository.findById(5); // Supposons que 5 est l'ID de l'utilisateur temporaire
+            commentaireModifie.setId_utilisateur_redacteur(redacteurTemporaire);
+
+            commentairesModifies.add(commentaireModifie);
+        }
+
+        return commentairesModifies;
     }
+
 }

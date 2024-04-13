@@ -21,6 +21,7 @@ public class TypeController {
 
     @GET
     @PermitAll
+    @Path("/all")
     public List<Type> getTypes() {
         return typeService.listAll();
     }
