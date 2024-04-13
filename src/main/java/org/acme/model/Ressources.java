@@ -97,14 +97,6 @@ public class Ressources extends PanacheEntityBase {
         this.tag = tag;
     }
 
-    public Images getimage() {
-        return image;
-    }
-
-    public void setimage(Images image) {
-        this.image = image;
-    }
-
     public String getTitre() {
         return titre;
     }

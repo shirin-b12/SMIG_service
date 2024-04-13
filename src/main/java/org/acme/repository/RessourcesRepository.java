@@ -35,7 +35,7 @@ public class RessourcesRepository {
             ressourceExistante.setCategorie(nouvelleRessource.getCategorie());
             ressourceExistante.setType(nouvelleRessource.getType());
             ressourceExistante.setTag(nouvelleRessource.getTag());
-            ressourceExistante.setimage(nouvelleRessource.getimage());
+            ressourceExistante.setImage(nouvelleRessource.getImage());
 
             em.merge(ressourceExistante);
             em.getTransaction().commit();
