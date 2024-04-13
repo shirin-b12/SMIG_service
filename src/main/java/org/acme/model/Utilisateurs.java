@@ -39,8 +39,9 @@ public class Utilisateurs extends PanacheEntityBase {
         this.tokenRefrech = token;
     }
 
+
     @OneToOne
-    @JoinColumn(name = "id_image", nullable = true)
+    @JoinColumn(name = "id_image_profil", referencedColumnName = "id_image")
     private Images imageProfil;
 
     public Images getImageProfil() {
@@ -106,15 +107,5 @@ public class Utilisateurs extends PanacheEntityBase {
     public void setRole(Roles role) {
         this.role = role;
     }
-
-//    public Integer getId_image_profil() {
-//        return id_image_profil;
-//    }
-//
-//    public void setId_image_profil(Integer id_image_profil) {
-//        this.id_image_profil = id_image_profil;
-//    }
-
-
 
 }
