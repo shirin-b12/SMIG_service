@@ -79,4 +79,27 @@ public class RessourcesController {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
+
+    @PUT
+    @Path("/update/{id}")
+    @Transactional
+    @PermitAll
+    public Response updateRessource(@PathParam("id") int id, RessourcesRequest request) {
+        Ressources updatedRessource = ressourcesService.updateRessource(id, request);
+        if (updatedRessource != null) {
+            return Response.ok(updatedRessource).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @DELETE
+    @Path("/delete/{id}")
+    //@RolesAllowed("Utilisateur")
+    @PermitAll
+    @Transactional
+    public Response deleteRessource(@PathParam("id") int id) {
+        ressourcesService.deleteRessource(id);
+        return Response.noContent().build();
+    }
+
 }

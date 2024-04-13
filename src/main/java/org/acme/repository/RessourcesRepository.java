@@ -47,4 +47,12 @@ public class RessourcesRepository {
         return null;
     }
 
+    public Ressources findById(int id) { return Ressources.findById(id); }
+    public void delete(Ressources ressource) {
+        Ressources.delete("id", ressource.getId_ressource());
+    }
+    public void deletebyCreateur(int id) {
+        Ressources.delete("createur.id_utilisateur", id);
+    }
+
 }

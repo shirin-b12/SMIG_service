@@ -21,9 +21,10 @@ public class TokenService {
     }
     public String generateRefreshToken(Utilisateurs user) {
         return Jwt.issuer("https://localhost:8081/")
-                .upn(String.valueOf(user.id_utilisateur))
+                .upn(String.valueOf(user.getId_utilisateur()))
                 .claim("refresh", true)
                 .sign();
     }
+
 
 }
