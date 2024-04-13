@@ -11,18 +11,8 @@ public class RessourcesRequest {
     private int idCreateur;
     private String titre;
     private String description;
-
-    private Images image;
-
-//    public int getImage() {
-//        return image;
-//    }
     private int visibilite;
     private LocalDateTime dateDeCreation;
-
-    public void setImage(Images image) {
-        this.image = image;
-    }
 
     public int getIdCat() {
         return idCat;
