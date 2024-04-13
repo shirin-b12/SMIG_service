@@ -16,7 +16,7 @@ public class  Images extends PanacheEntityBase {
     @Column(nullable = false, unique = true)
     private int id_image;
     @Lob
-    @Column(name = "fichier", nullable = false)
+    @Column(name = "fichier")
     private byte[] fichier;
 
     @Column(nullable = true)
