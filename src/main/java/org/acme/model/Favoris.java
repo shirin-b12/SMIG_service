@@ -20,11 +20,11 @@ public class Favoris extends PanacheEntityBase {
 
     @ManyToOne
     @JoinColumn(name = "id_ressource", nullable = false)
-    private Ressources ressource;
+    private Ressources id_ressource;
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
-    private Utilisateurs utilisateur;
-    @Column(nullable = false)
+    private Utilisateurs id_utilisateur;
+    @Column(nullable = true)
     private Date date_de_creation;
 
     public int getId_favori() {
@@ -35,20 +35,20 @@ public class Favoris extends PanacheEntityBase {
         this.id_favori = id_favori;
     }
 
-    public Ressources getRessource() {
-        return ressource;
+    public Ressources getId_ressource() {
+        return id_ressource;
     }
 
-    public void setRessource(Ressources id_ressource) {
-        this.ressource = id_ressource;
+    public void setId_ressource(Ressources id_ressource) {
+        this.id_ressource = id_ressource;
     }
 
-    public Utilisateurs getUtilisateur() {
-        return utilisateur;
+    public Utilisateurs getId_utilisateur() {
+        return id_utilisateur;
     }
 
-    public void setUtilisateur(Utilisateurs utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setId_utilisateur(Utilisateurs id_utilisateur) {
+        this.id_utilisateur = id_utilisateur;
     }
 
     public Date getDate_de_creation() {

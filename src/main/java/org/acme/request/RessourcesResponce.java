@@ -1,11 +1,19 @@
 package org.acme.request;
 
+import org.acme.model.Images;
+
 public class RessourcesResponce {
     private int id;
     private String titre;
     private String description;
     private int visibilite;
     private String dateDeCreation;
+    private String nomCreateur;
+    private String prenomCreateur;
+    private String nomCategorie;
+    private String nomType;
+    private String nomTag;
+
 
     public int getId() {
         return id;
@@ -46,4 +54,45 @@ public class RessourcesResponce {
     public void setDateDeCreation(String dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }
+
+    public String getNomCreateur() {
+        return nomCreateur;
+    }
+
+    public void setNomCreateur(String nomCreateur) {
+        this.nomCreateur = nomCreateur;
+    }
+
+    public String getPrenomCreateur() {
+        return prenomCreateur;
+    }
+
+    public void setPrenomCreateur(String prenomCreateur) {
+        this.prenomCreateur = prenomCreateur;
+    }
+
+    public String getNomCategorie() {
+        return nomCategorie;
+    }
+
+    public void setNomCategorie(String nomCategorie) {
+        this.nomCategorie = nomCategorie;
+    }
+
+    public String getNomType() {
+        return nomType;
+    }
+
+    public void setNomType(String nomType) {
+        this.nomType = nomType;
+    }
+
+    public String getNomTag() {
+        return nomTag;
+    }
+
+    public void setNomTag(String nomTag) {
+        this.nomTag = nomTag;
+    }
+
 }
