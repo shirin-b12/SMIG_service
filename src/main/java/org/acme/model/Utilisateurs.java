@@ -31,9 +31,6 @@ public class Utilisateurs extends PanacheEntityBase {
     @JoinColumn(name = "id_role", nullable = true)
     private Roles role;
 
-    @Column(nullable = true)
-    private Integer id_image_profil; // Changed from int to Integer
-
     @Column(nullable = true,unique = true)
     private String tokenRefrech;
 
@@ -43,7 +40,7 @@ public class Utilisateurs extends PanacheEntityBase {
     }
 
     @OneToOne
-    @JoinColumn(name = "id_image_profil", referencedColumnName = "id_image")
+    @JoinColumn(name = "id_image", nullable = true)
     private Images imageProfil;
 
     public Images getImageProfil() {
@@ -110,13 +107,13 @@ public class Utilisateurs extends PanacheEntityBase {
         this.role = role;
     }
 
-    public Integer getId_image_profil() {
-        return id_image_profil;
-    }
-
-    public void setId_image_profil(Integer id_image_profil) {
-        this.id_image_profil = id_image_profil;
-    }
+//    public Integer getId_image_profil() {
+//        return id_image_profil;
+//    }
+//
+//    public void setId_image_profil(Integer id_image_profil) {
+//        this.id_image_profil = id_image_profil;
+//    }
 
 
 
