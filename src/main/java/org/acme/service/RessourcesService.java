@@ -21,6 +21,8 @@ public class RessourcesService {
     @Inject
     CategoriesRepository categoriesRepository;
     @Inject
+    ImagesRepository imagesRepository;
+    @Inject
     TypeRepository typeRepository;
     @Inject
     TagRepository tagRepository;
@@ -74,9 +76,11 @@ public class RessourcesService {
         return ressource;
     }
 
-    public Ressources linkImage(Images image, int ressource) {
+    public Ressources linkImage(int imageId, int ressource) {
 
         Ressources ressources = ressourcesRepository.findById(ressource);
+
+        Images image = imagesRepository.findById(imageId);
 
         if (ressources == null ) {
             return null;

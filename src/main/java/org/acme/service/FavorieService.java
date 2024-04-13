@@ -27,7 +27,6 @@ public class FavorieService {
     @Inject
     RessourcesRepository ressourcesRepository;
 
-// ...
 
     @Transactional
     public Response addFavori(FavorieRequest favoriRequest) {

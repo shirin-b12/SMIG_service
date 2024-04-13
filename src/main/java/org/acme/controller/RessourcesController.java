@@ -69,9 +69,9 @@ public class RessourcesController {
 
 
     @PUT
-    @Transactional
-    @PermitAll
-    public Response linkImage(Images image, int ressourceId) {
+    @Path("/{ressourceId}/image/{image}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response linkImage(@PathParam("ressourceId") int ressourceId, @PathParam("image") int image) {
         Ressources ressourceWithImage = ressourcesService.linkImage(image, ressourceId);
         if (ressourceWithImage != null) {
             return Response.ok(ressourceWithImage).build();
