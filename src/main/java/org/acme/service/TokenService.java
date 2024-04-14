@@ -13,11 +13,16 @@ public class TokenService {
 
 
     public String generateToken(Utilisateurs user) {
-        String role = user.getRole().nom_role;
-        return Jwt.issuer("https://localhost:8081/")
-                .upn(String.valueOf(user.getId_utilisateur()))
-                .groups(new HashSet<>(List.of(role)))
-                .sign();
+        String role = user.getRole().getNom_role();
+
+        if (user != null) {
+            return Jwt.issuer("https://localhost:8081/")
+                    .upn(String.valueOf(user.getId_utilisateur()))
+                    .groups(new HashSet<>(List.of(role)))
+                    .sign();
+        } else {
+           return null;
+        }
     }
     public String generateRefreshToken(Utilisateurs user) {
         return Jwt.issuer("https://localhost:8081/")
