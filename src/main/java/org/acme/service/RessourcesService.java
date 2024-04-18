@@ -120,6 +120,15 @@ public class RessourcesService {
             System.out.println(e.getMessage());
         }
     }
+    public Ressources validateRessource(int id) {
+        Ressources ressource = findById(id);
+        if (ressource != null) {
+            ressource.setValidate_Ressource(true);
+            ressourcesRepository.persist(ressource);
+            return ressource;
+        }
+        return null;
+    }
 
 
 }

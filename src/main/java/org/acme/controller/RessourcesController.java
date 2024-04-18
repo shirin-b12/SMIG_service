@@ -101,5 +101,16 @@ public class RessourcesController {
         ressourcesService.deleteRessource(id);
         return Response.noContent().build();
     }
+    @PUT
+    @Path("/validate/{id}")
+    @Transactional
+    public Response validateRessource(@PathParam("id") int id) {
+        Ressources validatedRessource = ressourcesService.validateRessource(id);
+        if (validatedRessource != null) {
+            return Response.ok(validatedRessource).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
 
 }

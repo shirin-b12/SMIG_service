@@ -49,6 +49,9 @@ public class Ressources extends PanacheEntityBase {
     @Column(nullable = false)
     private int vue;
 
+    @Column(nullable = false)
+    private boolean validate_Ressource;
+
     public Images getImage() {
         return image;
     }
@@ -135,5 +138,13 @@ public class Ressources extends PanacheEntityBase {
 
     public void setVue(int vue) {
         this.vue = vue;
+    }
+
+    public boolean isValidate_Ressource() {
+        return validate_Ressource;
+    }
+
+    public void setValidate_Ressource(boolean validate_Ressource) {
+        this.validate_Ressource = validate_Ressource;
     }
 }
