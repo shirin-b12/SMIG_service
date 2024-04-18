@@ -28,9 +28,6 @@ public class UtilisateursService {
         return utilisateurRepository.findById(id);
     }
 
-
-
-
     public Utilisateurs addUtilisateur(Utilisateurs utilisateur) {
         if (utilisateur != null) {
             utilisateurRepository.persist(utilisateur);
@@ -46,18 +43,20 @@ public class UtilisateursService {
         }
         return null;
     }
+
     public Utilisateurs updateUtilisateur(int id, Utilisateurs utilisateurUpdates) {
         Utilisateurs utilisateur = findById(id);
         if (utilisateur != null) {
             utilisateur.setNom(utilisateurUpdates.getNom());
             utilisateur.setEmail(utilisateurUpdates.getEmail());
             utilisateur.setMot_de_passe(utilisateur.getMot_de_passe());
-
+            utilisateur.setEtat_utilisateur(utilisateurUpdates.getEtat_utilisateur());
             utilisateurRepository.persist(utilisateur);
             return utilisateur;
         }
         return null;
     }
+
     public void deleteUtilisateur(int id) {
         Utilisateurs utilisateur = findById(id);
         ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());

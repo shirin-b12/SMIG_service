@@ -33,6 +33,10 @@ public class Utilisateurs extends PanacheEntityBase {
 
     @Column(nullable = true,unique = true)
     private String tokenRefrech;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EtatUtilisateur etat_utilisateur;
+
 
 
     public void setToken(String token) {
@@ -106,6 +110,14 @@ public class Utilisateurs extends PanacheEntityBase {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public EtatUtilisateur getEtat_utilisateur() {
+        return etat_utilisateur;
+    }
+
+    public void setEtat_utilisateur(EtatUtilisateur etat_utilisateur) {
+        this.etat_utilisateur = etat_utilisateur;
     }
 
 }
