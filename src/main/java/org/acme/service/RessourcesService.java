@@ -130,5 +130,7 @@ public class RessourcesService {
         return null;
     }
 
-
+    public List<Ressources> findByCreateurId(int createurId) {
+        return ressourcesRepository.findByCreateurId(createurId);
+    }
 }

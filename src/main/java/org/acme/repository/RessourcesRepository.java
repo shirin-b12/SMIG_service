@@ -52,4 +52,10 @@ public class RessourcesRepository {
         Ressources.delete("createur.id_utilisateur", id);
     }
 
+    public List<Ressources> findByCreateurId(int createurId) {
+        return em.createQuery("SELECT r FROM Ressources r WHERE r.createur.id_utilisateur = :createurId", Ressources.class)
+                .setParameter("createurId", createurId)
+                .getResultList();
+    }
+
 }

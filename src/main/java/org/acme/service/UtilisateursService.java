@@ -57,15 +57,17 @@ public class UtilisateursService {
         return null;
     }
 
-    public void deleteUtilisateur(int id) {
+    public boolean deleteUtilisateur(int id) {
         Utilisateurs utilisateur = findById(id);
-        ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());
-        favorieService.deleteFavoriebyUtilisateur(utilisateur.getId_utilisateur());
-
-
         if (utilisateur != null) {
-            utilisateurRepository.delete(utilisateur);
+            ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());
+            favorieService.deleteFavoriebyUtilisateur(utilisateur.getId_utilisateur());
+            utilisateurRepository.deleteUtilisateur(utilisateur.getId_utilisateur());
+            return true;
         }
+        return false;
     }
+
+
 
 }

@@ -3,6 +3,7 @@ package org.acme.controller;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -68,7 +69,6 @@ public class UtilisateursController {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("Utilisateur")
     public Response getUser(@PathParam("id") int id) {
         Utilisateurs user = utilisateurService.findById(id);
         if (user != null) {
@@ -89,11 +89,27 @@ public class UtilisateursController {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    @DELETE
+   /* @DELETE
     @Path("/delete/{id}")
     @Transactional
     public Response deleteUtilisateur(@PathParam("id") int id) {
-        utilisateurService.deleteUtilisateur(id);
-        return Response.noContent().build();
+        boolean isDeleted = utilisateurService.deleteUtilisateur(id);
+        if (isDeleted) {
+            return Response.ok("User deleted successfully").build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
+        }
+    }*/
+
+    @DELETE
+    @Path("/delete/{id}")
+    public Response deleteUtilisateur(@PathParam("id") int id) {
+        try {
+            utilisateurService.deleteUtilisateur(id);
+            return Response.ok("User deleted successfully").build();
+        } catch (EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
     }
+
 }
