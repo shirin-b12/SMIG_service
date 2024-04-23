@@ -2,8 +2,10 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.acme.model.EtatUtilisateur;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
+import org.acme.request.ChangeStatu;
 
 import java.util.List;
 
@@ -68,4 +70,14 @@ public class UtilisateursService {
         }
     }
 
+    public Utilisateurs updateUtilisateurStatu(int id, ChangeStatu utilisateur) {
+        Utilisateurs user = findById(id);
+        if (user != null) {
+
+            user.setEtat_utilisateur(user.setEtat_utilisateur(EtatUtilisateur.valueOf(utilisateur.getStatu())));
+            utilisateurRepository.persist(user);
+            return user;
+        }
+        return null;
+    }
 }

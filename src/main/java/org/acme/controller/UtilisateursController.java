@@ -8,6 +8,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Utilisateurs;
+import org.acme.request.ChangeStatu;
 import org.acme.service.AuthService;
 import org.acme.service.UtilisateursService;
 
@@ -82,7 +83,27 @@ public class UtilisateursController {
     @Path("/update/{id}")
     @Transactional
     public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
+        Utilisateurs existingUser = utilisateurService.findById(id);
+        if (existingUser == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
+        if (updatedUser != null) {
+            return Response.ok(updatedUser).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    @PUT
+    @Path("/statu/{id}")
+    @Transactional
+    public Response updatestatu(@PathParam("id") int id, ChangeStatu utilisateur) {
+        Utilisateurs existingUser = utilisateurService.findById(id);
+        utilisateur.setId(id);
+        if (existingUser == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        Utilisateurs updatedUser = utilisateurService.updateUtilisateurStatu(id, utilisateur);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {
