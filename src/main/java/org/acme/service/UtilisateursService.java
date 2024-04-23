@@ -2,6 +2,7 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
 
@@ -44,6 +45,7 @@ public class UtilisateursService {
         return null;
     }
 
+    @Transactional
     public Utilisateurs updateUtilisateur(int id, Utilisateurs utilisateurUpdates) {
         Utilisateurs utilisateur = findById(id);
         if (utilisateur != null) {

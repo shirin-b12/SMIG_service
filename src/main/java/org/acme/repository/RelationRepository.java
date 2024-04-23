@@ -33,10 +33,14 @@ public class RelationRepository {
 
     public List<Relations> findRelationsByUserId(int userId) {
         TypedQuery<Relations> query = entityManager.createQuery(
-                "SELECT r FROM Relations r WHERE r.utilisateur1.id = :userId OR r.utilisateur2.id = :userId", Relations.class);
+                "SELECT r FROM Relations r " +
+                        "JOIN r.utilisateur1 u1 " +
+                        "JOIN r.utilisateur2 u2 " +
+                        "WHERE u1.id = :userId OR u2.id = :userId", Relations.class);
         query.setParameter("userId", userId);
         return query.getResultList();
     }
+
 
     // In RelationRepository.java
     public boolean existsRelationBetweenUsers(int userId1, int userId2) {

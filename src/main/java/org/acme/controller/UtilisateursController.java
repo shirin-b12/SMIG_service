@@ -80,7 +80,7 @@ public class UtilisateursController {
 
     @PUT
     @Path("/update/{id}")
-    @Transactional
+   // @Transactional
     public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
         Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
         if (updatedUser != null) {
