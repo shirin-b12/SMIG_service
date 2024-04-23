@@ -42,7 +42,6 @@ public class RelationRepository {
     }
 
 
-    // In RelationRepository.java
     public boolean existsRelationBetweenUsers(int userId1, int userId2) {
         Long count = entityManager.createQuery(
                         "SELECT COUNT(r) FROM Relations r WHERE (r.utilisateur1.id = :userId1 AND r.utilisateur2.id = :userId2) OR (r.utilisateur1.id = :userId2 AND r.utilisateur2.id = :userId1)",
