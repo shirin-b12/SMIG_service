@@ -1,5 +1,9 @@
 package org.acme.response;
 
+import org.acme.model.Images;
+
+import java.awt.Image;
+
 public class RessourcesResponce {
     private int id;
     private String titre;
@@ -11,6 +15,7 @@ public class RessourcesResponce {
     private String nomCategorie;
     private String nomType;
     private String nomTag;
+    private Images image;
 
 
     public int getId() {
@@ -93,4 +98,10 @@ public class RessourcesResponce {
         this.nomTag = nomTag;
     }
 
+    public Images getImage() {
+        return image;
+    }
+    public void setImage(Images image) {
+        this.image = image;
+    }
 }

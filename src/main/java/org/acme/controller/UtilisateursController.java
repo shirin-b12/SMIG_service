@@ -8,6 +8,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Utilisateurs;
+import org.acme.response.UtilisateurResponce;
 import org.acme.service.AuthService;
 import org.acme.service.UtilisateursService;
 
@@ -26,7 +27,7 @@ public class UtilisateursController {
 
     @GET
     @PermitAll
-    public List<Utilisateurs> getUtilisateurs() {
+    public List<UtilisateurResponce> getUtilisateurs() {
         return utilisateurService.listAll();
     }
 
@@ -58,7 +59,7 @@ public class UtilisateursController {
     @Transactional
     @PermitAll
     public Response addUtilisateur(Utilisateurs utilisateur) {
-        Utilisateurs createdUser = utilisateurService.addUtilisateur(utilisateur);
+        UtilisateurResponce createdUser = utilisateurService.addUtilisateur(utilisateur);
         if (createdUser != null) {
             return Response.ok(createdUser).build();
         } else {
@@ -70,7 +71,7 @@ public class UtilisateursController {
     @Path("/{id}")
     @RolesAllowed("Utilisateur")
     public Response getUser(@PathParam("id") int id) {
-        Utilisateurs user = utilisateurService.findById(id);
+        UtilisateurResponce user = utilisateurService.findById(id);
         if (user != null) {
             return Response.ok(user).build();
         } else {
@@ -82,7 +83,7 @@ public class UtilisateursController {
     @Path("/update/{id}")
     @Transactional
     public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
-        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
+        UtilisateurResponce updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {
