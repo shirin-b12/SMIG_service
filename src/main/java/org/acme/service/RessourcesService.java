@@ -7,9 +7,8 @@ import jakarta.inject.Inject;
 import org.acme.model.*;
 import org.acme.repository.*;
 import org.acme.request.RessourcesRequest;
-import org.acme.request.RessourcesResponce;
+import org.acme.response.RessourcesResponce;
 
-import java.awt.*;
 import java.util.List;
 
 @ApplicationScoped

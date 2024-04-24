@@ -55,7 +55,6 @@ public class UtilisateursRepository {
     }
     public void delete(Utilisateurs utilisateur) {
 
-
         Utilisateurs.delete("id", utilisateur.getId_utilisateur());
 
     }

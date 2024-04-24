@@ -2,18 +2,15 @@ package org.acme.controller;
 
 import io.smallrye.mutiny.Multi;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Images;
 import org.acme.model.Ressources;
-import org.acme.model.Utilisateurs;
 import org.acme.request.RessourcesRequest;
-import org.acme.request.RessourcesResponce;
+import org.acme.response.RessourcesResponce;
 import org.acme.service.RessourcesService;
 
 import java.util.List;

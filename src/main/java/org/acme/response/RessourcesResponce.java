@@ -1,6 +1,4 @@
-package org.acme.request;
-
-import org.acme.model.Images;
+package org.acme.response;
 
 public class RessourcesResponce {
     private int id;

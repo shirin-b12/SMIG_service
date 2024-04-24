@@ -6,23 +6,36 @@ import jakarta.persistence.EntityManager;
 import org.acme.model.Roles;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class RolesRepository {
-
+    private static final Logger LOGGER = Logger.getLogger(RolesRepository.class.getName());
     @Inject
     EntityManager entityManager;
 
     public List<Roles> listAll() {
-        return Roles.listAll();
+        try {
+            return Roles.listAll();
+        } catch (Exception e) {
+            LOGGER.severe("Une exception s'est produite lors de la recherche des rôles: " + e.getMessage());
+            return null;
+        }
     }
-
     public void persist(Roles role) {
-        Roles.persist(role);
+        try {
+            Roles.persist(role);
+        } catch (Exception e) {
+            LOGGER.severe("Une exception s'est produite lors de la persistance du rôle: " + e.getMessage());
+        }
     }
-
     public Roles findById(int id) {
-        return Roles.findById(id);
+        try {
+            return entityManager.find(Roles.class, id);
+        } catch (Exception e) {
+            LOGGER.severe("Une exception s'est produite lors de la recherche du rôle: " + e.getMessage());
+            return null;
+        }
     }
 }
 

@@ -2,6 +2,7 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
 
@@ -57,13 +58,13 @@ public class UtilisateursService {
         return null;
     }
 
+
     public void deleteUtilisateur(int id) {
         Utilisateurs utilisateur = findById(id);
-        ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());
-        favorieService.deleteFavoriebyUtilisateur(utilisateur.getId_utilisateur());
-
 
         if (utilisateur != null) {
+            ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());
+            favorieService.deleteFavoriebyUtilisateur(utilisateur.getId_utilisateur());
             utilisateurRepository.delete(utilisateur);
         }
     }
