@@ -29,9 +29,9 @@ public class RolesRepository {
             LOGGER.severe("Une exception s'est produite lors de la persistance du rôle: " + e.getMessage());
         }
     }
-    public Roles findById(int id) {
+    public static Roles findById(int id) {
         try {
-            return entityManager.find(Roles.class, id);
+            return  Roles.findById(id);
         } catch (Exception e) {
             LOGGER.severe("Une exception s'est produite lors de la recherche du rôle: " + e.getMessage());
             return null;

@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.Response;
 import org.acme.model.Utilisateurs;
 import org.acme.request.UpdateUserRequest;
 import org.acme.request.ChangeStatu;
+import org.acme.request.UtilisateurLoginRequest;
 import org.acme.response.UtilisateurResponce;
 import org.acme.service.AuthService;
 import org.acme.service.UtilisateursService;
@@ -37,7 +38,7 @@ public class UtilisateursController {
     @POST
     @Path("/login")
     @PermitAll
-    public Response login(Utilisateurs credentials) {
+    public Response login(UtilisateurLoginRequest credentials) {
         Map<String, String> token = authService.login(credentials.getEmail(), credentials.getMot_de_passe());
         if (token != null) {
             return Response.ok(token).build();
