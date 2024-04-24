@@ -86,7 +86,7 @@ public class UtilisateursController {
     @Path("/update/{id}")
     @Transactional
     public Response updateUtilisateur(@PathParam("id") int id, UpdateUserRequest request) {
-        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, request);
+        UtilisateurResponce updatedUser = utilisateurService.updateUtilisateur(id, request);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {

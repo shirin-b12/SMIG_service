@@ -3,6 +3,7 @@ package org.acme.service;
 import io.quarkus.test.junit.QuarkusTest;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
+import org.acme.response.UtilisateurResponce;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -36,7 +37,7 @@ class UtilisateursServiceTest {
 
         when(utilisateursRepository.findById(anyInt())).thenReturn(expectedUser);
 
-        Utilisateurs result = utilisateursService.findById(1);
+        UtilisateurResponce result = utilisateursService.findById(1);
 
         assertNotNull(result);
         assertEquals(expectedUser.getId_utilisateur(), result.getId_utilisateur());

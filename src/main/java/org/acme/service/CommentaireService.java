@@ -32,15 +32,7 @@ public class CommentaireService {
         List<CommentaireResponce> commentairesModifies = new ArrayList<>();
         for (Commentaires commentaire : commentaires) {
             try {
-                CommentaireResponce reponce = new CommentaireResponce();
-                reponce.setId_commentaire(commentaire.getId_commentaire());
-                reponce.setCommentaire(commentaire.getCommentaire());
-                reponce.setDate_de_creation(commentaire.getDate_de_creation());
-                reponce.setId_ressource(commentaire.getId_ressource().getId_ressource());
-                reponce.setId_utilisateur_redacteur(commentaire.getId_utilisateur_redacteur().getId_utilisateur());
-                CommentaireResponce reponceRep = getCommentaireReponce(commentaire);
-                reponce.setId_commentaire_rep(reponceRep);
-                commentairesModifies.add(reponce);
+                transmormationCommentaireenCommentaireResponce(commentairesModifies, commentaire);
             } catch (Exception e) {
                 LOGGER.severe("Une exception s'est produite lors du mapping des commentaires: " + e.getMessage());
             }
@@ -85,10 +77,25 @@ public class CommentaireService {
     }
 
 
-//TODO:logger
-    public List<Commentaires> getCommentsByRessourceId(int idRessource) {
+    public List<CommentaireResponce> getCommentsByRessourceId(int idRessource) {
         List<Commentaires> commentairesOriginaux = commentaireRepository.findByRessourceId(idRessource);
-        return commentairesOriginaux;
+        List<CommentaireResponce> commentairesResponce = new ArrayList<>();
+        for (Commentaires commentaire : commentairesOriginaux) {
+            transmormationCommentaireenCommentaireResponce(commentairesResponce, commentaire);
+        }
+        return commentairesResponce;
+    }
+
+    private void transmormationCommentaireenCommentaireResponce(List<CommentaireResponce> commentairesResponce, Commentaires commentaire) {
+        CommentaireResponce reponce = new CommentaireResponce();
+        reponce.setId_commentaire(commentaire.getId_commentaire());
+        reponce.setCommentaire(commentaire.getCommentaire());
+        reponce.setDate_de_creation(commentaire.getDate_de_creation());
+        reponce.setId_ressource(commentaire.getId_ressource().getId_ressource());
+        reponce.setId_utilisateur_redacteur(commentaire.getId_utilisateur_redacteur().getId_utilisateur());
+        CommentaireResponce reponceRep = getCommentaireReponce(commentaire);
+        reponce.setId_commentaire_rep(reponceRep);
+        commentairesResponce.add(reponce);
     }
 
     private static CommentaireResponce getCommentaireReponce(Commentaires commentaireModifie) {

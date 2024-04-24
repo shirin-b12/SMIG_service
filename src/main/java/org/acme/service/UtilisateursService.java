@@ -83,7 +83,7 @@ public class UtilisateursService {
     }
 
     public Utilisateurs updateUtilisateurStatu(int id, ChangeStatu utilisateur) {
-        Utilisateurs user = findById(id);
+        Utilisateurs user = utilisateurRepository.findById(id);
         if (user != null) {
 
             user.setEtat_utilisateur(user.setEtat_utilisateur(EtatUtilisateur.valueOf(utilisateur.getStatu())));
