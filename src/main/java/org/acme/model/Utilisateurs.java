@@ -2,7 +2,6 @@ package org.acme.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
 public class Utilisateurs extends PanacheEntityBase {
@@ -116,8 +115,9 @@ public class Utilisateurs extends PanacheEntityBase {
         return etat_utilisateur;
     }
 
-    public void setEtat_utilisateur(EtatUtilisateur etat_utilisateur) {
+    public EtatUtilisateur setEtat_utilisateur(EtatUtilisateur etat_utilisateur) {
         this.etat_utilisateur = etat_utilisateur;
+        return etat_utilisateur;
     }
 
 }

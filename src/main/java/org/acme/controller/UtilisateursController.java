@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Utilisateurs;
 import org.acme.request.UpdateUserRequest;
+import org.acme.request.ChangeStatu;
 import org.acme.service.AuthService;
 import org.acme.service.UtilisateursService;
 
@@ -70,6 +71,7 @@ public class UtilisateursController {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("Utilisateur")
     public Response getUser(@PathParam("id") int id) {
         Utilisateurs user = utilisateurService.findById(id);
         if (user != null) {
@@ -81,27 +83,35 @@ public class UtilisateursController {
 
     @PUT
     @Path("/update/{id}")
-   // @Transactional
-    public Response updateUtilisateur(@PathParam("id") int id, UpdateUserRequest request) {
-        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, request);
+    @Transactional
+    public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
+        Utilisateurs existingUser = utilisateurService.findById(id);
+        if (existingUser == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-   /* @DELETE
-    @Path("/delete/{id}")
+    @PUT
+    @Path("/statu/{id}")
     @Transactional
-    public Response deleteUtilisateur(@PathParam("id") int id) {
-        boolean isDeleted = utilisateurService.deleteUtilisateur(id);
-        if (isDeleted) {
-            return Response.ok("User deleted successfully").build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
+    public Response updatestatu(@PathParam("id") int id, ChangeStatu utilisateur) {
+        Utilisateurs existingUser = utilisateurService.findById(id);
+        utilisateur.setId(id);
+        if (existingUser == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-    }*/
-
+        Utilisateurs updatedUser = utilisateurService.updateUtilisateurStatu(id, utilisateur);
+        if (updatedUser != null) {
+            return Response.ok(updatedUser).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
     @DELETE
     @Path("/delete/{id}")
     public Response deleteUtilisateur(@PathParam("id") int id) {
@@ -112,5 +122,4 @@ public class UtilisateursController {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
-
 }

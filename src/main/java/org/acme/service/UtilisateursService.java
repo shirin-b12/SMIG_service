@@ -3,9 +3,11 @@ package org.acme.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.acme.model.EtatUtilisateur;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
 import org.acme.request.UpdateUserRequest;
+import org.acme.request.ChangeStatu;
 
 import java.util.List;
 
@@ -49,7 +51,6 @@ public class UtilisateursService {
     @Transactional
     public Utilisateurs updateUtilisateur(int id, UpdateUserRequest request) {
         Utilisateurs utilisateur = findById(id);
-        System.out.println(request.getPrenom());
         if (utilisateur != null) {
             utilisateur.setNom(request.getNom());
             utilisateur.setPrenom(request.getPrenom());
@@ -73,4 +74,14 @@ public class UtilisateursService {
         return false;
     }
 
+    public Utilisateurs updateUtilisateurStatu(int id, ChangeStatu utilisateur) {
+        Utilisateurs user = findById(id);
+        if (user != null) {
+
+            user.setEtat_utilisateur(user.setEtat_utilisateur(EtatUtilisateur.valueOf(utilisateur.getStatu())));
+            utilisateurRepository.persist(user);
+            return user;
+        }
+        return null;
+    }
 }
