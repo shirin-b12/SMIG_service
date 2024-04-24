@@ -24,7 +24,7 @@ import java.util.List;
 @Path("/favori")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@PermitAll
+@RolesAllowed("Utilisateur")
 public class FavorieController {
     @Inject
     FavorieService favorieService;

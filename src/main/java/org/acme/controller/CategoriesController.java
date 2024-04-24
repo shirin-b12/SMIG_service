@@ -23,7 +23,6 @@ public class CategoriesController {
 
     @GET
     @PermitAll
-    @Path("/all")
     public List<Categories> getCategories() {
         return categoriesService.listAll();
     }

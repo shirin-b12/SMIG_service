@@ -1,5 +1,7 @@
 package org.acme.controller;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -14,11 +16,13 @@ import org.acme.service.RolesService;
 @Path("/roles")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RolesAllowed("Admin")
 public class RolesController {
     @Inject
     RolesService rolesService;
 
     @GET
+    @PermitAll
     public Response listAll() {
         return Response.ok(rolesService.listAll()).build();
     }
