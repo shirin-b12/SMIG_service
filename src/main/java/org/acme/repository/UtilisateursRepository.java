@@ -56,10 +56,10 @@ public class UtilisateursRepository {
         }
     }
     public void delete(Utilisateurs utilisateur) {
-        Utilisateurs.delete(String.valueOf(utilisateur.getId_utilisateur()));
-    }
 
-    @Transactional
+        Utilisateurs.delete("id", utilisateur.getId_utilisateur());
+
+    }
     public void deleteUtilisateur(int id) {
         Utilisateurs utilisateur = entityManager.find(Utilisateurs.class, id);
         if (utilisateur != null) {

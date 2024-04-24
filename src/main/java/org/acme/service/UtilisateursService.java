@@ -4,11 +4,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.acme.model.EtatUtilisateur;
+import jakarta.transaction.Transactional;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
+import org.acme.response.UtilisateurResponce;
 import org.acme.request.UpdateUserRequest;
 import org.acme.request.ChangeStatu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -24,18 +27,24 @@ public class UtilisateursService {
     @Inject
     RessourcesService ressourceService;
 
-    public List<Utilisateurs> listAll() {
-        return utilisateurRepository.listAll();
+    public List<UtilisateurResponce> listAll() {
+        List<Utilisateurs> utilisateursList = utilisateurRepository.listAll();
+        List<UtilisateurResponce> utilisateurResponceList = new ArrayList<>();
+        for (Utilisateurs utilisateur : utilisateursList) {
+            utilisateurResponceList.add(mapUtilisateurToUtilisateurResponse(utilisateur));
+        }
+        return utilisateurResponceList;
     }
 
-    public Utilisateurs findById(int id) {
-        return utilisateurRepository.findById(id);
+    public UtilisateurResponce findById(int id) {
+
+        return mapUtilisateurToUtilisateurResponse(utilisateurRepository.findById(id));
     }
 
-    public Utilisateurs addUtilisateur(Utilisateurs utilisateur) {
+    public UtilisateurResponce addUtilisateur(Utilisateurs utilisateur) {
         if (utilisateur != null) {
             utilisateurRepository.persist(utilisateur);
-            return utilisateur;
+            return mapUtilisateurToUtilisateurResponse(utilisateur);
         }
         return null;
     }
@@ -50,7 +59,7 @@ public class UtilisateursService {
 
     @Transactional
     public Utilisateurs updateUtilisateur(int id, UpdateUserRequest request) {
-        Utilisateurs utilisateur = findById(id);
+        Utilisateurs utilisateur = utilisateurRepository.findById(id);
         if (utilisateur != null) {
             utilisateur.setNom(request.getNom());
             utilisateur.setPrenom(request.getPrenom());
@@ -58,20 +67,20 @@ public class UtilisateursService {
             utilisateur.setMot_de_passe(utilisateur.getMot_de_passe());
             utilisateur.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
             utilisateurRepository.persist(utilisateur);
-            return utilisateur;
+            return mapUtilisateurToUtilisateurResponse(utilisateur);
         }
         return null;
     }
 
-    public boolean deleteUtilisateur(int id) {
-        Utilisateurs utilisateur = findById(id);
+
+    public void deleteUtilisateur(int id) {
+        Utilisateurs utilisateur = utilisateurRepository.findById(id);
+
         if (utilisateur != null) {
             ressourceService.deleteRessourcebyCreateur(utilisateur.getId_utilisateur());
             favorieService.deleteFavoriebyUtilisateur(utilisateur.getId_utilisateur());
-            utilisateurRepository.deleteUtilisateur(utilisateur.getId_utilisateur());
-            return true;
+            utilisateurRepository.delete(utilisateur);
         }
-        return false;
     }
 
     public Utilisateurs updateUtilisateurStatu(int id, ChangeStatu utilisateur) {
@@ -84,4 +93,16 @@ public class UtilisateursService {
         }
         return null;
     }
+
+    public UtilisateurResponce mapUtilisateurToUtilisateurResponse(Utilisateurs utilisateur) {
+        UtilisateurResponce utilisateurResponce = new UtilisateurResponce();
+        utilisateurResponce.setId_utilisateur(utilisateur.getId_utilisateur());
+        utilisateurResponce.setNom(utilisateur.getNom());
+        utilisateurResponce.setPrenom(utilisateur.getPrenom());
+        utilisateurResponce.setRole(utilisateur.getRole());
+        utilisateurResponce.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
+        utilisateurResponce.setImage(utilisateur.getImageProfil());
+        return utilisateurResponce;
+    }
+
 }

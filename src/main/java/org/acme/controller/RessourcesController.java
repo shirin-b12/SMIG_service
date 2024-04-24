@@ -2,18 +2,15 @@ package org.acme.controller;
 
 import io.smallrye.mutiny.Multi;
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Images;
 import org.acme.model.Ressources;
-import org.acme.model.Utilisateurs;
 import org.acme.request.RessourcesRequest;
-import org.acme.request.RessourcesResponce;
+import org.acme.response.RessourcesResponce;
 import org.acme.service.RessourcesService;
 
 import java.util.List;
@@ -33,15 +30,15 @@ public class RessourcesController {
     @GET
     @PermitAll
     @Path("/all")
-    public List<Ressources> getRessources() {
+    public List<RessourcesResponce> getRessources() {
         return ressourcesService.listAll();
     }
 
     @POST
     @Transactional
     @PermitAll
-    public Response createRessource(RessourcesRequest request) {
-        Ressources createdRessource = ressourcesService.createRessource(request);
+    public Response createRessource(RessourcesRequest request) throws Exception {
+        RessourcesResponce createdRessource = ressourcesService.createRessource(request);
         if (createdRessource != null) {
             return Response.ok(createdRessource).build();
         } else {
@@ -58,10 +55,10 @@ public class RessourcesController {
 
     @GET
     @Path("/{id}")
-    public Response getRessourceById(@PathParam("id") int id) {
-        Ressources user = ressourcesService.findById(id);
-        if (user != null) {
-            return Response.ok(user).build();
+    public Response getRessourceById(@PathParam("id") int id) throws Exception {
+        RessourcesResponce ressources = ressourcesService.findById(id);
+        if (ressources != null) {
+            return Response.ok(ressources).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -97,14 +94,14 @@ public class RessourcesController {
     //@RolesAllowed("Utilisateur")
     @PermitAll
     @Transactional
-    public Response deleteRessource(@PathParam("id") int id) {
+    public Response deleteRessource(@PathParam("id") int id) throws Exception {
         ressourcesService.deleteRessource(id);
         return Response.noContent().build();
     }
     @PUT
     @Path("/validate/{id}")
     @Transactional
-    public Response validateRessource(@PathParam("id") int id) {
+    public Response validateRessource(@PathParam("id") int id) throws Exception {
         Ressources validatedRessource = ressourcesService.validateRessource(id);
         if (validatedRessource != null) {
             return Response.ok(validatedRessource).build();

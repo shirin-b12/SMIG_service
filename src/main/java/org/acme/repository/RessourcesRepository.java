@@ -6,13 +6,14 @@ import jakarta.persistence.EntityManager;
 import org.acme.model.Ressources;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class RessourcesRepository {
 
     @Inject
     EntityManager em;
-
+    private static final Logger LOGGER = Logger.getLogger(RessourcesRepository.class.getName());
     public List<Ressources> listAll() {
         return Ressources.listAll();
     }
@@ -22,6 +23,7 @@ public class RessourcesRepository {
     }
 
     public Ressources update(int id, Ressources nouvelleRessource) {
+
         Ressources ressourceExistante = em.find(Ressources.class, id);
         if (ressourceExistante != null) {
             em.getTransaction().begin();
@@ -39,17 +41,36 @@ public class RessourcesRepository {
 
             em.merge(ressourceExistante);
             em.getTransaction().commit();
-            return ressourceExistante;
+            try {
+                return ressourceExistante;
+            } catch (Exception e) {
+                LOGGER.severe("Une exception s'est produite lors de la mise à jour de la ressource: " + e.getMessage());
+            }
         }
         return null;
     }
 
-    public Ressources findById(int id) { return Ressources.findById(id); }
+    public Ressources findById(int id) {
+        try {
+            return Ressources.findById(id);
+        } catch (Exception e) {
+            LOGGER.severe("Une exception s'est produite lors de la recherche de la ressource: " + e.getMessage());
+            return null;
+        }
+    }
     public void delete(Ressources ressource) {
-        Ressources.delete("id", ressource.getId_ressource());
+        try {
+            Ressources.delete("id", ressource.getId_ressource());
+        } catch (Exception e) {
+            LOGGER.severe("Une exception s'est produite lors de la suppression de la ressource: " + e.getMessage());
+        }
     }
     public void deletebyCreateur(int id) {
-        Ressources.delete("createur.id_utilisateur", id);
+        try {
+            Ressources.delete("createur.id_utilisateur", id);
+        } catch (Exception e) {
+            LOGGER.severe("Une exception s'est produite lors de la suppression de la ressource: " + e.getMessage());
+        }
     }
 
     public List<Ressources> findByCreateurId(int createurId) {

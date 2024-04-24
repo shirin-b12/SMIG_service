@@ -1,7 +1,6 @@
 package org.acme.controller;
 
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -13,9 +12,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Favoris;
-import org.acme.model.Ressources;
-import org.acme.request.FavorieReponce;
+import org.acme.response.FavorieResponce;
 import org.acme.request.FavorieRequest;
 import org.acme.service.FavorieService;
 
@@ -37,7 +34,7 @@ public class FavorieController {
     }
     @GET
     @Path("/{id}")
-    public List<FavorieReponce> listFavorie(@PathParam("id") int id_utilisateur) {
+    public List<FavorieResponce> listFavorie(@PathParam("id") int id_utilisateur) {
        return favorieService.listFavorie(id_utilisateur);
     }
     @Transactional
