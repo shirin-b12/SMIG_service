@@ -84,18 +84,15 @@ public class UtilisateursController {
     @PUT
     @Path("/update/{id}")
     @Transactional
-    public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
-        Utilisateurs existingUser = utilisateurService.findById(id);
-        if (existingUser == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
+    public Response updateUtilisateur(@PathParam("id") int id, UpdateUserRequest request) {
+        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, request);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
     @PUT
     @Path("/statu/{id}")
     @Transactional
