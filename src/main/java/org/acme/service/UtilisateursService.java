@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
+import org.acme.request.UpdateUserRequest;
 
 import java.util.List;
 
@@ -46,13 +47,15 @@ public class UtilisateursService {
     }
 
     @Transactional
-    public Utilisateurs updateUtilisateur(int id, Utilisateurs utilisateurUpdates) {
+    public Utilisateurs updateUtilisateur(int id, UpdateUserRequest request) {
         Utilisateurs utilisateur = findById(id);
+        System.out.println(request.getPrenom());
         if (utilisateur != null) {
-            utilisateur.setNom(utilisateurUpdates.getNom());
-            utilisateur.setEmail(utilisateurUpdates.getEmail());
+            utilisateur.setNom(request.getNom());
+            utilisateur.setPrenom(request.getPrenom());
+            utilisateur.setEmail(request.getEmail());
             utilisateur.setMot_de_passe(utilisateur.getMot_de_passe());
-            utilisateur.setEtat_utilisateur(utilisateurUpdates.getEtat_utilisateur());
+            utilisateur.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
             utilisateurRepository.persist(utilisateur);
             return utilisateur;
         }
@@ -69,7 +72,5 @@ public class UtilisateursService {
         }
         return false;
     }
-
-
 
 }

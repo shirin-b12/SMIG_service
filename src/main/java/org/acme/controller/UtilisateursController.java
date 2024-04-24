@@ -9,6 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Utilisateurs;
+import org.acme.request.UpdateUserRequest;
 import org.acme.service.AuthService;
 import org.acme.service.UtilisateursService;
 
@@ -81,8 +82,8 @@ public class UtilisateursController {
     @PUT
     @Path("/update/{id}")
    // @Transactional
-    public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
-        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
+    public Response updateUtilisateur(@PathParam("id") int id, UpdateUserRequest request) {
+        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, request);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {

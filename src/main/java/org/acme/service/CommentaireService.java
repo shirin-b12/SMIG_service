@@ -3,6 +3,7 @@ package org.acme.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.acme.model.Commentaires;
+import org.acme.model.Ressources;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.CommentaireRepository;
 import org.acme.repository.RessourcesRepository;
@@ -12,6 +13,8 @@ import org.acme.request.CommentaireRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @ApplicationScoped
 public class CommentaireService {
     @Inject
@@ -27,40 +30,43 @@ public class CommentaireService {
     public Commentaires createCommentaire(CommentaireRequest commentaires) {
         Commentaires commentaire = new Commentaires();
         commentaire.setCommentaire(commentaires.getCommentaire());
-        commentaire.setId_utilisateur_redacteur(utilisateursRepository.findById(commentaires.getIdCreateur()));
+
+        Optional<Utilisateurs> foundUser = Optional.ofNullable(utilisateursRepository.findById(commentaires.getIdCreateur()));
+        if (!foundUser.isPresent()) {
+            throw new RuntimeException("User not found with ID: " + commentaires.getIdCreateur());
+        } else {
+            commentaire.setId_utilisateur_redacteur(foundUser.get());
+        }
+
+        Optional<Ressources> foundResource = Optional.ofNullable(ressourceRepository.findById(commentaires.getIdRessource()));
+        if (!foundResource.isPresent()) {
+            throw new RuntimeException("Resource not found with ID: " + commentaires.getIdRessource());
+        } else {
+            commentaire.setId_ressource(foundResource.get());
+        }
+
         LocalDateTime dateDeCreation = commentaires.getDateDeCreation();
         if (dateDeCreation == null) {
             dateDeCreation = LocalDateTime.now();
         }
         commentaire.setDate_de_creation(dateDeCreation);
-        commentaire.setId_ressource(ressourceRepository.findById(commentaires.getIdRessource()));
+
         if (commentaires.getIdCommentaireRep() != 0) {
-            commentaire.setId_commentaire_rep(commentaireRepository.findById(commentaires.getIdCommentaireRep()));
+            Optional<Commentaires> foundComment = Optional.ofNullable(commentaireRepository.findById(commentaires.getIdCommentaireRep()));
+            if (!foundComment.isPresent()) {
+                throw new RuntimeException("Reply Comment not found with ID: " + commentaires.getIdCommentaireRep());
+            } else {
+                commentaire.setId_commentaire_rep(foundComment.get());
+            }
         }
+
         commentaireRepository.persist(commentaire);
         return commentaire;
     }
 
     public List<Commentaires> getCommentsByRessourceId(int idRessource) {
         List<Commentaires> commentairesOriginaux = commentaireRepository.findByRessourceId(idRessource);
-        List<Commentaires> commentairesModifies = new ArrayList<>();
-
-        for (Commentaires commentaireOriginal : commentairesOriginaux) {
-            Commentaires commentaireModifie = new Commentaires();
-            commentaireModifie.setId_commentaire(commentaireOriginal.getId_commentaire());
-            commentaireModifie.setCommentaire(commentaireOriginal.getCommentaire());
-            commentaireModifie.setDate_de_creation(commentaireOriginal.getDate_de_creation());
-            commentaireModifie.setId_ressource(commentaireOriginal.getId_ressource());
-            commentaireModifie.setId_commentaire_rep(commentaireOriginal.getId_commentaire_rep());
-
-            // Set temporary redacteur
-            Utilisateurs redacteurTemporaire = utilisateursRepository.findById(5); // Supposons que 5 est l'ID de l'utilisateur temporaire
-            commentaireModifie.setId_utilisateur_redacteur(redacteurTemporaire);
-
-            commentairesModifies.add(commentaireModifie);
-        }
-
-        return commentairesModifies;
+        return commentairesOriginaux;
     }
 
 }
