@@ -85,8 +85,8 @@ public class UtilisateursController {
     @PUT
     @Path("/update/{id}")
     @Transactional
-    public Response updateUtilisateur(@PathParam("id") int id, Utilisateurs utilisateur) {
-        UtilisateurResponce updatedUser = utilisateurService.updateUtilisateur(id, utilisateur);
+    public Response updateUtilisateur(@PathParam("id") int id, UpdateUserRequest request) {
+        Utilisateurs updatedUser = utilisateurService.updateUtilisateur(id, request);
         if (updatedUser != null) {
             return Response.ok(updatedUser).build();
         } else {
@@ -98,7 +98,7 @@ public class UtilisateursController {
     @Path("/statu/{id}")
     @Transactional
     public Response updatestatu(@PathParam("id") int id, ChangeStatu utilisateur) {
-        Utilisateurs existingUser = utilisateurService.findById(id);
+        UtilisateurResponce existingUser = utilisateurService.findById(id);
         utilisateur.setId(id);
         if (existingUser == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
