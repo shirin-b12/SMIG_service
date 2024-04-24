@@ -4,7 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.acme.model.EtatUtilisateur;
-import jakarta.transaction.Transactional;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.UtilisateursRepository;
 import org.acme.response.UtilisateurResponce;
@@ -58,7 +57,7 @@ public class UtilisateursService {
     }
 
     @Transactional
-    public Utilisateurs updateUtilisateur(int id, UpdateUserRequest request) {
+    public UtilisateurResponce updateUtilisateur(int id, UpdateUserRequest request) {
         Utilisateurs utilisateur = utilisateurRepository.findById(id);
         if (utilisateur != null) {
             utilisateur.setNom(request.getNom());
