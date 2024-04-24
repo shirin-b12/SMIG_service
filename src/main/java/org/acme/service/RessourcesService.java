@@ -4,12 +4,12 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.operators.multi.processors.UnicastProcessor;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.acme.model.*;
 import org.acme.repository.*;
 import org.acme.request.RessourcesRequest;
 import org.acme.request.RessourcesResponce;
 
-import java.awt.*;
 import java.util.List;
 
 @ApplicationScoped
@@ -33,8 +33,14 @@ public class RessourcesService {
         return ressourceStream;
     }
 
+    @Transactional
     public Ressources findById(int id) {
-        return ressourcesRepository.findById(id);
+        Ressources ressource = ressourcesRepository.findById(id);
+        if (ressource != null) {
+            ressource.setVue(ressource.getVue() + 1);
+            ressourcesRepository.persist(ressource);
+        }
+        return ressource;
     }
 
     public List<Ressources> listAll() {
@@ -82,7 +88,7 @@ public class RessourcesService {
 
         Images image = imagesRepository.findById(imageId);
 
-        if (ressources == null ) {
+        if (ressources == null) {
             return null;
         }
 
@@ -107,19 +113,22 @@ public class RessourcesService {
         ressourcesRepository.persist(ressource);
         return ressource;
     }
+
     public void deleteRessource(int id) {
         Ressources ressource = findById(id);
         if (ressource != null) {
             ressourcesRepository.delete(ressource);
         }
     }
-    public void deleteRessourcebyCreateur(int id_createur){
+
+    public void deleteRessourcebyCreateur(int id_createur) {
         try {
             ressourcesRepository.deletebyCreateur(id_createur);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
     public Ressources validateRessource(int id) {
         Ressources ressource = findById(id);
         if (ressource != null) {
