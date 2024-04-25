@@ -68,5 +68,15 @@ public class UtilisateursRepository {
             throw new EntityNotFoundException("User with ID " + id + " not found");
         }
     }
+
+    public Utilisateurs findByEmail(String email) {
+        try {
+            return entityManager.createQuery("SELECT u FROM Utilisateurs u WHERE u.email = :email", Utilisateurs.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }
 

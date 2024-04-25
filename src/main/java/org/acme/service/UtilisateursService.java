@@ -1,15 +1,20 @@
 package org.acme.service;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.acme.model.EtatUtilisateur;
 import org.acme.model.Utilisateurs;
+import org.acme.repository.RolesRepository;
 import org.acme.repository.UtilisateursRepository;
-import org.acme.response.UtilisateurResponce;
-import org.acme.request.UpdateUserRequest;
 import org.acme.request.ChangeStatu;
+import org.acme.request.UpdateUserRequest;
+import org.acme.response.UtilisateurResponce;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,20 +47,15 @@ public class UtilisateursService {
 
     public UtilisateurResponce addUtilisateur(Utilisateurs utilisateur) {
         if (utilisateur != null) {
+            PasswordEncodersService passwordEncodersService = new PasswordEncodersService();
+            utilisateur.setMot_de_passe(passwordEncodersService.encodePassword(utilisateur.getMot_de_passe()));
+            utilisateur.setRole(RolesRepository.findById(1));
+            utilisateur.setEtat_utilisateur(EtatUtilisateur.normal);
             utilisateurRepository.persist(utilisateur);
             return utilisateur.mapUtilisateurToUtilisateurResponse();
         }
         return null;
     }
-
-    public String login(String email, String motDePasse) {
-        Utilisateurs user = utilisateurRepository.findByUsernameAndPassword(email, motDePasse);
-        if (user != null) {
-            return tokenService.generateToken(user);
-        }
-        return null;
-    }
-
     @Transactional
     public UtilisateurResponce updateUtilisateur(int id, UpdateUserRequest request) {
         Utilisateurs utilisateur = utilisateurRepository.findById(id);
