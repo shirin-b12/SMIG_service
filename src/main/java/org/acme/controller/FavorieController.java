@@ -22,7 +22,7 @@ import java.util.List;
 @Path("/favori")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@RolesAllowed("Utilisateur")
+@RolesAllowed({"Utilisateur","Moderateur","Admin"})
 public class FavorieController {
     @Inject
     FavorieService favorieService;
