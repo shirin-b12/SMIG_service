@@ -1,6 +1,7 @@
 package org.acme.controller;
 
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -28,7 +29,7 @@ public class TypeController {
 
     @POST
     @Transactional
-    @PermitAll
+    @RolesAllowed("Moderateur")
     public Response createType(Type type) {
         Type createdType = typeService.createType(type);
         if (createdType != null) {

@@ -84,7 +84,8 @@ public class UtilisateursController {
     }
 
     @PUT
-    @Path("/update/{id}")
+    @Path("/{id}")
+    @RolesAllowed("Utilisateur")
     @Transactional
     public Response updateUtilisateur(@PathParam("id") int id, UpdateUserRequest request) {
         UtilisateurResponce updatedUser = utilisateurService.updateUtilisateur(id, request);
@@ -113,7 +114,8 @@ public class UtilisateursController {
     }
 
     @DELETE
-    @Path("/delete/{id}")
+    @Path("/{id}")
+    @RolesAllowed("Admin")
     @Transactional
     public Response deleteUtilisateur(@PathParam("id") int id) {
         try {

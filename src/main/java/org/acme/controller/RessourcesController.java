@@ -2,6 +2,7 @@ package org.acme.controller;
 
 import io.smallrye.mutiny.Multi;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -19,6 +20,7 @@ import java.util.List;
 @Path("/ressources")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@PermitAll
 public class RessourcesController {
 
     @Inject
@@ -28,7 +30,6 @@ public class RessourcesController {
     Event<Ressources> newRessourceEvent;
 
     @GET
-    @PermitAll
     @Path("/all")
     public List<RessourcesResponce> getRessources() {
         return ressourcesService.listAll();
@@ -36,7 +37,7 @@ public class RessourcesController {
 
     @POST
     @Transactional
-    @PermitAll
+    @RolesAllowed("Utilisateur")
     public Response createRessource(RessourcesRequest request) throws Exception {
         RessourcesResponce createdRessource = ressourcesService.createRessource(request);
         if (createdRessource != null) {
@@ -67,6 +68,7 @@ public class RessourcesController {
 
     @PUT
     @Path("/{ressourceId}/image/{image}")
+    @RolesAllowed("Utilisateur")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response linkImage(@PathParam("ressourceId") int ressourceId, @PathParam("image") int image) {
         Ressources ressourceWithImage = ressourcesService.linkImage(image, ressourceId);
@@ -78,9 +80,9 @@ public class RessourcesController {
     }
 
     @PUT
-    @Path("/update/{id}")
+    @Path("/{id}")
     @Transactional
-    @PermitAll
+    @RolesAllowed("Utilisateur")
     public Response updateRessource(@PathParam("id") int id, RessourcesRequest request) {
         Ressources updatedRessource = ressourcesService.updateRessource(id, request);
         if (updatedRessource != null) {
@@ -90,9 +92,8 @@ public class RessourcesController {
         }
     }
     @DELETE
-    @Path("/delete/{id}")
-    //@RolesAllowed("Utilisateur")
-    @PermitAll
+    @Path("/{id}")
+    @RolesAllowed("Utilisateur")
     @Transactional
     public Response deleteRessource(@PathParam("id") int id) throws Exception {
         ressourcesService.deleteRessource(id);
