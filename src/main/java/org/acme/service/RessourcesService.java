@@ -31,6 +31,7 @@ public class RessourcesService {
     TagRepository tagRepository;
     @Inject
     UtilisateursRepository utilisateursRepository;
+
     private static final Logger LOGGER = Logger.getLogger(RessourcesService.class.getName());
 
     public Multi<RessourcesResponce> getRessourceStream() {
@@ -46,7 +47,7 @@ public class RessourcesService {
         if (ressource.getCreateur() == null || ressource.getCategorie() == null || ressource.getType() == null || ressource.getTag() == null) {
             throw new Exception("Un des objets liés à la ressource est null.");
         }
-        return MapperRessourceToRessourceResponse(ressource);
+        return ressource.mapperRessourceToRessourceResponse();
 
     }
 
@@ -56,11 +57,10 @@ public class RessourcesService {
 
         for (Ressources ressource : allRessources) {
             try {
-                responceList.add(MapperRessourceToRessourceResponse(ressource));
+                responceList.add(ressource.mapperRessourceToRessourceResponse());
             } catch (Exception e) {
               LOGGER.severe("Une exception s'est produite lors de la recherche des ressources: " + e.getMessage());
             }
-
         }
         return responceList;
     }
@@ -82,18 +82,14 @@ public class RessourcesService {
         ressource.setVisibilite(request.getVisibilite());
         ressource.setDate_de_creation(request.getDateDeCreation());
         ressourcesRepository.persist(ressource);
-        RessourcesResponce response = MapperRessourceToRessourceResponse(ressource);
+        RessourcesResponce response = ressource.mapperRessourceToRessourceResponse();
         ressourceStream.onNext(response);
         return response;
-
     }
 
     public Ressources linkImage(int imageId, int ressource) {
-
         Ressources ressources = ressourcesRepository.findById(ressource);
-
         Images image = imagesRepository.findById(imageId);
-
         ressources.setImage(image);
         ressourcesRepository.update(ressource, ressources);
         return ressources;
@@ -104,22 +100,23 @@ public class RessourcesService {
         if (ressource == null) {
             return null;
         }
-
         ressource.setTitre(request.getTitre());
         ressource.setDescription(request.getDescription());
         ressource.setVisibilite(request.getVisibilite());
         ressource.setDate_de_creation(request.getDateDeCreation());
-
         ressourcesRepository.persist(ressource);
         return ressource;
     }
+
     public void deleteRessource(int id) throws Exception {
         Ressources ressource = ressourcesRepository.findById(id);
         if (ressource != null) {
             ressourcesRepository.delete(ressource);
         }
     }
+
 //TODO: logger
+
     public void deleteRessourcebyCreateur(int id_createur) {
         try {
             ressourcesRepository.deletebyCreateur(id_createur);
@@ -127,6 +124,7 @@ public class RessourcesService {
             System.out.println(e.getMessage());
         }
     }
+
     public Ressources validateRessource(int id) throws Exception {
         Ressources ressource = ressourcesRepository.findById(id);
         if (ressource != null) {
@@ -135,21 +133,6 @@ public class RessourcesService {
             return ressource;
         }
         return null;
-    }
-    private RessourcesResponce MapperRessourceToRessourceResponse(Ressources ressource) {
-        RessourcesResponce responce = new RessourcesResponce();
-        responce.setId(ressource.getId_ressource());
-        responce.setTitre(ressource.getTitre());
-        responce.setDescription(ressource.getDescription());
-        responce.setVisibilite(ressource.getVisibilite());
-        responce.setDateDeCreation(ressource.getDate_de_creation().toString());
-        responce.setNomCreateur(ressource.getCreateur().getNom());
-        responce.setPrenomCreateur(ressource.getCreateur().getPrenom());
-        responce.setNomCategorie(ressource.getCategorie().getNom_cat());
-        responce.setNomType(ressource.getType().getNom_type());
-        responce.setNomTag(ressource.getTag().getNom_tag());
-        responce.setImage(ressource.getImage());
-        return responce;
     }
 
     public List<Ressources> findByCreateurId(int createurId) {

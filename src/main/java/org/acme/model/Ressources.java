@@ -2,6 +2,7 @@ package org.acme.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import org.acme.response.RessourcesResponce;
 
 
 import java.time.LocalDateTime;
@@ -146,5 +147,20 @@ public class Ressources extends PanacheEntityBase {
 
     public void setValidate_Ressource(boolean validate_Ressource) {
         this.validate_Ressource = validate_Ressource;
+    }
+
+    public RessourcesResponce mapperRessourceToRessourceResponse() {
+        RessourcesResponce responce = new RessourcesResponce();
+        responce.setId(this.getId_ressource());
+        responce.setTitre(this.getTitre());
+        responce.setDescription(this.getDescription());
+        responce.setVisibilite(this.getVisibilite());
+        responce.setDateDeCreation(this.getDate_de_creation().toString());
+        responce.setCreateur(this.getCreateur().mapUtilisateurToUtilisateurResponse());
+        responce.setNomCategorie(this.getCategorie().getNom_cat());
+        responce.setNomType(this.getType().getNom_type());
+        responce.setNomTag(this.getTag().getNom_tag());
+        responce.setImage(this.getImage());
+        return responce;
     }
 }

@@ -10,8 +10,7 @@ public class RessourcesResponce {
     private String description;
     private int visibilite;
     private String dateDeCreation;
-    private String nomCreateur;
-    private String prenomCreateur;
+    private UtilisateurResponce createur;
     private String nomCategorie;
     private String nomType;
     private String nomTag;
@@ -58,20 +57,12 @@ public class RessourcesResponce {
         this.dateDeCreation = dateDeCreation;
     }
 
-    public String getNomCreateur() {
-        return nomCreateur;
+    public UtilisateurResponce getCreateur() {
+        return createur;
     }
 
-    public void setNomCreateur(String nomCreateur) {
-        this.nomCreateur = nomCreateur;
-    }
-
-    public String getPrenomCreateur() {
-        return prenomCreateur;
-    }
-
-    public void setPrenomCreateur(String prenomCreateur) {
-        this.prenomCreateur = prenomCreateur;
+    public void setCreateur(UtilisateurResponce createur) {
+        this.createur = createur;
     }
 
     public String getNomCategorie() {

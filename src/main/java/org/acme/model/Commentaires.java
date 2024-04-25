@@ -8,8 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import org.acme.response.CommentaireResponce;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Commentaires extends PanacheEntityBase {
@@ -80,4 +82,16 @@ public class Commentaires extends PanacheEntityBase {
         this.commentaire_rep = id_commentaire_rep;
     }
 
+    public CommentaireResponce mapCommentaireToCommentaireResponse() {
+        CommentaireResponce commentaireResponse = new CommentaireResponce();
+        commentaireResponse.setId_commentaire(this.getId_commentaire());
+        commentaireResponse.setCommentaire(this.getCommentaire());
+        commentaireResponse.setCreateur(this.getId_utilisateur_redacteur().mapUtilisateurToUtilisateurResponse());
+        commentaireResponse.setDate_de_creation(this.getDate_de_creation());
+        commentaireResponse.setId_ressource(this.getId_ressource().getId_ressource());
+        if (this.getId_commentaire_rep() != null) {
+            commentaireResponse.setId_commentaire_rep(this.commentaire_rep.mapCommentaireToCommentaireResponse());
+        }
+        return commentaireResponse;
+    }
 }

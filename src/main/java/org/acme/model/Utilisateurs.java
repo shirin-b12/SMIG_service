@@ -2,6 +2,7 @@ package org.acme.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import org.acme.response.UtilisateurResponce;
 
 @Entity
 public class Utilisateurs extends PanacheEntityBase {
@@ -120,4 +121,15 @@ public class Utilisateurs extends PanacheEntityBase {
         return etat_utilisateur;
     }
 
+    public UtilisateurResponce mapUtilisateurToUtilisateurResponse() {
+        UtilisateurResponce utilisateurResponce = new UtilisateurResponce();
+        utilisateurResponce.setId_utilisateur(this.getId_utilisateur());
+        utilisateurResponce.setNom(this.getNom());
+        utilisateurResponce.setPrenom(this.getPrenom());
+        utilisateurResponce.setRole(this.getRole());
+        utilisateurResponce.setEmail(this.getEmail());
+        utilisateurResponce.setEtat_utilisateur(this.getEtat_utilisateur());
+        utilisateurResponce.setImage(this.getImageProfil());
+        return utilisateurResponce;
+    }
 }

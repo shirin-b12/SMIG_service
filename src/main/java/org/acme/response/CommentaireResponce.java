@@ -6,7 +6,7 @@ public class CommentaireResponce {
 
     private int id_commentaire;
     private String commentaire;
-    private int id_utilisateur_redacteur;
+    private UtilisateurResponce createur;
     private LocalDateTime date_de_creation;
     private int ressource;
     private CommentaireResponce commentaire_rep;
@@ -27,13 +27,14 @@ public class CommentaireResponce {
         this.commentaire = commentaire;
     }
 
-    public int getId_utilisateur_redacteur() {
-        return id_utilisateur_redacteur;
+    public UtilisateurResponce getCreateur() {
+        return createur;
     }
 
-    public void setId_utilisateur_redacteur(int id_utilisateur_redacteur) {
-        this.id_utilisateur_redacteur = id_utilisateur_redacteur;
+    public void setCreateur(UtilisateurResponce createur) {
+        this.createur = createur;
     }
+
 
     public LocalDateTime getDate_de_creation() {
         return date_de_creation;

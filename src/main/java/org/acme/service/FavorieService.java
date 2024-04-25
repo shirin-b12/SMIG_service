@@ -61,6 +61,7 @@ public class FavorieService {
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
+
     public List<FavorieResponce> listFavorie(int id_utilisateur) {
         Utilisateurs utilisateur = utilisateursRepository.findById(id_utilisateur);
         if (utilisateur != null) {
@@ -71,6 +72,7 @@ public class FavorieService {
         }
         return null;
     }
+
     public void deleteFavoriebyUtilisateur(int id_utilisateur){
         try {
             Favoris.delete("utilisateur.id = ?1", id_utilisateur);

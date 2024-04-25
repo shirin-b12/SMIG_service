@@ -30,20 +30,20 @@ public class UtilisateursService {
         List<Utilisateurs> utilisateursList = utilisateurRepository.listAll();
         List<UtilisateurResponce> utilisateurResponceList = new ArrayList<>();
         for (Utilisateurs utilisateur : utilisateursList) {
-            utilisateurResponceList.add(mapUtilisateurToUtilisateurResponse(utilisateur));
+            utilisateurResponceList.add(utilisateur.mapUtilisateurToUtilisateurResponse());
         }
         return utilisateurResponceList;
     }
 
     public UtilisateurResponce findById(int id) {
 
-        return mapUtilisateurToUtilisateurResponse(utilisateurRepository.findById(id));
+        return utilisateurRepository.findById(id).mapUtilisateurToUtilisateurResponse();
     }
 
     public UtilisateurResponce addUtilisateur(Utilisateurs utilisateur) {
         if (utilisateur != null) {
             utilisateurRepository.persist(utilisateur);
-            return mapUtilisateurToUtilisateurResponse(utilisateur);
+            return utilisateur.mapUtilisateurToUtilisateurResponse();
         }
         return null;
     }
@@ -66,7 +66,7 @@ public class UtilisateursService {
             utilisateur.setMot_de_passe(utilisateur.getMot_de_passe());
             utilisateur.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
             utilisateurRepository.persist(utilisateur);
-            return mapUtilisateurToUtilisateurResponse(utilisateur);
+            return utilisateur.mapUtilisateurToUtilisateurResponse();
         }
         return null;
     }
@@ -93,15 +93,5 @@ public class UtilisateursService {
         return null;
     }
 
-    public UtilisateurResponce mapUtilisateurToUtilisateurResponse(Utilisateurs utilisateur) {
-        UtilisateurResponce utilisateurResponce = new UtilisateurResponce();
-        utilisateurResponce.setId_utilisateur(utilisateur.getId_utilisateur());
-        utilisateurResponce.setNom(utilisateur.getNom());
-        utilisateurResponce.setPrenom(utilisateur.getPrenom());
-        utilisateurResponce.setRole(utilisateur.getRole());
-        utilisateurResponce.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
-        utilisateurResponce.setImage(utilisateur.getImageProfil());
-        return utilisateurResponce;
-    }
 
 }

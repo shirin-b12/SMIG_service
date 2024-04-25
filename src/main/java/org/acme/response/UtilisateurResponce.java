@@ -3,6 +3,7 @@ package org.acme.response;
 import org.acme.model.EtatUtilisateur;
 import org.acme.model.Images;
 import org.acme.model.Roles;
+import org.acme.model.Utilisateurs;
 
 public class UtilisateurResponce {
     private Images image;
@@ -11,6 +12,16 @@ public class UtilisateurResponce {
     private String prenom;
     private Roles role;
     private EtatUtilisateur etat_utilisateur;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
 
     public int getId_utilisateur() {
         return id_utilisateur;
@@ -58,5 +69,17 @@ public class UtilisateurResponce {
 
     public void setImage(Images image) {
         this.image = image;
+    }
+
+    public UtilisateurResponce mapUtilisateurToUtilisateurResponse(Utilisateurs utilisateur) {
+        UtilisateurResponce utilisateurResponce = new UtilisateurResponce();
+        utilisateurResponce.setId_utilisateur(utilisateur.getId_utilisateur());
+        utilisateurResponce.setNom(utilisateur.getNom());
+        utilisateurResponce.setPrenom(utilisateur.getPrenom());
+        utilisateurResponce.setRole(utilisateur.getRole());
+        utilisateurResponce.setEmail(utilisateur.getEmail());
+        utilisateurResponce.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
+        utilisateurResponce.setImage(utilisateur.getImageProfil());
+        return utilisateurResponce;
     }
 }

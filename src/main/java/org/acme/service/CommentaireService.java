@@ -32,7 +32,7 @@ public class CommentaireService {
         List<CommentaireResponce> commentairesModifies = new ArrayList<>();
         for (Commentaires commentaire : commentaires) {
             try {
-                transmormationCommentaireenCommentaireResponce(commentairesModifies, commentaire);
+                commentairesModifies.add(commentaire.mapCommentaireToCommentaireResponse());
             } catch (Exception e) {
                 LOGGER.severe("Une exception s'est produite lors du mapping des commentaires: " + e.getMessage());
             }
@@ -81,22 +81,13 @@ public class CommentaireService {
         List<Commentaires> commentairesOriginaux = commentaireRepository.findByRessourceId(idRessource);
         List<CommentaireResponce> commentairesResponce = new ArrayList<>();
         for (Commentaires commentaire : commentairesOriginaux) {
-            transmormationCommentaireenCommentaireResponce(commentairesResponce, commentaire);
+            commentairesResponce.add(commentaire.mapCommentaireToCommentaireResponse());
+            System.out.println(commentaire.getId_utilisateur_redacteur()==null);
         }
         return commentairesResponce;
     }
 
-    private void transmormationCommentaireenCommentaireResponce(List<CommentaireResponce> commentairesResponce, Commentaires commentaire) {
-        CommentaireResponce reponce = new CommentaireResponce();
-        reponce.setId_commentaire(commentaire.getId_commentaire());
-        reponce.setCommentaire(commentaire.getCommentaire());
-        reponce.setDate_de_creation(commentaire.getDate_de_creation());
-        reponce.setId_ressource(commentaire.getId_ressource().getId_ressource());
-        reponce.setId_utilisateur_redacteur(commentaire.getId_utilisateur_redacteur().getId_utilisateur());
-        CommentaireResponce reponceRep = getCommentaireReponce(commentaire);
-        reponce.setId_commentaire_rep(reponceRep);
-        commentairesResponce.add(reponce);
-    }
+
 
     private static CommentaireResponce getCommentaireReponce(Commentaires commentaireModifie) {
         CommentaireResponce reponceRep = new CommentaireResponce();
@@ -106,7 +97,7 @@ public class CommentaireService {
                 reponceRep.setCommentaire(commentaireModifie.getId_commentaire_rep().getCommentaire());
                 reponceRep.setDate_de_creation(commentaireModifie.getId_commentaire_rep().getDate_de_creation());
                 reponceRep.setId_ressource(commentaireModifie.getId_commentaire_rep().getId_ressource().getId_ressource());
-                reponceRep.setId_utilisateur_redacteur(commentaireModifie.getId_commentaire_rep().getId_utilisateur_redacteur().getId_utilisateur());
+                reponceRep.setCreateur(commentaireModifie.getId_commentaire_rep().getId_utilisateur_redacteur().mapUtilisateurToUtilisateurResponse());
                 return reponceRep;
             }
             return null;
