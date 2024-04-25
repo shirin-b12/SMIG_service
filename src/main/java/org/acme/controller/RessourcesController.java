@@ -113,7 +113,7 @@ public class RessourcesController {
     @GET
     @Path("/byCreateur/{createurId}")
     public Response getRessourcesByCreateur(@PathParam("createurId") int createurId) {
-        List<Ressources> ressources = ressourcesService.findByCreateurId(createurId);
+        List<RessourcesResponce> ressources = ressourcesService.findByCreateurId(createurId);
         if (ressources != null && !ressources.isEmpty()) {
             return Response.ok(ressources).build();
         } else {

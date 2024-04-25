@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RessourcesService {
@@ -135,7 +136,9 @@ public class RessourcesService {
         return null;
     }
 
-    public List<Ressources> findByCreateurId(int createurId) {
-        return ressourcesRepository.findByCreateurId(createurId);
+    public List<RessourcesResponce> findByCreateurId(int createurId) {
+        return ressourcesRepository.findByCreateurId(createurId).stream()
+                .map(Ressources::mapperRessourceToRessourceResponse)
+                .collect(Collectors.toList());
     }
 }
