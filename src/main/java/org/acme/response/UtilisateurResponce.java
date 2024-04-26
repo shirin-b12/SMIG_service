@@ -12,6 +12,15 @@ public class UtilisateurResponce {
     private String prenom;
     private Roles role;
     private EtatUtilisateur etat_utilisateur;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getId_utilisateur() {
         return id_utilisateur;
@@ -61,14 +70,4 @@ public class UtilisateurResponce {
         this.image = image;
     }
 
-    public UtilisateurResponce mapUtilisateurToUtilisateurResponse(Utilisateurs utilisateur) {
-        UtilisateurResponce utilisateurResponce = new UtilisateurResponce();
-        utilisateurResponce.setId_utilisateur(utilisateur.getId_utilisateur());
-        utilisateurResponce.setNom(utilisateur.getNom());
-        utilisateurResponce.setPrenom(utilisateur.getPrenom());
-        utilisateurResponce.setRole(utilisateur.getRole());
-        utilisateurResponce.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
-        utilisateurResponce.setImage(utilisateur.getImageProfil());
-        return utilisateurResponce;
-    }
 }
