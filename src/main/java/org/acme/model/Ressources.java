@@ -161,6 +161,7 @@ public class Ressources extends PanacheEntityBase {
         responce.setNomType(this.getType().getNom_type());
         responce.setNomTag(this.getTag().getNom_tag());
         responce.setImage(this.getImage());
+        responce.setVue(this.getVue());
         return responce;
     }
 }

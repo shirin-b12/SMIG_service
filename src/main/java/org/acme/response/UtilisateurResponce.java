@@ -13,16 +13,6 @@ public class UtilisateurResponce {
     private Roles role;
     private EtatUtilisateur etat_utilisateur;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    private String email;
-
     public int getId_utilisateur() {
         return id_utilisateur;
     }
@@ -77,7 +67,6 @@ public class UtilisateurResponce {
         utilisateurResponce.setNom(utilisateur.getNom());
         utilisateurResponce.setPrenom(utilisateur.getPrenom());
         utilisateurResponce.setRole(utilisateur.getRole());
-        utilisateurResponce.setEmail(utilisateur.getEmail());
         utilisateurResponce.setEtat_utilisateur(utilisateur.getEtat_utilisateur());
         utilisateurResponce.setImage(utilisateur.getImageProfil());
         return utilisateurResponce;
