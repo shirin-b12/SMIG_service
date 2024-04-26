@@ -9,9 +9,8 @@ import org.acme.model.Ressources;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.RessourcesRepository;
 import org.acme.repository.UtilisateursRepository;
-import org.acme.request.FavorieReponce;
+import org.acme.response.FavorieResponce;
 import org.acme.request.FavorieRequest;
-import org.acme.request.RessourcesResponce;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -62,16 +61,18 @@ public class FavorieService {
         }
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
-    public List<FavorieReponce> listFavorie(int id_utilisateur) {
+
+    public List<FavorieResponce> listFavorie(int id_utilisateur) {
         Utilisateurs utilisateur = utilisateursRepository.findById(id_utilisateur);
         if (utilisateur != null) {
             return Favoris.list("id_utilisateur = ?1", utilisateur)
                     .stream()
-                    .map(favoris -> new FavorieReponce((Favoris) favoris))
+                    .map(favoris -> new FavorieResponce((Favoris) favoris))
                     .collect(Collectors.toList());
         }
         return null;
     }
+
     public void deleteFavoriebyUtilisateur(int id_utilisateur){
         try {
             Favoris.delete("utilisateur.id = ?1", id_utilisateur);

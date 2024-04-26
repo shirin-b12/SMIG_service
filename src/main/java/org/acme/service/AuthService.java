@@ -6,6 +6,8 @@ import org.acme.model.Utilisateurs;
 import org.acme.repository.AuthRepository;
 import org.acme.repository.UtilisateursRepository;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +21,13 @@ public class AuthService {
     AuthRepository authRepository;
 
     public Map<String, String> login(String email, String motDePasse) {
-        Utilisateurs user = utilisateurRepository.findByUsernameAndPassword(email, motDePasse);
-        return CreateTokens(user);
+        Utilisateurs user = utilisateurRepository.findByEmail(email);
+        if (user != null && PasswordEncodersService.checkPassword(motDePasse, user.getMot_de_passe())) {
+            return CreateTokens(user);
+        } else {
+            // Handle login failure
+            throw new RuntimeException("Invalid email or password");
+        }
     }
     public Map<String, String> login(String token) {
         Utilisateurs user = utilisateurRepository.findByToken(token);
@@ -40,5 +47,6 @@ public class AuthService {
 
         return tokens;
     }
+
 
 }

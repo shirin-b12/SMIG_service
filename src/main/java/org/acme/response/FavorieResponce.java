@@ -1,14 +1,13 @@
-package org.acme.request;
+package org.acme.response;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.acme.model.Favoris;
 
-public class FavorieReponce {
+public class FavorieResponce {
     private int id_favori;
     private int id_ressource;
     private String date_de_creation;
 
-    public FavorieReponce(Favoris favoris) {
+    public FavorieResponce(Favoris favoris) {
         id_favori = favoris.getId_favori();
         id_ressource = favoris.getId_ressource().getId_ressource();
         date_de_creation = favoris.getDate_de_creation().toString();

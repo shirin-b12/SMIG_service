@@ -3,7 +3,9 @@ package org.acme.repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 import org.acme.model.Utilisateurs;
 
 import java.util.List;
@@ -55,9 +57,26 @@ public class UtilisateursRepository {
     }
     public void delete(Utilisateurs utilisateur) {
 
-
         Utilisateurs.delete("id", utilisateur.getId_utilisateur());
 
     }
+    public void deleteUtilisateur(int id) {
+        Utilisateurs utilisateur = entityManager.find(Utilisateurs.class, id);
+        if (utilisateur != null) {
+            entityManager.remove(utilisateur);
+        } else {
+            throw new EntityNotFoundException("User with ID " + id + " not found");
+        }
     }
+
+    public Utilisateurs findByEmail(String email) {
+        try {
+            return entityManager.createQuery("SELECT u FROM Utilisateurs u WHERE u.email = :email", Utilisateurs.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+}
 

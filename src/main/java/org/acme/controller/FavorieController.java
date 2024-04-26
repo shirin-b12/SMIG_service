@@ -13,9 +13,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Favoris;
-import org.acme.model.Ressources;
-import org.acme.request.FavorieReponce;
+import org.acme.response.FavorieResponce;
 import org.acme.request.FavorieRequest;
 import org.acme.service.FavorieService;
 
@@ -24,7 +22,7 @@ import java.util.List;
 @Path("/favori")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@PermitAll
+@RolesAllowed({"Utilisateur","Moderateur","Admin"})
 public class FavorieController {
     @Inject
     FavorieService favorieService;
@@ -36,7 +34,7 @@ public class FavorieController {
     }
     @GET
     @Path("/{id}")
-    public List<FavorieReponce> listFavorie(@PathParam("id") int id_utilisateur) {
+    public List<FavorieResponce> listFavorie(@PathParam("id") int id_utilisateur) {
        return favorieService.listFavorie(id_utilisateur);
     }
     @Transactional
