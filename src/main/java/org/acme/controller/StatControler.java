@@ -10,7 +10,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.acme.model.Categories;
 import org.acme.model.Type;
-import org.acme.response.FavorieResponce;
+import org.acme.response.CategorieStatSurRessource;
 import org.acme.response.RessourcesResponce;
 import org.acme.service.StatService;
 
@@ -29,19 +29,28 @@ public class StatControler {
     public List<Categories> getStat(@PathParam("id") int id) {
         return statService.getTopCategories(id);
     }
+
     @GET
     @Path("/topTypeSurFavoris/{id}")
     public List<Type> getStatType(@PathParam("id") int id) {
         return statService.getTopType(id);
     }
+
     @GET
     @Path("/TopRessource/{id}")
     public List<RessourcesResponce> getTopViewdResource(@PathParam("id") int id) {
         return statService.getTopViewedResources(id);
     }
+
     @GET
     @Path("/TopFavorie/{id}")
     public List<RessourcesResponce> getTopFavorie(@PathParam("id") int id) {
         return statService.getTopViewedRessourcesInFavoris(id);
+    }
+
+    @GET
+    @Path("/CategoriesSurRessources/{id}")
+    public List<CategorieStatSurRessource> getCategoriesSurRessources(@PathParam("id") int id) {
+        return statService.getCategoriesSurRessources(id);
     }
 }

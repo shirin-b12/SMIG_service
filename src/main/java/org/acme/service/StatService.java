@@ -4,9 +4,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.acme.model.Categories;
 import org.acme.model.Favoris;
+import org.acme.model.Ressources;
 import org.acme.model.Type;
 import org.acme.repository.FavorieRepository;
-import org.acme.response.FavorieResponce;
+import org.acme.response.CategorieStatSurRessource;
 import org.acme.response.RessourcesResponce;
 
 import java.util.ArrayList;
@@ -97,4 +98,16 @@ public class StatService {
         return topRessources;
     }
 
+    public List<CategorieStatSurRessource> getCategoriesSurRessources(int id) {
+        List<RessourcesResponce> listRessource = ressourcesService.findByCreateurId(id);
+        Map<String, Integer> categoryCounts = new HashMap<>();
+        for (RessourcesResponce ressource : listRessource) {
+            String categorieName = ressource.getNomCategorie();
+            categoryCounts.put(categorieName, categoryCounts.getOrDefault(categorieName, 0) + 1);
+        }
+
+        return new ArrayList<>(categoryCounts.entrySet().stream()
+                .map(entry -> new CategorieStatSurRessource(entry.getKey(), entry.getValue(), id))
+                .collect(Collectors.toList()));
+    }
 }
