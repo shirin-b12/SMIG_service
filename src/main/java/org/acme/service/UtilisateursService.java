@@ -49,7 +49,7 @@ public class UtilisateursService {
         if (utilisateur != null) {
             PasswordEncodersService passwordEncodersService = new PasswordEncodersService();
             utilisateur.setMot_de_passe(passwordEncodersService.encodePassword(utilisateur.getMot_de_passe()));
-            utilisateur.setRole(RolesRepository.findById(1));
+            utilisateur.setRole(RolesRepository.findById(2));
             utilisateur.setEtat_utilisateur(EtatUtilisateur.normal);
             utilisateurRepository.persist(utilisateur);
             return utilisateur.mapUtilisateurToUtilisateurResponse();
