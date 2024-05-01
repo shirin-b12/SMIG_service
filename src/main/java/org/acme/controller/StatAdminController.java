@@ -8,6 +8,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.acme.response.RessourcesResponce;
+import org.acme.response.TopCreateur;
 import org.acme.response.TopRessourceFavoris;
 import org.acme.response.TypeMoisRessource;
 import org.acme.service.StatAdminService;
@@ -22,13 +23,13 @@ public class StatAdminController {
     @Inject
     StatAdminService statService;
     @GET
-    @Path("/nombreuDeRessoucesParCategoriesParMoi")
+    @Path("/nombreDeRessoucesParCategoriesParMois")
     public List<TypeMoisRessource> getNombreDeRessoucesParCategoriesParMoi() {
        return statService.getNombreDeRessoucesParCategoriesParMoi();
 
     }
     @GET
-    @Path("/nombreuDeRessoucesParTagParMoi")
+    @Path("/nombreDeRessoucesParTagParMois")
     public List<TypeMoisRessource> getNombreDeRessoucesParTagsParMoi() {
         return statService.getNombreDeRessoucesParTagsParMoi();
 
@@ -43,11 +44,6 @@ public class StatAdminController {
     @Path("/TopCreateur")
     public List<TopCreateur> getTopCreateur() {
         return statService.getTopCreators();
-    }
-    @GET
-    @Path("/TopRessource")
-    public List<RessourcesResponce> getTopRessource() {
-        return statService.getTopFastestResources();
     }
 
 }

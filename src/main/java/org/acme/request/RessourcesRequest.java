@@ -13,6 +13,9 @@ public class RessourcesRequest {
     private String description;
     private int visibilite;
     private LocalDateTime dateDeCreation;
+    private int imageId;
+
+    // Getters and setters
 
     public int getIdCat() {
         return idCat;
@@ -76,5 +79,13 @@ public class RessourcesRequest {
 
     public void setDateDeCreation(LocalDateTime dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 }

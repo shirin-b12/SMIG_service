@@ -2,7 +2,7 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.acme.controller.TopCreateur;
+import org.acme.response.TopCreateur;
 import org.acme.model.Favoris;
 import org.acme.model.Ressources;
 import org.acme.model.Utilisateurs;
@@ -12,9 +12,6 @@ import org.acme.response.TopRessourceFavoris;
 import org.acme.response.TypeMoisRessource;
 import org.acme.response.RessourcesResponce;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,52 +31,33 @@ public class StatAdminService {
     RessourcesRepository ressourcesRepository;
 
     public List<TypeMoisRessource> getNombreDeRessoucesParCategoriesParMoi() {
-        // Fetch the data from your database or data source
-        List<RessourcesResponce> listressource = ressourcesService.listAll();
+        List<RessourcesResponce> listRessource = ressourcesService.listAll();
+        Map<String, Integer> categoryCount = new HashMap<>();
 
-        Map<String, Map<String, Integer>> monthCategoryCount = new HashMap<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-        // Populate the monthCategoryCount map with the fetched data
-        for (RessourcesResponce ressource : listressource) {
-            LocalDateTime dateTime = LocalDateTime.parse(ressource.getDateDeCreation(), formatter);
-            String monthInFrench = dateTime.getMonth().getDisplayName(TextStyle.FULL, Locale.FRENCH);
-            monthCategoryCount.computeIfAbsent(monthInFrench, k -> new HashMap<>()).merge(ressource.getNomCategorie(), 1, Integer::sum);
+        for (RessourcesResponce ressource : listRessource) {
+            categoryCount.merge(ressource.getNomCategorie(), 1, Integer::sum);
         }
 
-        List<TypeMoisRessource> result = new ArrayList<>();
-
-        for (Map.Entry<String, Map<String, Integer>> entry : monthCategoryCount.entrySet()) {
-            for (Map.Entry<String, Integer> categoryEntry : entry.getValue().entrySet()) {
-                result.add(new TypeMoisRessource(categoryEntry.getKey(), categoryEntry.getValue(), entry.getKey()));
-            }
-        }
-
-        return result;
+        return categoryCount.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .map(entry -> new TypeMoisRessource(entry.getKey(), entry.getValue(), null))
+                .collect(Collectors.toList());
     }
+
     public List<TypeMoisRessource> getNombreDeRessoucesParTagsParMoi() {
-        // Fetch the data from your database or data source
-        List<RessourcesResponce> listressource = ressourcesService.listAll();
+        List<RessourcesResponce> listRessource = ressourcesService.listAll();
+        Map<String, Integer> tagCount = new HashMap<>();
 
-        Map<String, Map<String, Integer>> monthTagCount = new HashMap<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-        // Populate the monthTagCount map with the fetched data
-        for (RessourcesResponce ressource : listressource) {
-            LocalDateTime dateTime = LocalDateTime.parse(ressource.getDateDeCreation(), formatter);
-            String monthInFrench = dateTime.getMonth().getDisplayName(TextStyle.FULL, Locale.FRENCH);
-            monthTagCount.computeIfAbsent(monthInFrench, k -> new HashMap<>()).merge(ressource.getNomTag(), 1, Integer::sum);
+        for (RessourcesResponce ressource : listRessource) {
+            tagCount.merge(ressource.getNomTag(), 1, Integer::sum);
         }
 
-        List<TypeMoisRessource> result = new ArrayList<>();
-
-        for (Map.Entry<String, Map<String, Integer>> entry : monthTagCount.entrySet()) {
-            for (Map.Entry<String, Integer> tagEntry : entry.getValue().entrySet()) {
-                result.add(new TypeMoisRessource(tagEntry.getKey(), tagEntry.getValue(), entry.getKey()));
-            }
-        }
-
-        return result;
+        return tagCount.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .limit(5)
+                .map(entry -> new TypeMoisRessource(entry.getKey(), entry.getValue(), null))
+                .collect(Collectors.toList());
     }
 
 
@@ -121,16 +99,6 @@ public class StatAdminService {
                 .sorted(Map.Entry.<Utilisateurs, Long>comparingByValue().reversed())
                 .limit(3)
                 .map(entry -> new TopCreateur(entry.getKey().getNom(), entry.getValue().intValue()))
-                .collect(Collectors.toList());
-    }
-    public List<RessourcesResponce> getTopFastestResources() {
-        List<RessourcesResponce> listressource = ressourcesRepository.listAll().stream()
-                .map(Ressources::mapperRessourceToRessourceResponse)
-                .collect(Collectors.toList());
-        listressource.sort((a, b) -> b.getVue() - a.getVue());
-
-        return listressource.stream()
-                .limit(3)
                 .collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.acme.model.Categories;
 import org.acme.model.Tag;
 import org.acme.repository.TagRepository;
 
@@ -16,7 +17,10 @@ public class TagService {
     public List<Tag> listAll() {
         return tagRepository.listAll();
     }
+    public Tag findById(int id) {
 
+        return tagRepository.findById(id);
+    }
     public Tag createTag(Tag tag) {
         if (tag != null && tag.getNom_tag() != null && !tag.getNom_tag().isEmpty()) {
             tagRepository.persist(tag);

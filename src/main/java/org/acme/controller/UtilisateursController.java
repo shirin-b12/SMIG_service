@@ -8,13 +8,18 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.acme.model.Images;
 import org.acme.model.Utilisateurs;
 import org.acme.request.UpdateUserRequest;
 import org.acme.request.ChangeStatu;
 import org.acme.request.UtilisateurLoginRequest;
 import org.acme.response.UtilisateurResponce;
 import org.acme.service.AuthService;
+import org.acme.service.ImagesService;
 import org.acme.service.UtilisateursService;
+import org.jboss.resteasy.reactive.*;
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +33,8 @@ public class UtilisateursController {
     UtilisateursService utilisateurService;
     @Inject
     AuthService authService;
+    @Inject
+    ImagesService imagesService;
 
     @GET
     @PermitAll
@@ -56,6 +63,40 @@ public class UtilisateursController {
             return Response.ok(newToken).build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Path("/create")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @PermitAll
+    @Transactional
+    public Response createUtilisateur(
+            @RestForm FileUpload profileImage,
+            @RestForm String nom,
+            @RestForm String prenom,
+            @RestForm String email,
+            @RestForm String motDePasse) {
+        try {
+            Utilisateurs newUser = new Utilisateurs();
+            newUser.setNom(nom);
+            newUser.setPrenom(prenom);
+            newUser.setEmail(email);
+            newUser.setMot_de_passe(motDePasse);
+
+            if (profileImage != null) {
+                Images image = imagesService.addImage( "Profile image for new user", profileImage);
+                newUser.setImageProfil(image);
+            }
+
+            UtilisateurResponce createdUser = utilisateurService.addUtilisateur(newUser);
+            if (createdUser != null) {
+                return Response.ok(createdUser).build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 
@@ -125,4 +166,6 @@ public class UtilisateursController {
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
+
+
 }
