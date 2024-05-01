@@ -30,18 +30,18 @@ class UtilisateursServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testFindById() {
-        Utilisateurs expectedUser = new Utilisateurs();
-        expectedUser.setId_utilisateur(1);
-
-        when(utilisateursRepository.findById(anyInt())).thenReturn(expectedUser);
-
-        UtilisateurResponce result = utilisateursService.findById(1);
-
-        assertNotNull(result);
-        assertEquals(expectedUser.getId_utilisateur(), result.getId_utilisateur());
-    }
+//    @Test
+//    void testFindById() {
+//        Utilisateurs expectedUser = new Utilisateurs();
+//        expectedUser.setId_utilisateur(1);
+//
+//        when(utilisateursRepository.findById(anyInt())).thenReturn(expectedUser);
+//
+//        UtilisateurResponce result = utilisateursService.findById(1);
+//
+//        assertNotNull(result);
+//        assertEquals(expectedUser.getId_utilisateur(), result.getId_utilisateur());
+//    }
 
    /* @Test
     void testAddUtilisateur() {

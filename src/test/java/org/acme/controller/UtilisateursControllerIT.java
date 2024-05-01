@@ -18,9 +18,9 @@ import static org.mockito.Mockito.*;
 @QuarkusTest
 @TestHTTPEndpoint(UtilisateursController.class)
 class UtilisateursControllerIT {
-
-    @InjectMock
-    UtilisateursService utilisateurService;
+//
+//    @InjectMock
+//    UtilisateursService utilisateurService;
 /*
     @Test
     void testGetUtilisateurs() {
