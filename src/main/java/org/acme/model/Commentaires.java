@@ -88,6 +88,8 @@ public class Commentaires extends PanacheEntityBase {
         commentaireResponse.setCommentaire(this.getCommentaire());
         commentaireResponse.setCreateur(this.getId_utilisateur_redacteur().mapUtilisateurToUtilisateurResponse());
         commentaireResponse.setDate_de_creation(this.getDate_de_creation());
+
+        System.out.println("bla bla"+this.getId_ressource().getId_ressource());
         commentaireResponse.setId_ressource(this.getId_ressource().getId_ressource());
         if (this.getId_commentaire_rep() != null) {
             commentaireResponse.setId_commentaire_rep(this.commentaire_rep.mapCommentaireToCommentaireResponse());
