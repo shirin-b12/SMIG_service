@@ -35,7 +35,7 @@ public class FavorieController {
     @GET
     @Path("/{id}")
     public List<FavorieResponce> listFavorie(@PathParam("id") int id_utilisateur) {
-       return favorieService.listFavorie(id_utilisateur);
+       return favorieService.listFavorieResponce(id_utilisateur);
     }
     @Transactional
     @DELETE

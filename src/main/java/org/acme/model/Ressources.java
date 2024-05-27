@@ -2,6 +2,7 @@ package org.acme.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
+import org.acme.request.RessourcesRequest;
 import org.acme.response.RessourcesResponce;
 
 
@@ -161,6 +162,23 @@ public class Ressources extends PanacheEntityBase {
         responce.setNomType(this.getType().getNom_type());
         responce.setNomTag(this.getTag().getNom_tag());
         responce.setImage(this.getImage());
+        responce.setVue(this.getVue());
         return responce;
+    }
+
+    public RessourcesRequest toRessourcesRequest() {
+        RessourcesRequest request = new RessourcesRequest();
+        request.setIdCat(this.categorie.getId_cat());
+        request.setIdType(this.type.getId_type());
+        request.setIdTag(this.tag.getId_tag());
+        request.setIdCreateur(this.createur.getId_utilisateur());
+        request.setTitre(this.titre);
+        request.setDescription(this.description);
+        request.setVisibilite(this.visibilite);
+        request.setDateDeCreation(this.date_de_creation);
+        if (this.image != null) {
+            request.setImageId(this.image.getId_image());
+        }
+        return request;
     }
 }

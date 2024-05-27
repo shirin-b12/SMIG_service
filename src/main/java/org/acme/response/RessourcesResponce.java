@@ -15,7 +15,15 @@ public class RessourcesResponce {
     private String nomType;
     private String nomTag;
     private Images image;
+    private int vue;
 
+    public int getVue() {
+        return vue;
+    }
+
+    public void setVue(int vue) {
+        this.vue = vue;
+    }
 
     public int getId() {
         return id;
@@ -92,6 +100,7 @@ public class RessourcesResponce {
     public Images getImage() {
         return image;
     }
+
     public void setImage(Images image) {
         this.image = image;
     }

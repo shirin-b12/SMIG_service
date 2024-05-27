@@ -2,6 +2,7 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.acme.model.Categories;
 import org.acme.model.Type;
 import org.acme.repository.TypeRepository;
 
@@ -16,7 +17,10 @@ public class TypeService {
     public List<Type> listAll() {
         return typeRepository.listAll();
     }
+    public Type findById(int id) {
 
+        return typeRepository.findById(id);
+    }
     public Type createType(Type type) {
         if (type != null && type.getNom_type() != null && !type.getNom_type().isEmpty()) {
             typeRepository.persist(type);

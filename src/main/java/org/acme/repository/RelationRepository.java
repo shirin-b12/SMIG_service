@@ -28,7 +28,7 @@ public class RelationRepository {
     }
 
     public void delete(Relations relations) {
-        Relations.delete(String.valueOf(relations.getIdRelation()));
+        Relations.delete("id",relations.getIdRelation());
     }
 
     public List<Relations> findRelationsByUserId(int userId) {

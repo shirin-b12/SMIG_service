@@ -24,7 +24,7 @@ public class Relations extends PanacheEntityBase {
     private Utilisateurs utilisateur2;
 
     // Getter and Setter for id_relation
-    public Integer getIdRelation() {
+    public int getIdRelation() {
         return id_relation;
     }
 

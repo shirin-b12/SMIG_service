@@ -127,9 +127,9 @@ public class Utilisateurs extends PanacheEntityBase {
         utilisateurResponce.setNom(this.getNom());
         utilisateurResponce.setPrenom(this.getPrenom());
         utilisateurResponce.setRole(this.getRole());
-        utilisateurResponce.setEmail(this.getEmail());
         utilisateurResponce.setEtat_utilisateur(this.getEtat_utilisateur());
         utilisateurResponce.setImage(this.getImageProfil());
+        utilisateurResponce.setEmail(this.getEmail());
         return utilisateurResponce;
     }
 }

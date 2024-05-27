@@ -9,11 +9,16 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.acme.model.Images;
 import org.acme.model.Ressources;
 import org.acme.request.RessourcesRequest;
 import org.acme.response.RessourcesResponce;
-import org.acme.service.RessourcesService;
+import org.acme.service.*;
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -27,6 +32,21 @@ public class RessourcesController {
     RessourcesService ressourcesService;
 
     @Inject
+    CategoriesService categoriesService;
+
+    @Inject
+    TypeService typeService;
+
+    @Inject
+    TagService tagService;
+
+    @Inject
+    ImagesService imagesService;
+
+    @Inject
+    UtilisateursService utilisateursService;
+
+    @Inject
     Event<Ressources> newRessourceEvent;
 
     @GET
@@ -35,6 +55,41 @@ public class RessourcesController {
         return ressourcesService.listAll();
     }
 
+    @POST
+    @Path("/create")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed("Utilisateur")
+    @Transactional
+    public Response createRessource(
+            @RestForm String idCreateur,
+            @RestForm FileUpload img,
+            @RestForm String titre,
+            @RestForm String description,
+            @RestForm String idCat,
+            @RestForm String idType,
+            @RestForm String idTag) {
+        try {
+            Ressources ressource = new Ressources();
+            ressource.setTitre(titre);
+            ressource.setDescription(description);
+            ressource.setDate_de_creation(LocalDateTime.now());
+            ressource.setVisibilite(1);
+            ressource.setType(typeService.findById(Integer.parseInt(idType)));
+            ressource.setTag(tagService.findById(Integer.parseInt(idTag)));
+            ressource.setCategorie(categoriesService.findById(Integer.parseInt(idCat)));
+            ressource.setCreateur(utilisateursService.findUserById(Integer.parseInt(idCreateur)));
+
+            if (img != null) {
+                Images image = imagesService.addImage( "Image for resource id : "+ressource.getId_ressource(), img);
+                ressource.setImage(image);
+            }
+
+            ressourcesService.createRessource(ressource.toRessourcesRequest());
+            return Response.ok(ressource).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
     @POST
     @Transactional
     @RolesAllowed("Utilisateur")

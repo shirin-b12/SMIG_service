@@ -1,10 +1,12 @@
 package org.acme.service;
 
-import io.quarkus.elytron.security.common.BcryptUtil;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.acme.model.EtatUtilisateur;
+import org.acme.model.Images;
 import org.acme.model.Utilisateurs;
 import org.acme.repository.RolesRepository;
 import org.acme.repository.UtilisateursRepository;
@@ -12,9 +14,6 @@ import org.acme.request.ChangeStatu;
 import org.acme.request.UpdateUserRequest;
 import org.acme.response.UtilisateurResponce;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +30,9 @@ public class UtilisateursService {
     @Inject
     RessourcesService ressourceService;
 
+    @Inject
+    ImagesService imagesService;
+
     public List<UtilisateurResponce> listAll() {
         List<Utilisateurs> utilisateursList = utilisateurRepository.listAll();
         List<UtilisateurResponce> utilisateurResponceList = new ArrayList<>();
@@ -43,6 +45,11 @@ public class UtilisateursService {
     public UtilisateurResponce findById(int id) {
 
         return utilisateurRepository.findById(id).mapUtilisateurToUtilisateurResponse();
+    }
+
+    public Utilisateurs findUserById(int id) {
+
+        return utilisateurRepository.findById(id);
     }
 
     public UtilisateurResponce addUtilisateur(Utilisateurs utilisateur) {
@@ -91,6 +98,17 @@ public class UtilisateursService {
             return user;
         }
         return null;
+    }
+    @Transactional
+    public UtilisateurResponce addProfileImageToUser(int userId, FileUpload fileUpload) {
+        Utilisateurs user = utilisateurRepository.findById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found with ID: " + userId);
+        }
+        Images image = imagesService.addImage("Profile image for user ID " + userId, fileUpload);
+        user.setImageProfil(image);
+        utilisateurRepository.persist(user);
+        return user.mapUtilisateurToUtilisateurResponse();
     }
 
 

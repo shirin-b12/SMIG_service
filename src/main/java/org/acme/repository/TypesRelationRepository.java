@@ -27,6 +27,6 @@ public class TypesRelationRepository {
     }
 
     public void delete(TypesRelation typesRelation) {
-        TypesRelation.delete(String.valueOf(typesRelation));
+        TypesRelation.delete("id", typesRelation);
     }
 }

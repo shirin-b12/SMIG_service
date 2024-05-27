@@ -82,7 +82,6 @@ public class CommentaireService {
         List<CommentaireResponce> commentairesResponce = new ArrayList<>();
         for (Commentaires commentaire : commentairesOriginaux) {
             commentairesResponce.add(commentaire.mapCommentaireToCommentaireResponse());
-            System.out.println(commentaire.getId_utilisateur_redacteur()==null);
         }
         return commentairesResponce;
     }

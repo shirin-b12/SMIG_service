@@ -82,6 +82,12 @@ public class RessourcesService {
         ressource.setDescription(request.getDescription());
         ressource.setVisibilite(request.getVisibilite());
         ressource.setDate_de_creation(request.getDateDeCreation());
+
+        if(request.getImageId() != 0){
+            Images img = imagesRepository.findById(request.getImageId());
+            ressource.setImage(img);
+        }
+
         ressourcesRepository.persist(ressource);
         RessourcesResponce response = ressource.mapperRessourceToRessourceResponse();
         ressourceStream.onNext(response);
