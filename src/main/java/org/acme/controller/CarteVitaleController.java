@@ -8,22 +8,21 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Categories;
-import org.acme.request.CarteVitalRequest;
-import org.acme.service.CarteVitalService;
+import org.acme.request.CarteVitaleRequest;
+import org.acme.service.CarteVitaleService;
 
-@Path("/carteVital")
+@Path("/carteVitale")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 
-public class CarteVitalControler {
+public class CarteVitaleController {
     @Inject
-    CarteVitalService carteVitalService;
+    CarteVitaleService carteVitaleService;
 
     @POST
-    public Response verificationCarteVital(CarteVitalRequest request) {
-        boolean confirmation = carteVitalService.verificationCarteVital(request.getCarteVital());
+    public Response verificationCarteVitale(CarteVitaleRequest request) {
+        boolean confirmation = carteVitaleService.verificationCarteVitale(request.getCarteVitale());
         if (confirmation) {
             return Response.ok().build();
         } else {
