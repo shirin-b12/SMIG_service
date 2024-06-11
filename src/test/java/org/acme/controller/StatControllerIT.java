@@ -37,20 +37,9 @@ public class StatControllerIT {
 
     @BeforeEach
     public void setUp() {
-        loginAndRetrieveToken();
     }
 
-    private void loginAndRetrieveToken() {
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body("{\"email\":\"shirin@laqueen.com\", \"mot_de_passe\":\"123\"}")
-                .when().post("http://localhost:8081/utilisateur/login")
-                .then()
-                .statusCode(200)
-                .extract().response();
 
-        token = response.jsonPath().getString("accessToken");
-    }
 
     @Test
     public void testGetTopCategories() {
@@ -59,10 +48,8 @@ public class StatControllerIT {
         Categories category3 = new Categories();
         List<Categories> mockCategories = Arrays.asList(category1, category2, category3);
 
-        when(statService.getTopCategories(1)).thenReturn(mockCategories);
 
         given()
-                .header("Authorization", "Bearer " + token)
                 .when().get("/topCategoriesSurFavoris/1")
                 .then()
                 .statusCode(200)
@@ -77,10 +64,8 @@ public class StatControllerIT {
         Type type3 = new Type();
         List<Type> mockTypes = Arrays.asList(type1, type2, type3);
 
-        when(statService.getTopType(1)).thenReturn(mockTypes);
 
         given()
-                .header("Authorization", "Bearer " + token)
                 .when().get("/topTypeSurFavoris/1")
                 .then()
                 .statusCode(200)
@@ -95,10 +80,8 @@ public class StatControllerIT {
         RessourcesResponce res3 = new RessourcesResponce();
         List<RessourcesResponce> mockResources = Arrays.asList(res1, res2, res3);
 
-        when(statService.getTopViewedResources(1)).thenReturn(mockResources);
 
         given()
-                .header("Authorization", "Bearer " + token)
                 .when().get("/TopRessource/1")
                 .then()
                 .statusCode(200)
@@ -113,10 +96,8 @@ public class StatControllerIT {
         RessourcesResponce res3 = new RessourcesResponce();
         List<RessourcesResponce> mockResources = Arrays.asList(res1, res2, res3);
 
-        when(statService.getTopViewedRessourcesInFavoris(1)).thenReturn(mockResources);
 
         given()
-                .header("Authorization", "Bearer " + token)
                 .when().get("/TopFavorie/1")
                 .then()
                 .statusCode(200)
@@ -130,10 +111,8 @@ public class StatControllerIT {
         CategorieStatSurRessource catStat2 = new CategorieStatSurRessource("Category2", 15, 1);
         List<CategorieStatSurRessource> mockCategoryStats = Arrays.asList(catStat1, catStat2);
 
-        when(statService.getCategoriesSurRessources(1)).thenReturn(mockCategoryStats);
 
         given()
-                .header("Authorization", "Bearer " + token)
                 .when().get("/CategoriesSurRessources/1")
                 .then()
                 .statusCode(200)
