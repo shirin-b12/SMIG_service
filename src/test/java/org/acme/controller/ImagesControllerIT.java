@@ -50,20 +50,20 @@ public class  ImagesControllerIT {
                 .contentType(ContentType.BINARY);
     }
 
-        @Test
-        public void testUploadImage() {
-            File testImageFile = new File("src/main/resources/test-image.jpg");
+    @Test
+    public void testCreateImage() {
+        File testImageFile = new File("src/main/resources/test-image.jpg");
 
-            given()
-                    .multiPart("legende", "Test Image")
-                    .multiPart("fichier", testImageFile)
-                    .header("Authorization", "Bearer " + token) // Use the retrieved token
-                    .when().post("http://localhost:8081/images")
-                    .then()
-                    .statusCode(404)
-                    .contentType(MediaType.MULTIPART_FORM_DATA);
-        }
-
+        given()
+                .multiPart("description", "Test Image")
+                .multiPart("image", testImageFile)
+                .header("Authorization", "Bearer " + token) // Utilisez le jeton récupéré
+                .header("Content-Type", "multipart/form-data")
+                .when().post("http://localhost:8081/images")
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON);
+    }
 
     @Test
     public void testCreateImageUnauthorized() {
