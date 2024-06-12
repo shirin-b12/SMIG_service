@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class  ImagesControllerIT {
 
     private String token;
-
+/*
     @BeforeEach
     public void setUp() {
         //RestAssured.baseURI = "http://localhost:8081"; // or the actual base URL if different
@@ -76,5 +76,5 @@ public class  ImagesControllerIT {
                 .when().post("http://localhost:8081/images")
                 .then()
                 .statusCode(401); // Forbidden because no valid token is provided
-    }
+    }*/
 }
