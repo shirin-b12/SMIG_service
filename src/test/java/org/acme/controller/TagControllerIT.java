@@ -58,7 +58,8 @@ public class TagControllerIT {
     public void testCreateTagFailed() {
         given()
                 .contentType(ContentType.JSON)
-                .body("{\"NomTags\":\"tag\"}")
+                .header("Authorization", "Bearer " + token)
+                .body("{\"nom_tag_incorrect\":\"tag\"}")
                 .when().post("http://localhost:8081/tags")
                 .then()
                 .statusCode(400);
