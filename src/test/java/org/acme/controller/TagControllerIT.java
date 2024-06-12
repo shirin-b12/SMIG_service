@@ -18,7 +18,7 @@ public class TagControllerIT {
 
     @BeforeEach
     public void setUp() {
-        //RestAssured.baseURI = "http://localhost:8081"; // or the actual base URL if different
+        //RestAssured.baseURI = "http://localhost:8081" ; // ou l'URL de base réelle si elle est différente
         loginAndRetrieveToken();
     }
 
