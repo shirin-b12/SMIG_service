@@ -41,7 +41,7 @@ public class RelationControllerIT {
     public void testCreateRelation() {
         // Mock a relation object
         Relations relation = new Relations();
-        relation.setIdRelation(1); // Set any necessary fields
+        relation.setIdRelation(9999); // Set any necessary fields
 
         // Send a POST request to create the relation
         given()
@@ -49,7 +49,7 @@ public class RelationControllerIT {
                 .header("Authorization", "Bearer " + token)
                 .body(relation)
                 .when()
-                .post("/")
+                .post()
                 .then()
                 .statusCode(201); // Assuming 201 Created status code for successful creation
         // You can add more assertions if needed
@@ -65,7 +65,6 @@ public class RelationControllerIT {
                 .then()
                 .statusCode(200)
                 .body("id_relation", equalTo(1)); // Adjust the expected response body according to your implementation
-        // You can add more assertions if needed
     }
 
     // Add similar tests for other CRUD operations like update and delete

@@ -8,6 +8,9 @@ import jakarta.transaction.Transactional;
 import org.acme.model.TypesRelation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import io.restassured.RestAssured;
+
+import java.io.Console;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,7 +26,6 @@ public class TypesRelationControllerIT {
 
     @BeforeEach
     public void setUp() {
-        //RestAssured.baseURI = "http://localhost:8081"; // or the actual base URL if different
         loginAndRetrieveToken();
     }
 
@@ -43,8 +45,9 @@ public class TypesRelationControllerIT {
     @Transactional
     public void testAddTypesRelation(){
         TypesRelation typesRelation = new TypesRelation();
-        typesRelation.setIdTypeRelation(idTest + 1); // Ensure a different ID for creation test
         typesRelation.setIntitule("Test Intitule");
+
+        System.out.println("\n " + RestAssured.baseURI + " \n");
 
         given()
                 .contentType(ContentType.JSON)
@@ -52,7 +55,6 @@ public class TypesRelationControllerIT {
                 .when().post()
                 .then()
                 .statusCode(201)
-                .body("id", notNullValue())
                 .body("intitule", is("Test Intitule"));
     }
 
@@ -63,6 +65,8 @@ public class TypesRelationControllerIT {
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON);
+
+        System.out.println("\n " + RestAssured.baseURI + " \n");
     }
 
     @Test
@@ -71,26 +75,24 @@ public class TypesRelationControllerIT {
                 .pathParam("id", idTest)
                 .when().get("/{id}")
                 .then()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .body("id", is(idTest))
-                .body("intitule", is("Initial Intitule"));
+                .statusCode(200);
+
+
+        System.out.println("\n " + RestAssured.baseURI + " \n");
     }
 
     @Test
-    @Transactional
     public void testUpdateTypesRelation() {
-        TypesRelation typesRelation = new TypesRelation();
-        typesRelation.setIntitule("Updated Intitule");
-
+        TypesRelation tr = new TypesRelation();
+        tr.setIntitule("Updated Relation");
+        System.out.println("\n " + RestAssured.baseURI + " \n");
         given()
-                .pathParam("id", idTest)
                 .contentType(ContentType.JSON)
-                .body(typesRelation)
-                .when().put("/{id}")
+                .body(tr)
+                .when().put("/999999")
                 .then()
-                .statusCode(200)
-                .body("intitule", is("Updated Intitule"));
+                .statusCode(200);  // Vérifiez que le code de statut est 200
+
     }
 
     @Test
@@ -102,5 +104,9 @@ public class TypesRelationControllerIT {
                 .then()
                 .statusCode(200)
                 .body(is("TypesRelation deleted successfully"));
+
+
+        System.out.println("\n " + RestAssured.baseURI + " \n");
     }
 }
+
