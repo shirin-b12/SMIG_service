@@ -23,4 +23,12 @@ public class Categories extends PanacheEntityBase {
     public int getId_cat() {
         return id_cat;
     }
+
+    public void setId_cat(int id){
+        this.id_cat = id;
+    }
+
+    public void setNom_cat(String nom){
+        this.nom_cat = nom;
+    }
 }

@@ -24,4 +24,11 @@ public class Tag extends PanacheEntityBase {
         return id_tag;
     }
 
+    public void setId_tag(int id){
+        this.id_tag = id;
+    }
+
+    public void setNom_tag(String nom){
+        this.nom_tag = nom;
+    }
 }

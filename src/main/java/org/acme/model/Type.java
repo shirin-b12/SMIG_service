@@ -24,5 +24,11 @@ public class Type extends PanacheEntityBase {
         return id_type;
     }
 
+    public void setId_type(int id){
+        this.id_type = id;
+    }
 
+    public void setNom_type(String nom){
+        this.nom_type = nom;
+    }
 }
