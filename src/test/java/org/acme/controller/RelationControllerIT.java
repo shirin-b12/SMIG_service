@@ -11,6 +11,7 @@ import org.acme.request.RelationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -39,6 +40,7 @@ public class RelationControllerIT {
 
     @BeforeEach
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
 
         mockTypesRelation01 = new TypesRelation();
         mockTypesRelation01.setIdTypeRelation(69);
@@ -87,7 +89,7 @@ public class RelationControllerIT {
                 .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer " + token)
                 .body(mockRelationRequest)
-                .when().post()
+                .when().post("http://localhost:8081/relation")
                 .then()
                 .statusCode(201)
                 .body("utilisateur1", is(notNullValue()))
