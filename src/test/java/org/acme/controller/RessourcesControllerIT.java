@@ -3,12 +3,15 @@ package org.acme.controller;
 import io.restassured.response.Response;
 import jakarta.ws.rs.core.MediaType;
 import org.acme.model.*;
+import org.acme.request.RessourcesRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.mockito.Mock;
+
+import java.time.LocalDateTime;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -18,7 +21,7 @@ import static org.hamcrest.Matchers.*;
 public class RessourcesControllerIT {
 
     @Mock
-    private Ressources ressourceMock;
+    private Ressources mockRessource;
     @Mock
     private Utilisateurs mockUtilisateur01;
     @Mock
@@ -27,6 +30,10 @@ public class RessourcesControllerIT {
     private Roles mockRoleModerateur;
     @Mock
     private EtatUtilisateur mockEtatUtilisateur;
+    @Mock
+    private RessourcesRequest mockRessourcesRequest;
+    @Mock
+    private RessourcesRequest mockRessourcesRequestUpdate;
     @Mock
     private Type mockType;
     @Mock
@@ -73,14 +80,34 @@ public class RessourcesControllerIT {
         mockTag.setId_tag(1);
         mockTag.setNom_tag("Test Tag");
 
-        ressourceMock = new Ressources();
-        ressourceMock.setCreateur(mockUtilisateur01);
-        ressourceMock.setTitre("Test Ressource");
-        ressourceMock.setDescription("Ceci est un test de création de ressource");
-        ressourceMock.setCategorie(mockCategorie);
-        ressourceMock.setType(mockType);
-        ressourceMock.setTag(mockTag);
-        ressourceMock.setVisibilite(1);
+        mockRessource = new Ressources();
+        mockRessource.setCreateur(mockUtilisateur01);
+        mockRessource.setTitre("Test Ressource");
+        mockRessource.setDescription("Ceci est un test de création de ressource");
+        mockRessource.setCategorie(mockCategorie);
+        mockRessource.setType(mockType);
+        mockRessource.setTag(mockTag);
+        mockRessource.setVisibilite(1);
+
+        mockRessourcesRequest = new RessourcesRequest();
+        mockRessourcesRequest.setIdCreateur(mockUtilisateur01.getId_utilisateur());
+        mockRessourcesRequest.setTitre("Test Ressource");
+        mockRessourcesRequest.setDescription("Test Description");
+        mockRessourcesRequest.setIdCat(mockRessource.getCategorie().getId_cat());
+        mockRessourcesRequest.setIdType(mockRessource.getType().getId_type());
+        mockRessourcesRequest.setIdTag(mockRessource.getTag().getId_tag());
+        mockRessourcesRequest.setVisibilite(1);
+        mockRessourcesRequest.setDateDeCreation(LocalDateTime.now());
+
+        mockRessourcesRequestUpdate = new RessourcesRequest();
+        mockRessourcesRequestUpdate.setIdCreateur(mockUtilisateur01.getId_utilisateur());
+        mockRessourcesRequestUpdate.setTitre("Updated Test Ressource");
+        mockRessourcesRequestUpdate.setDescription("Updated Test Description");
+        mockRessourcesRequestUpdate.setIdCat(mockRessource.getCategorie().getId_cat());
+        mockRessourcesRequestUpdate.setIdType(mockRessource.getType().getId_type());
+        mockRessourcesRequestUpdate.setIdTag(mockRessource.getTag().getId_tag());
+        mockRessourcesRequestUpdate.setVisibilite(1);
+        mockRessourcesRequestUpdate.setDateDeCreation(LocalDateTime.now());
 
         loginAndRetrieveToken();
     }
@@ -98,32 +125,18 @@ public class RessourcesControllerIT {
     }
 
     @Test
-    public void testGetRessourcesEndpoint() {
-        Response response = given()
-                .header("Authorization", "Bearer " + token)
-                .when().get("/all")
-                .then()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .body("size()", greaterThan(0))
-                .extract().response(); // Assure que la réponse contient au moins une ressource
-
-        System.out.println("\n " + response.getBody().print() + " \n");
-    }
-
-    @Test
     public void testCreateRessource() {
         Response response = given()
                 .header("Authorization", "Bearer " + token)
                 .contentType(ContentType.MULTIPART)
-                .multiPart("idCat", ressourceMock.getCategorie().getId_cat(), MediaType.TEXT_PLAIN)
-                .multiPart("idCat", ressourceMock.getCategorie().getId_cat(), MediaType.TEXT_PLAIN)
-                .multiPart("idType", ressourceMock.getType().getId_type(), MediaType.TEXT_PLAIN)
-                .multiPart("idTag", ressourceMock.getTag().getId_tag(), MediaType.TEXT_PLAIN)
-                .multiPart("idCreateur", ressourceMock.getCreateur().getId_utilisateur(), MediaType.TEXT_PLAIN)
-                .multiPart("titre", ressourceMock.getTitre(), MediaType.TEXT_PLAIN)
-                .multiPart("description", ressourceMock.getDescription(), MediaType.TEXT_PLAIN)
-                .multiPart("visibilite", ressourceMock.getVisibilite(), MediaType.TEXT_PLAIN)
+                .multiPart("idCat", mockRessource.getCategorie().getId_cat(), MediaType.TEXT_PLAIN)
+                .multiPart("idCat", mockRessource.getCategorie().getId_cat(), MediaType.TEXT_PLAIN)
+                .multiPart("idType", mockRessource.getType().getId_type(), MediaType.TEXT_PLAIN)
+                .multiPart("idTag", mockRessource.getTag().getId_tag(), MediaType.TEXT_PLAIN)
+                .multiPart("idCreateur", mockRessource.getCreateur().getId_utilisateur(), MediaType.TEXT_PLAIN)
+                .multiPart("titre", mockRessource.getTitre(), MediaType.TEXT_PLAIN)
+                .multiPart("description", mockRessource.getDescription(), MediaType.TEXT_PLAIN)
+                .multiPart("visibilite", mockRessource.getVisibilite(), MediaType.TEXT_PLAIN)
                 .multiPart("dateDeCreation", "2024-13-06T10:00:00", MediaType.TEXT_PLAIN)
                 .when()
                 .post("/create")
@@ -155,13 +168,140 @@ public class RessourcesControllerIT {
     }
 
     @Test
+    public void testCreateRessourceWithRessourcesRequest() {
+        Response response = given()
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .body(mockRessourcesRequest)
+                .when()
+                .post()
+                .then()
+                .extract()
+                .response();
+
+        // Affiche la réponse complète pour le débogage
+        System.out.println("Response: " + response.getBody().asString());
+
+        // Vérifie le code de statut et le corps de la réponse
+        response.then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("titre", equalTo("Test Ressource"));
+
+        /*
+        {
+            "idCat": 1,
+            "idType": 1,
+            "idTag": 1,
+            "idCreateur": 21,
+            "titre": "Nouvelle ressource",
+            "description": "Description de la nouvelle ressource",
+            "visibilite": 1,
+            "dateDeCreation": "2024-05-04T10:00:00"
+        }
+        */
+    }
+
+    @Test
+    public void testDeleteRessource() {
+        given()
+                .header("Authorization", "Bearer " + token)
+                .pathParam("id", 1)
+                .when().delete("/{id}")
+                .then()
+                .statusCode(204);
+    }
+
+    @Test
+    public void testGetRessourceById() {
+        given()
+                .header("Authorization", "Bearer " + token)
+                .pathParam("id", 1)
+                .when().get("/{id}")
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("id_ressource", equalTo(1));
+    }
+
+    @Test
+    public void testGetRessources() {
+        Response response = given()
+                .header("Authorization", "Bearer " + token)
+                .when().get("/all")
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("size()", greaterThan(0))
+                .extract().response(); // Assure que la réponse contient au moins une ressource
+
+        System.out.println("\n " + response.getBody().print() + " \n");
+    }
+
+    @Test
     public void testGetRessourcesByCreateur() {
         given()
                 .header("Authorization", "Bearer " + token)
-                .pathParam("createurId", 21)
+                .pathParam("createurId", mockUtilisateur01.getId_utilisateur())
                 .when().get("/byCreateur/{createurId}")
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON);
     }
+
+    @Test
+    public void testLinkImage() {
+        given()
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .pathParam("ressourceId", mockRessource.getId_ressource())
+                .pathParam("image", 1)
+                .when().put("/{ressourceId}/image/{image}")
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("image.id_image", equalTo(1));
+    }
+
+    /*@Test
+    public void testStreamDesRessources() {
+        given()
+                .header("Authorization", "Bearer " + token)
+                .when().get("/")
+                .then()
+                .statusCode(200)
+                .contentType("text/event-stream")
+                .body(notNullValue());
+    }*/
+
+    @Test
+    public void testUpdateRessource() {
+        given()
+                .header("Authorization", "Bearer " + token)
+                .contentType(ContentType.JSON)
+                .body(mockRessourcesRequestUpdate)
+                .pathParam("id", mockRessource.getId_ressource())
+                .when().put("/{id}")
+                .then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("titre", equalTo("Updated Title"));
+    }
+
+    @Test
+    public void testValidateRessource() {
+        Response response = given()
+                .header("Authorization", "Bearer " + token)
+                .pathParam("id", mockRessource.getId_ressource())
+                .when().put("/validate/{id}")
+                .then().extract().response();
+
+        System.out.println("Response: " + response.getBody().asString());
+
+        response.then()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body(notNullValue());
+    }
 }
+
