@@ -32,7 +32,7 @@ public class TypesRelationControllerIT {
     public void setUp() {
         mockTypesRelation = new TypesRelation();
 
-        mockTypesRelation.setIntitule("Test Intitule");
+        mockTypesRelation.setIntitule("Test Intitule 48974846514675412");
 
         loginAndRetrieveToken();
     }
@@ -60,7 +60,7 @@ public class TypesRelationControllerIT {
                 .then()
                 .statusCode(201)
                 .body("idTypeRelation", is(notNullValue()))
-                .body("intitule", is("Test Intitule"))
+                .body("intitule", is("Test Intitule 48974846514675412"))
                 .extract().response();
 
         //System.out.println("\n " + response.getBody().print() + " \n");
