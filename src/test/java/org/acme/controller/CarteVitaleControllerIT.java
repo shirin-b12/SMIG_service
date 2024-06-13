@@ -11,6 +11,9 @@ import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 @TestHTTPEndpoint(CarteVitaleController.class)
+
+// Test unitaire d'API CarteVitaleControllerIT
+
 public class CarteVitaleControllerIT {
 
     private String token;
