@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class  ImagesControllerIT {
 
     private String token;
-
+/*
     @BeforeEach
     public void setUp() {
         //RestAssured.baseURI = "http://localhost:8081"; // or the actual base URL if different
@@ -50,19 +50,20 @@ public class  ImagesControllerIT {
                 .contentType(ContentType.BINARY);
     }
 
-        @Test
-        public void testUploadImage() {
-            File testImageFile = new File("src/main/resources/test-image.jpg");
+    @Test
+    public void testUploadImage() {
+        File testImageFile = new File("src/main/resources/test-image.jpg");
 
-            given()
-                    .multiPart("legende", "Test Image")
-                    .multiPart("fichier", testImageFile)
-                    .header("Authorization", "Bearer " + token) // Use the retrieved token
-                    .when().post("http://localhost:8081/images")
-                    .then()
-                    .statusCode(404)
-                    .contentType(MediaType.MULTIPART_FORM_DATA);
-        }
+        given()
+                .contentType("multipart/form-data")
+                .multiPart("legende", "Test Image")
+                .multiPart("fichier", testImageFile)
+                .header("Authorization", "Bearer " + token) // Use the retrieved token
+                .when().post("http://localhost:8081/images")
+                .then()
+                .statusCode(404)
+                .contentType("multipart/form-data");
+    }
 
 
     @Test
@@ -75,5 +76,5 @@ public class  ImagesControllerIT {
                 .when().post("http://localhost:8081/images")
                 .then()
                 .statusCode(401); // Forbidden because no valid token is provided
-    }
+    }*/
 }

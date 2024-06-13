@@ -15,6 +15,7 @@ import org.acme.service.CarteVitaleService;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
+//fake carte vital
 
 public class CarteVitaleController {
     @Inject
