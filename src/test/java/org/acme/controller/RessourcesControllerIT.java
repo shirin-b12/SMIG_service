@@ -10,6 +10,7 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 
@@ -28,7 +29,7 @@ public class RessourcesControllerIT {
     private Categories mockCategorie;
     @Mock
     private Roles mockRoleModerateur;
-    @Mock
+
     private EtatUtilisateur mockEtatUtilisateur;
     @Mock
     private RessourcesRequest mockRessourcesRequest;
@@ -43,6 +44,7 @@ public class RessourcesControllerIT {
 
     @BeforeEach
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
 
         mockRoleModerateur = new Roles();
         mockRoleModerateur.setId_role(5);

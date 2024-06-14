@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import io.restassured.RestAssured;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.Console;
 
@@ -30,6 +31,8 @@ public class TypesRelationControllerIT {
 
     @BeforeEach
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
         mockTypesRelation = new TypesRelation();
 
         mockTypesRelation.setIntitule("Test Intitule 48974846514675412");
