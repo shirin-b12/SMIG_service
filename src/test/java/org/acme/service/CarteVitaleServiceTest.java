@@ -1,41 +1,36 @@
 package org.acme.service;
 
-import io.quarkus.test.common.http.TestHTTPEndpoint;
-import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.http.ContentType;
-import org.acme.controller.ImagesController;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static io.restassured.RestAssured.given;
+public class CarteVitaleServiceTest {
 
+    private CarteVitaleService carteVitaleService;
 
-@QuarkusTest
-class CarteVitaleServiceTest {
-
-    @Test
-    public void testVerifierEndpointValide() {
-        given()
-                .contentType(ContentType.JSON)
-                .body("{\"carteVitale\":\"1234\"}")
-                .when().post("http://localhost:8081/carteVitale")
-                .then()
-                .statusCode(200);
+    @BeforeEach
+    public void setUp() {
+        carteVitaleService = new CarteVitaleService();
     }
 
     @Test
-    public void testVerifierEndpointInvalide() {
-        given()
-                .contentType(ContentType.JSON)
-                .body("{\"carteVitale\":\"test\"}")
-                .when().post("http://localhost:8081/carteVitale")
-                .then()
-                .statusCode(400);
+    public void testVerifierCarteVitaleValide() {
+        String carteVitale = "1234"; // Utiliser une carte Vitale valide
+        boolean resultat = carteVitaleService.verificationCarteVitale(carteVitale);
+        assertTrue(resultat, "La carte Vitale devrait être valide");
     }
 
+    @Test
+    public void testVerifierCarteVitaleInvalide() {
+        String carteVitale = "test"; // Utiliser une carte Vitale invalide
+        boolean resultat = carteVitaleService.verificationCarteVitale(carteVitale);
+        assertFalse(resultat, "La carte Vitale devrait être invalide");
+    }
+
+    @Test
+    public void testVerifierCarteVitaleVide() {
+        String carteVitale = ""; // Tester le cas où la carte Vitale est vide
+        boolean resultat = carteVitaleService.verificationCarteVitale(carteVitale);
+        assertFalse(resultat, "La carte Vitale vide devrait être invalide");
+    }
 }
